@@ -1,0 +1,23 @@
+{
+  "name": "twistter",
+  "version": "1.0.0",
+  "description": "Team 26's Twistter (CS 307 LE2 Fall 2019)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kylashkrishnamurthy/twistter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kylashkrishnamurthy/twistter/issues"
+  },
+  "homepage": "https://github.com/kylashkrishnamurthy/twistter#readme",
+  "dependencies": {
+    "firebase": "^6.6.1",
+    "react": "^16.9.0"
+  }
+}
