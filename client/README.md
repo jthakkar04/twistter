@@ -1,3 +1,6 @@
+1. Run 'npm install'
+2. Run 'npm install node-sass'
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
