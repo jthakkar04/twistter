@@ -1,6 +1,7 @@
 import React from "react";
-import "./App.scss";
+import "./styles/App.scss";
 import { Login } from "./components/login/index";
+import { Registration } from "./components/registration/index";
 
 class App extends React.Component {
   constructor(props) {
@@ -38,9 +39,9 @@ class App extends React.Component {
             {isLogginActive && (
               <Login containerRef={ref => (this.current = ref)} />
             )}
-            {/* {!isLogginActive && ( */}
-              {/* <Register containerRef={ref => (this.current = ref)} /> */}
-            {/* )} */}
+            {!isLogginActive && (
+              <Registration containerRef={ref => (this.current = ref)} />
+            )}
           </div>
           <RightSide
             current={current}
