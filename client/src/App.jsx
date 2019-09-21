@@ -11,20 +11,16 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.rightSide.classList.add("right");
-  }
-
   changeState() {
     const { isLogginActive } = this.state;
 
-    if (isLogginActive) {
-      this.rightSide.classList.remove("right");
-      this.rightSide.classList.add("left");
-    } else {
-      this.rightSide.classList.remove("left");
-      this.rightSide.classList.add("right");
-    }
+    // if (isLogginActive) {
+    //   this.rightSide.classList.remove("right");
+    //   this.rightSide.classList.add("left");
+    // } else {
+    //   this.rightSide.classList.remove("left");
+    //   this.rightSide.classList.add("right");
+    // }
     this.setState(prevState => ({ isLogginActive: !prevState.isLogginActive }));
   }
 
@@ -43,30 +39,16 @@ class App extends React.Component {
               <Registration containerRef={ref => (this.current = ref)} />
             )}
           </div>
-          <RightSide
+          {/* <RightSide
             current={current}
             currentActive={currentActive}
             containerRef={ref => (this.rightSide = ref)}
             onClick={this.changeState.bind(this)}
-          />
+          /> */}
         </div>
       </div>
     );
   }
 }
-
-const RightSide = props => {
-  return (
-    <div
-      className="right-side"
-      ref={props.containerRef}
-      onClick={props.onClick}
-    >
-      <div className="inner-container">
-        <div className="text">{props.current}</div>
-      </div>
-    </div>
-  );
-};
 
 export default App;

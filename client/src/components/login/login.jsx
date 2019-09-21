@@ -11,9 +11,9 @@ export class Login extends React.Component {
       <div className="base-container" ref={this.props.containerRef}>
         <div className="header">Login</div>
         <div className="content">
-          <div className="image">
+          {/* <div className="image">
             <img src={loginImg} />
-          </div>
+          </div> */}
           <div className="form">
             <div className="form-group">
               <label htmlFor="username">Username</label>
@@ -23,14 +23,22 @@ export class Login extends React.Component {
               <label htmlFor="password">Password</label>
               <input type="password" name="password" placeholder="password" />
             </div>
-
           </div>
         </div>
         <div className="footer">
           <button type="button" className="btn">
             Login
           </button>
+          <button type="button" className="btn">
+            Register
+          </button>
         </div>
+        {/* <div className="container">
+        <tr>
+          <td>Don't Have an Account?</td>
+          <td><a href={"localhost:3000/register"}>Sign Up Here</a></td>
+        </tr>
+        </div> */}
       </div>
     );
   }
