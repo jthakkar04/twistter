@@ -66,4 +66,18 @@
   .footer {
     margin-top: .5em;
   }
+
+  .input.error {
+    border-color: red;
+    font-family: "Helvetica","Open Sans", sans-serif;
+  }
+  
+  .input-feedback {
+    color: rgb(235, 54, 54);
+    margin-top: -23px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-family: "Helvetica","Open Sans", sans-serif;
+  }
 }

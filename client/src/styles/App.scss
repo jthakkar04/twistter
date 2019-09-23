@@ -32,51 +32,18 @@
     height: 75%;
     z-index: 99;
     padding: 17px 10px;
-    //transition: transform 200ms ease-in-out;
   }
-  // .right-side {
-  //   display: flex;
-  //   flex-direction: column;
-  //   justify-content: center;
-  //   height: 90%;
-  //   background-color: #2675f3f3;
-  //   width: 100%;
-  //   position: absolute;
-  //   right: -34%;
-  //   border-radius: 6px;
-  //   z-index: 1;
-  //   transition: all 400ms ease-in-out;
-  //   cursor: pointer;
-  //   box-shadow: 0px 0px 12px 2px rgba(15, 15, 15, 0.281);
+}
 
-  //   &.right {
-  //     right: -40%;
-  //     align-items: flex-end;
-  //     color: #fcfcfcf3;
-  //     &:hover {
-  //       right: -45%;
-  //       background-color: #fcfcfcf3;
-  //       color: #2675f3f3;
-  //     }
-  //   }
-  //   &.left {
-  //     right: 40%;
-  //     align-items: flex-start;
-  //     color: #fcfcfcf3;
-  //     &:hover {
-  //       right: 45%;
-  //       background-color: #fcfcfcf3;
-  //       color: #2675f3f3;
-  //     }
-  //   }
+input.error {
+  border-color: red;
+}
 
-  //   .text {
-  //     font-size: 21px;
-  //     font-weight: 500;
-  //     margin-right: 3em;
-  //     margin-left: 3em;
-  //   }
-  // }
+.input-feedback {
+  color: rgb(235, 54, 54);
+  margin-top: -15px;
+  font-size: 14px;
+  margin-bottom: 20px;
 }
 
 //Button
