@@ -1,8 +1,8 @@
 import React from "react";
-import loginImg from "../../login.svg";
 import { Formik } from "formik";
-import * as EmailValidator from "email-validator";
 import * as Yup from "yup";
+//import * as EmailValidator from "email-validator";
+//import loginImg from "../../login.svg";
 
 export class Login extends React.Component {
   constructor(props) {
@@ -25,6 +25,7 @@ export class Login extends React.Component {
         initialValues={{ email: "", password: "" }}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
+            console.log("Logging in", values);
             setSubmitting(false);
           }, 500);
         }}
@@ -42,7 +43,8 @@ export class Login extends React.Component {
         validationSchema = {Yup.object().shape({
           email: Yup.string()
             .email()
-            .required("Required"),
+            .required("Required")
+            .matches(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, "Invalid Email"),
           password: Yup.string()
             .min(8, "Invalid Password") // Keeps the min length of password to be 8 characters
             .required("Required")
@@ -75,6 +77,7 @@ export class Login extends React.Component {
                     type="text"
                     name="Email"
                     placeholder="Enter your Email"
+                    //value={values.email}
                     onChange={handleChange}
                     onBlur = {handleBlur}
                     className = {errors.email && touched.email && "error"}
@@ -109,12 +112,6 @@ export class Login extends React.Component {
                 Register
               </button>
             </div>
-            {/* <div className="container">
-            <tr>
-              <td>Don't Have an Account?</td>
-              <td><a href={"localhost:3000/register"}>Sign Up Here</a></td>
-            </tr>
-            </div> */}
           </div>
           </form>
         );
