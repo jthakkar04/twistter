@@ -1,10 +1,11 @@
-.App {
+.App { //connects to app.jsx
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
   font-family: "Helvetica", "Open Sans", sans-serif;
   color: #2675f3f3;
+  background: url("../images/307\ background.jpg"); //specifies where background image from login page is coming from
 }
 
 //Login Main Container
