@@ -21,7 +21,7 @@ export class Login extends React.Component {
 
   render() {
     return(
-      <Formik
+      <Formik 
         initialValues={{ email: "", password: "" }}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
@@ -51,6 +51,7 @@ export class Login extends React.Component {
             .matches(/(?=.*[0-9])/, "Invalid Password") // Makes sure the password has a number in there
         })}
       >
+        
         {props => {
           const {
               values,
