@@ -13,26 +13,32 @@ export class Registration extends React.Component {
 
     return (
       <Formik
-        initialValues={{ username: "", email: "", password: "", verifyPassword: "" }}
+        initialValues={{ username: "", email: "", password: "", confirmPassword: "" }}
         onSubmit={(values, actions) => {
           setTimeout(() => {
-            console.log(helpers.validation(values.password, values.verifyPassword))
+            console.log(helpers.validation(values.password, values.confirmPassword))
             alert(JSON.stringify(values, null, 2));
             actions.setSubmitting(false);
           }, 1000);
         }}
 
-        validationSchema={Yup.object().shape({
-          username: Yup.string()
-            .required("Required"),
-          email: Yup.string()
-            .email('Invalid email')
-            .required('Required'),
-          password: Yup.string()
-            .min(8, "Invalid Password") // Keeps the min length of password to be 8 characters
-            .required("Required")
-            .matches(/(?=.*[0-9])/, "Invalid Password") // Makes sure the password has a number in there
-        })}
+        const validationSchema={
+          Yup.object().shape({
+            username: Yup.string()
+              .required("Required"),
+            email: Yup.string()
+              .email('Invalid email')
+              .required('Required'),
+            password: Yup.string()
+              .min(8, "Invalid Password") // Keeps the min length of password to be 8 characters
+              .required("Required")
+              .matches(/(?=.*[0-9])/, "Invalid Password"), // Makes sure the password has a number in there
+            confirmPassword: Yup.string()
+              .required('Required')
+              .test('passwords-match', 'Passwords must match ya fool', function(value) {
+                return this.parent.password === value;
+              }),
+          })}
       >
 
         {props => {
@@ -102,18 +108,18 @@ export class Registration extends React.Component {
                       )}
                     </div>
                     <div className="form-group">
-                      <label htmlFor="verifyPassword">Confirm Password</label>
+                      <label htmlFor="confirmPassword">Confirm Password</label>
                       <input
                         type="password"
-                        name="verifyPassword"
+                        name="confirmPassword"
                         placeholder="Re-type your Password"
-                        value={values.verifyPassword}
+                        value={values.confirmPassword}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        className={errors.verifyPassword && touched.verifyPassword && "error"}
+                        className={errors.confirmPassword && touched.confirmPassword && "error"}
                       />
-                      {errors.verifyPassword && touched.verifyPassword && (
-                        <div className="input-feedback">{errors.verifyPassword}</div>
+                      {errors.confirmPassword && touched.confirmPassword && (
+                        <div className="input-feedback">{errors.confirmPassword}</div>
                       )}
                     </div>
                   </div>
