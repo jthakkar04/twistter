@@ -20,8 +20,8 @@ export class Login extends React.Component {
   };
 
   render() {
-    return(
-      <Formik 
+    return (
+      <Formik
         initialValues={{ email: "", password: "" }}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
@@ -40,7 +40,7 @@ export class Login extends React.Component {
         //   return errors;
         // }}
 
-        validationSchema = {Yup.object().shape({
+        validationSchema={Yup.object().shape({
           email: Yup.string()
             .email()
             .required("Required")
@@ -51,74 +51,74 @@ export class Login extends React.Component {
             .matches(/(?=.*[0-9])/, "Invalid Password") // Makes sure the password has a number in there
         })}
       >
-        
+
         {props => {
           const {
-              values,
-              touched,
-              errors,
-              isSubmitting,
-              handleChange,
-              handleBlur,
-              handleSubmit
+            values,
+            touched,
+            errors,
+            isSubmitting,
+            handleChange,
+            handleBlur,
+            handleSubmit
           } = props;
-        return (
-          <form onSubmit={handleSubmit}>
-          <div className="base-container" ref={props.containerRef}>
-            <div className="header">Login</div>
-            <div className="content">
-              {/* <div className="image">
+          return (
+            <form onSubmit={handleSubmit}>
+              <div className="base-container" ref={props.containerRef}>
+                <div className="header">Login</div>
+                <div className="content">
+                  {/* <div className="image">
                 <img src={loginImg} />
               </div> */}
-              <div className="form">
+                  <div className="form">
 
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="text"
-                    name="Email"
-                    placeholder="Enter your Email"
-                    //value={values.email}
-                    onChange={handleChange}
-                    onBlur = {handleBlur}
-                    className = {errors.email && touched.email && "error"}
-                  />
-                  {errors.email && touched.email && (
-                    <div className="input-feedback">{errors.email}</div>
-                  )}
+                    <div className="form-group">
+                      <label htmlFor="email">Email</label>
+                      <input
+                        type="text"
+                        name="Email"
+                        placeholder="Enter your Email"
+                        //value={values.email}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={errors.email && touched.email && "error"}
+                      />
+                      {errors.email && touched.email && (
+                        <div className="input-feedback">{errors.email}</div>
+                      )}
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="password">Password</label>
+                      <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter your Password"
+                        value={values.password}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={errors.password && touched.password && "error"}
+                      />
+                      {errors.password && touched.password && (
+                        <div className="input-feedback">{errors.password}</div>
+                      )}
+                    </div>
+                  </div>
                 </div>
-    
-              <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <input
-                    type="password" 
-                    name="password" 
-                    placeholder="Enter your Password"
-                    value={values.password}
-                    onChange={handleChange}
-                    onBlur = {handleBlur}
-                    className = {errors.password && touched.password && "error"}
-                  />
-                  {errors.password && touched.password && (
-                      <div className="input-feedback">{errors.password}</div>
-                  )}
-              </div>
-              </div>
-            </div>
-            <div className="footer">
-              <button type="submit" className="btn" disabled={isSubmitting}>
-                Login
+                <div className="footer">
+                  <button type="submit" className="btn" disabled={isSubmitting}>
+                    Login
               </button>
-              <button type="button" className="btn">
-                Register
+                  <button type="button" className="btn">
+                    Register
               </button>
-            </div>
-          </div>
-          </form>
-        );
-  }
-  }
-  </Formik>
+                </div>
+              </div>
+            </form>
+          );
+        }
+        }
+      </Formik>
     );
-}
+  }
 }

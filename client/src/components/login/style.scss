@@ -1,5 +1,9 @@
 #id {
   background: url("../../images/307\ background.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .base-container {

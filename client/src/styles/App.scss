@@ -6,6 +6,10 @@
   font-family: "Helvetica", "Open Sans", sans-serif;
   color: #2675f3f3;
   background: url("../images/307\ background.jpg"); //specifies where background image from login page is coming from
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 //Login Main Container
