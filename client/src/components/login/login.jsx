@@ -1,8 +1,10 @@
-import React from "react";
+// Dependencies
+import React from 'react';
+import { Link, Redirect } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
-//import * as EmailValidator from "email-validator";
-//import loginImg from "../../login.svg";
+
+// Formatting
 
 export class Login extends React.Component {
   constructor(props) {
@@ -20,105 +22,101 @@ export class Login extends React.Component {
   };
 
   render() {
-    return(
-      <Formik 
+    return (
+      <Formik
         initialValues={{ email: "", password: "" }}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
             console.log("Logging in", values);
             setSubmitting(false);
+            //Change later
+            if (values.email === "test@gmail.com" && values.password === "testing1") {
+              return <Redirect to="/testPage" />
+            }
           }, 500);
         }}
 
-        // validate={values => {
-        //   let errors = {};
-        //   if (!values.values.email) {
-        //     errors.email = "Required";
-        //   } else if (!EmailValidator.validate(values.email)) {
-        //     errors.email = "Invalid Email Address";
-        //   }
-        //   return errors;
-        // }}
-
-        validationSchema = {Yup.object().shape({
+        validationSchema={Yup.object().shape({
           email: Yup.string()
-            .email()
-            .required("Required")
-            .matches(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, "Invalid Email"),
+            .email('Invalid email')
+            .required('Required'),
           password: Yup.string()
             .min(8, "Invalid Password") // Keeps the min length of password to be 8 characters
             .required("Required")
             .matches(/(?=.*[0-9])/, "Invalid Password") // Makes sure the password has a number in there
         })}
       >
-        
+
         {props => {
           const {
-              values,
-              touched,
-              errors,
-              isSubmitting,
-              handleChange,
-              handleBlur,
-              handleSubmit
+            values,
+            touched,
+            errors,
+            isSubmitting,
+            handleChange,
+            handleBlur,
+            handleSubmit
           } = props;
-        return (
-          <form onSubmit={handleSubmit}>
-          <div className="base-container" ref={props.containerRef}>
-            <div className="header">Login</div>
-            <div className="content">
-              {/* <div className="image">
+          return (
+
+            <form onSubmit={handleSubmit}>
+              <div className={"base-container"} ref={props.containerRef}>
+                <div className="header">Login</div>
+                <div className="content">
+                  {/* <div className="image">
                 <img src={loginImg} />
               </div> */}
-              <div className="form">
+                  <div className="form">
+                    <div className="form-group">
+                      <label htmlFor="email">Email</label>
+                      <input
+                        type="text"
+                        name="email"
+                        placeholder="Enter your Email"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.email}
+                      />
+                      {errors.email && touched.email && (
+                        <div className="input-feedback">{errors.email}</div>
+                      )}
+                    </div>
 
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="text"
-                    name="Email"
-                    placeholder="Enter your Email"
-                    //value={values.email}
-                    onChange={handleChange}
-                    onBlur = {handleBlur}
-                    className = {errors.email && touched.email && "error"}
-                  />
-                  {errors.email && touched.email && (
-                    <div className="input-feedback">{errors.email}</div>
-                  )}
+                    <div className="form-group">
+                      <label htmlFor="password">Password</label>
+                      <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter your Password"
+                        value={values.password}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        className={errors.password && touched.password && "error"}
+                      />
+                      {errors.password && touched.password && (
+                        <div className="input-feedback">{errors.password}</div>
+                      )}
+                    </div>
+                  </div>
                 </div>
-    
-              <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <input
-                    type="password" 
-                    name="password" 
-                    placeholder="Enter your Password"
-                    value={values.password}
-                    onChange={handleChange}
-                    onBlur = {handleBlur}
-                    className = {errors.password && touched.password && "error"}
-                  />
-                  {errors.password && touched.password && (
-                      <div className="input-feedback">{errors.password}</div>
-                  )}
+                <div className="footer">
+                  <button type="submit" className="btn" disabled={isSubmitting}>
+                    Login
+                    </button>
+                  <Link to="/register">
+                    <button type="button" className="btn">
+                      Sign-up
+                    </button>
+                  </Link>
+                </div>
               </div>
-              </div>
-            </div>
-            <div className="footer">
-              <button type="submit" className="btn" disabled={isSubmitting}>
-                Login
-              </button>
-              <button type="button" className="btn">
-                Register
-              </button>
-            </div>
-          </div>
-          </form>
-        );
-  }
-  }
-  </Formik>
+            </form>
+
+          );
+        }
+        }
+      </Formik >
+
     );
-}
+  }
 }
