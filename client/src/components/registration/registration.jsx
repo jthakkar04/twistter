@@ -1,7 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import helpers from './registrationLogic';
 import * as bad_words from "bad-words";
 
 export class Registration extends React.Component {
@@ -16,7 +15,6 @@ export class Registration extends React.Component {
         initialValues={{ username: "", email: "", password: "", confirmPassword: "" }}
         onSubmit={(values, actions) => {
           setTimeout(() => {
-            console.log(helpers.validation(values.password, values.confirmPassword))
             alert(JSON.stringify(values, null, 2));
             actions.setSubmitting(false);
           }, 1000);
@@ -139,11 +137,10 @@ export class Registration extends React.Component {
                 </div>
               </div>
             </form>
-
           );
         }
         }
-      </Formik>
+      </Formik >
     );
   }
 }
