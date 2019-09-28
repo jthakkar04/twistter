@@ -18,6 +18,7 @@
   "homepage": "https://github.com/kylashkrishnamurthy/twistter#readme",
   "dependencies": {
     "firebase": "^6.6.1",
-    "react": "^16.9.0"
+    "react": "^16.9.0",
+    "react-router-dom": "^5.0.1"
   }
 }

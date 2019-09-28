@@ -6,8 +6,9 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route('/')
-def hello():
-    return "Hello World!"
+@app.route('/login')
+def login():
+    return render_template("index.html")
 
 
 if __name__ == "__main__":

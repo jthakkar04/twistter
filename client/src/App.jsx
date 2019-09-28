@@ -1,23 +1,16 @@
 import React from "react";
 import "./styles/App.scss";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Login } from "./components/login/index";
 
 class App extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     isLogginActive: true
-  //   };
-  // }
-
-  // changeState() {
-  //   const { isLogginActive } = this.state;
-  //   this.setState(prevState => ({ isLogginActive: !prevState.isLogginActive }));
-  // }
 
   render() {
-    // const { isLogginActive } = this.state;
     return (
+      <div>
+      <Router>
+        <Route path="/" exact component={Login} />
+      </Router>
       <div className="App">
         <div className="login">
           <div className="container" ref={ref => (this.container = ref)}>
@@ -29,6 +22,7 @@ class App extends React.Component {
             {/* )} */}
           </div>
         </div>
+      </div>
       </div>
     );
   }
