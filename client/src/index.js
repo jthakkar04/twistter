@@ -8,6 +8,7 @@ import { HashRouter as Router, Route } from "react-router-dom";
 import App from './App.jsx';
 import { Login } from './components/login';
 import { Registration } from './components/registration';
+import { TestPage } from './components/testPage';
 
 const routing = (
     <Router>
@@ -15,6 +16,7 @@ const routing = (
             <Route exact path="/" component={App} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Registration} />
+            <Route path="/testPage" component={TestPage} />
         </div>
     </Router>
 )
