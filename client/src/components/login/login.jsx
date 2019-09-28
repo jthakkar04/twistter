@@ -2,12 +2,10 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Formik } from "formik";
-import { Registration } from '../registration';
 import * as Yup from "yup";
 
 // Formatting
-import "./style.scss";
-
+import styles from "./style.scss"
 
 export class Login extends React.Component {
   constructor(props) {
@@ -68,8 +66,9 @@ export class Login extends React.Component {
             handleSubmit
           } = props;
           return (
+
             <form onSubmit={handleSubmit}>
-              <div className="base-container" ref={props.containerRef}>
+              <div className={"base-container"} ref={props.containerRef}>
                 <div className="header">Login</div>
                 <div className="content">
                   {/* <div className="image">

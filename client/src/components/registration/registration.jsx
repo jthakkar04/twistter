@@ -2,20 +2,17 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Formik } from "formik";
-import { Login } from '../login';
 import * as Yup from "yup";
 import * as bad_words from "bad-words";
 
 // 
 import "./style.scss";
 
-
-
 export class Registration extends React.Component {
 
   render() {
-
     return (
+
       <Formik
         initialValues={{ username: "", email: "", password: "", confirmPassword: "" }}
         onSubmit={(values, actions) => {
@@ -31,7 +28,7 @@ export class Registration extends React.Component {
               .required("Required")
               .test('safe-username', 'Profanity not allowed in usernames', function (value) {
                 var filter = new bad_words();
-                return filter.isProfane(value) === true;
+                return filter.isProfane(value) === false;
               }),
             email: Yup.string()
               .email('Invalid email')
@@ -132,11 +129,11 @@ export class Registration extends React.Component {
                   <button type="submit" className="btn" disabled={isSubmitting}>
                     Sign Up
               </button>
-              <Link to="/login">
-              <button type="button" className="btn">
-                Login
+                  <Link to="/login">
+                    <button type="button" className="btn">
+                      Login
                     </button>
-            </Link>
+                  </Link>
 
                 </div>
               </div>
