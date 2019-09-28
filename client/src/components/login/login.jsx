@@ -1,11 +1,10 @@
 // Dependencies
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
 // Formatting
-import styles from "./style.scss"
 
 export class Login extends React.Component {
   constructor(props) {
@@ -30,24 +29,17 @@ export class Login extends React.Component {
           setTimeout(() => {
             console.log("Logging in", values);
             setSubmitting(false);
+            //Change later
+            if (values.email === "test@gmail.com" && values.password === "testing1") {
+              return <Redirect to="/testPage" />
+            }
           }, 500);
         }}
 
-        // validate={values => {
-        //   let errors = {};
-        //   if (!values.values.email) {
-        //     errors.email = "Required";
-        //   } else if (!EmailValidator.validate(values.email)) {
-        //     errors.email = "Invalid Email Address";
-        //   }
-        //   return errors;
-        // }}
-
         validationSchema={Yup.object().shape({
           email: Yup.string()
-            .email()
-            .required("Required")
-            .matches(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i, "Invalid Email"),
+            .email('Invalid email')
+            .required('Required'),
           password: Yup.string()
             .min(8, "Invalid Password") // Keeps the min length of password to be 8 characters
             .required("Required")
@@ -75,17 +67,15 @@ export class Login extends React.Component {
                 <img src={loginImg} />
               </div> */}
                   <div className="form">
-
                     <div className="form-group">
                       <label htmlFor="email">Email</label>
                       <input
                         type="text"
-                        name="Email"
+                        name="email"
                         placeholder="Enter your Email"
-                        //value={values.email}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        className={errors.email && touched.email && "error"}
+                        value={values.email}
                       />
                       {errors.email && touched.email && (
                         <div className="input-feedback">{errors.email}</div>
