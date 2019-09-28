@@ -1,22 +1,22 @@
-import React from "react";
+// Dependencies
+import React from 'react';
+import { Link } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import helpers from './registrationLogic';
 import * as bad_words from "bad-words";
 
+// 
+import "./style.scss";
+
 export class Registration extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
-
     return (
+
       <Formik
         initialValues={{ username: "", email: "", password: "", confirmPassword: "" }}
         onSubmit={(values, actions) => {
           setTimeout(() => {
-            console.log(helpers.validation(values.password, values.confirmPassword))
             alert(JSON.stringify(values, null, 2));
             actions.setSubmitting(false);
           }, 1000);
@@ -60,9 +60,6 @@ export class Registration extends React.Component {
               <div className="base-container" ref={props.containerRef}>
                 <div className="header">Registration</div>
                 <div className="content">
-                  {/* <div className="image">
-            <img src={loginImg} />
-          </div> */}
                   <div className="form">
                     <div className="form-group">
                       <label htmlFor="username">Username</label>
@@ -132,18 +129,19 @@ export class Registration extends React.Component {
                   <button type="submit" className="btn" disabled={isSubmitting}>
                     Sign Up
               </button>
-                  <button type="button" className="btn" >
-                    Login
-              </button>
+                  <Link to="/login">
+                    <button type="button" className="btn">
+                      Login
+                    </button>
+                  </Link>
 
                 </div>
               </div>
             </form>
-
           );
         }
         }
-      </Formik>
+      </Formik >
     );
   }
 }
