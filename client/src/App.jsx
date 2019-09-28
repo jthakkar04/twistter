@@ -18,7 +18,7 @@ class App extends React.Component {
   render() {
     // const { isLogginActive } = this.state;
     return (
-      <div className="App">
+      <div className="App"> {/* the whole thing which is declared in app.scss*/}
         <div className="login">
           <div className="container" ref={ref => (this.container = ref)}>
             {/* {isLogginActive && ( */}
