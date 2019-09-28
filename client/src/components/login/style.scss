@@ -1,11 +1,8 @@
 #id {
   background: url("../../images/307\ background.jpg") no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
 
+}
+// Field CSS
 .base-container {
   width: 100%;
   display: flex;
@@ -31,7 +28,7 @@
       }
     }
     
-    // Username and Password Textbox
+    // Field CSS
     .form { 
       margin-top: 1em;
       display: flex;

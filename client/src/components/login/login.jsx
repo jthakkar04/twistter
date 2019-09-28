@@ -1,10 +1,13 @@
-import React, { Component } from 'react';
-import { HashRouter, Route, Link } from "react-router-dom";
+// Dependencies
+import React from 'react';
+import { Link } from "react-router-dom";
 import { Formik } from "formik";
-import * as Yup from "yup";
 import { Registration } from '../registration';
-//import * as EmailValidator from "email-validator";
-//import loginImg from "../../login.svg";
+import * as Yup from "yup";
+
+// Formatting
+import "./style.scss";
+
 
 export class Login extends React.Component {
   constructor(props) {
@@ -111,9 +114,11 @@ export class Login extends React.Component {
                   <button type="submit" className="btn" disabled={isSubmitting}>
                     Login
                     </button>
-                  <button type="button" className="btn">
-                    Sign-up
+                  <Link to="/register">
+                    <button type="button" className="btn">
+                      Sign-up
                     </button>
+                  </Link>
                 </div>
               </div>
             </form>

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Route, Link } from "react-router-dom";
 import "./styles/App.scss";
 
 class App extends React.Component {
@@ -12,16 +12,19 @@ class App extends React.Component {
         <div className="landing">
           <div className="container" >
             <h1>Welcome to Twisster!</h1>
-            <Link path="/login">
+            <Link to="/login">
               <button type="button" className="btn">
                 Login
                     </button>
             </Link>
-            <Link path="/register">
+            <Link to="/register">
               <button type="button" className="btn">
                 Sign-up
                     </button>
             </Link>
+          </div>
+          <div>
+
           </div>
         </div>
       </div >
