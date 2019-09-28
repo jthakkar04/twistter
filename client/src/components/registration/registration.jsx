@@ -1,8 +1,8 @@
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import helpers from './registrationLogic'
-// import loginImg from "../../login.svg";
+import helpers from './registrationLogic';
+import * as bad_words from "bad-words";
 
 export class Registration extends React.Component {
   constructor(props) {
@@ -25,7 +25,11 @@ export class Registration extends React.Component {
         const validationSchema={
           Yup.object().shape({
             username: Yup.string()
-              .required("Required"),
+              .required("Required")
+              .test('safe-username', 'Profanity not allowed in usernames', function (value) {
+                var filter = new bad_words();
+                return filter.isProfane(value) === true;
+              }),
             email: Yup.string()
               .email('Invalid email')
               .required('Required'),
@@ -35,7 +39,7 @@ export class Registration extends React.Component {
               .matches(/(?=.*[0-9])/, "Invalid Password"), // Makes sure the password has a number in there
             confirmPassword: Yup.string()
               .required('Required')
-              .test('passwords-match', 'Passwords must match ya fool', function(value) {
+              .test('passwords-match', 'Passwords must match ya fool', function (value) {
                 return this.parent.password === value;
               }),
           })}
