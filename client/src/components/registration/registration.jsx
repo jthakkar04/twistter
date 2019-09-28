@@ -28,7 +28,7 @@ export class Registration extends React.Component {
               .required("Required")
               .test('safe-username', 'Profanity not allowed in usernames', function (value) {
                 var filter = new bad_words();
-                return filter.isProfane(value) === true;
+                return filter.isProfane(value) === false;
               }),
             email: Yup.string()
               .email('Invalid email')
