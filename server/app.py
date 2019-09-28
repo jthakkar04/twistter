@@ -5,9 +5,9 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/')
+@app.route('/index')
 def hello():
-    return "Hello World!"
+    return "Hello World"
 
 
 if __name__ == "__main__":
