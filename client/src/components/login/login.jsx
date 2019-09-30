@@ -22,28 +22,45 @@ export class Login extends React.Component {
     return (
       <Formik
         initialValues={{ email: "", password: "" }}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
+        onSubmit={ async (values, { setSubmitting }) => {
             console.log("Logging in", values);
             setSubmitting(false);
 
             // Firebase log-in auth
             /**
              * 
-             * .then(function() {
-              alert('Succesful login! Redirecting to main page!');
-              return <Redirect to="/testPage" />
-            })
+             * 
              * 
              */
-            firebase.auth().signInWithEmailAndPassword(values.email, values.password).catch(function (error) {
-              alert('Incorrect email and/or password!');
-            });
-
-            // Re-direct to test-page  (should be on valid login)
-            this.props.history.push("/testpage");
-
-          }, 500);
+            var valid = false
+            firebase.auth().signInWithEmailAndPassword(values.email, values.password)
+            .then(function(firebaseUser) {
+              console.log('Succesful login! Redirecting to main page!');
+              valid = true
+            })
+            .catch(function(error) {
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              if (errorCode === 'auth/wrong-password') {
+                alert('Wrong password!');
+              }
+              else if (errorCode == 'auth/invalid-email') {
+                alert('Invalid email!')
+              }
+              else {
+                alert(errorMessage);
+              }
+            })
+            .then(() => {
+              if (valid === true){
+                console.log('Success!');
+                this.props.history.push("/testpage");
+              }
+            })
+            
+            
+            
+            
         }}
 
         validationSchema={Yup.object().shape({
