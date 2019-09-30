@@ -1,5 +1,6 @@
 // Dependencies
 import React from 'react';
+import loginImg from "../../images/loginImg.png";
 import { Link, Redirect } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -75,9 +76,11 @@ export class Login extends React.Component {
               <div className="base-container" ref={props.containerRef}>
                 <div className="header">Login</div>
                 <div className="content">
-                  {/* <div className="image">
-                <img src={loginImg} />
-              </div> */}
+                <Link to="/">
+                  <div className="image" alt="logo">
+                    <img src={loginImg} />
+                  </div>
+                </Link>
                   <div className="form">
                     <div className="form-group">
                       <label htmlFor="email">Email</label>
@@ -114,7 +117,7 @@ export class Login extends React.Component {
                 <div className="footer">
                   <button type="submit" className="btn" disabled={isSubmitting}>
                     Login
-                    </button>
+                  </button>
                   <Link to="/register">
                     <button type="button" className="btn">
                       Sign-up
