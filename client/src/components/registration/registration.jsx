@@ -7,8 +7,7 @@ import * as bad_words from "bad-words";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 
-// 
-import "./style.scss";
+// import "./style.scss";
 
 export class Registration extends React.Component {
 
@@ -84,6 +83,7 @@ export class Registration extends React.Component {
           } = props;
           return (
             <form onSubmit={handleSubmit}>
+              <div className="registration">
               <div className="base-container" ref={props.containerRef}>
                 <div className="header">Registration</div>
                 <div className="content">
@@ -163,6 +163,7 @@ export class Registration extends React.Component {
                   </Link>
 
                 </div>
+              </div>
               </div>
             </form>
           );

@@ -90,6 +90,7 @@ export class Login extends React.Component {
           return (
 
             <form onSubmit={handleSubmit}>
+              <div className="login">
               <div className="base-container" ref={props.containerRef}>
                 <div className="header">Login</div>
                 <div className="content">
@@ -124,6 +125,9 @@ export class Login extends React.Component {
                         <div className="input-feedback">{errors.password}</div>
                       )}
                     </div>
+                    <Link to="/forgot">
+                      <div className="forgotPassword">Forgot Password?</div>
+                      </Link>
                   </div>
                 </div>
                 <div className="footer">
@@ -136,6 +140,7 @@ export class Login extends React.Component {
                     </button>
                   </Link>
                 </div>
+              </div>
               </div>
             </form>
 

@@ -4,7 +4,8 @@ body {
   justify-content: center;
   align-items: center;
   font-family: "Helvetica", "Open Sans", sans-serif;
-  color: #2675f3f3;
+  color: #067096;
+  margin-top:1.5em;
   background: url("../images/307\ background.jpg"); //specifies where background image from login page is coming from
 }
 
@@ -19,6 +20,7 @@ body {
   margin-top: 1.5em;
   position: relative;
   z-index: 99;
+  margin-top: 300px;
 
   .container {
     display: flex;
@@ -54,14 +56,14 @@ input.error {
   padding: 5px 20px;
   margin: 10px;
   border: 0;
-  background-color: #2675f3f3;
+  background-color: #067096;
   color: #fff;
   border-radius: 3px;
   transition: all 250ms ease-in-out;
   cursor: pointer;
   &:hover {
     background-color: #fcfcfcf3;
-    color: #2675f3f3;
+    color: #5CCAF2;
   }
   &:focus {
     outline: none;
