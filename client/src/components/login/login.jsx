@@ -1,8 +1,10 @@
 // Dependencies
 import React from 'react';
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import * as firebase from "firebase/app";
+import "firebase/auth";
 
 // Formatting
 
@@ -17,7 +19,6 @@ export class Login extends React.Component {
 
   render() {
 
-    
     return (
       <Formik
         initialValues={{ email: "", password: "" }}
@@ -25,11 +26,23 @@ export class Login extends React.Component {
           setTimeout(() => {
             console.log("Logging in", values);
             setSubmitting(false);
-            //Change later
-            if (values.email === "test@gmail.com" && values.password === "testing1") {
-              console.log("valid info")
+
+            // Firebase log-in auth
+            /**
+             * 
+             * .then(function() {
+              alert('Succesful login! Redirecting to main page!');
               return <Redirect to="/testPage" />
-            }
+            })
+             * 
+             */
+            firebase.auth().signInWithEmailAndPassword(values.email, values.password).catch(function (error) {
+              alert('Incorrect email and/or password!');
+            });
+
+            // Re-direct to test-page  (should be on valid login)
+            this.props.history.push("/testpage");
+
           }, 500);
         }}
 
@@ -57,7 +70,7 @@ export class Login extends React.Component {
           return (
 
             <form onSubmit={handleSubmit}>
-              <div className={"base-container"} ref={props.containerRef}>
+              <div className="base-container" ref={props.containerRef}>
                 <div className="header">Login</div>
                 <div className="content">
                   <div className="form">

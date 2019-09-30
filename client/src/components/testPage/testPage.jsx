@@ -1,6 +1,5 @@
 // Dependencies
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 
 export class TestPage extends React.Component {
 
@@ -10,11 +9,7 @@ export class TestPage extends React.Component {
     }
 
     render() {
-        const { redirectToReferrer } = this.state
 
-        if (redirectToReferrer === true) {
-            return < Redirect to='/login' />
-        }
         return (
             <div>
                 <h1>WE'RE WORKING BITCHES</h1>

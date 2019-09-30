@@ -2,22 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/index.scss';
 import * as serviceWorker from './serviceWorker';
-import { HashRouter as Router, Route } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 
 // Add all components below this page for routing
 import App from './App.jsx';
-import { Login } from './components/login';
-import { Registration } from './components/registration';
-import { TestPage } from './components/testPage';
 
 const routing = (
     <Router>
-        <div>
-            <Route exact path="/" component={App} />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Registration} />
-            <Route path="/testPage" component={TestPage} />
-        </div>
+        < App />
     </Router>
 )
 ReactDOM.render(routing, document.getElementById("root"));
