@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import * as bad_words from "bad-words";
+import * as firebase from "firebase/app";
+import "firebase/auth";
 
 // 
 import "./style.scss";
@@ -17,7 +19,14 @@ export class Registration extends React.Component {
         initialValues={{ username: "", email: "", password: "", confirmPassword: "" }}
         onSubmit={(values, actions) => {
           setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+            //alert(JSON.stringify(values, null, 2));
+
+
+            //Firebase user registration
+            firebase.auth().createUserWithEmailAndPassword(values.email, values.password).catch(function(error) {
+              alert('Twistter account already associated with this email!');
+            });
+
             actions.setSubmitting(false);
           }, 1000);
         }}
