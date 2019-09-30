@@ -1,13 +1,20 @@
 body {
   background: url("../../images/307\ background.jpg") no-repeat center center fixed;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Helvetica", "Open Sans", sans-serif;
+  color: #2675f3f3;
 }
 
+// Field
 .base-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: .5em;
+  margin-top: 1.5em;
   background-color: rgba(189, 189, 189, 0.822);
   box-shadow: 0px 0px 12px 2px rgba(15, 15, 15, 0.2);
   border-radius: 4px;
@@ -36,7 +43,7 @@ body {
       }
     }
     
-    // Username and Password Textbox
+    // Field CSS
     .form { 
       margin-top: 1em;
       display: flex;
@@ -92,5 +99,25 @@ body {
     font-weight: bold;
     margin-bottom: 20px;
     font-family: "Helvetica","Open Sans", sans-serif;
+  }
+}
+
+//Button
+.btn {
+  font-size: 21px;
+  padding: 5px 20px;
+  margin: 10px;
+  border: 0;
+  background-color: #2675f3f3;
+  color: #fff;
+  border-radius: 3px;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+  &:hover {
+    background-color: #fcfcfcf3;
+    color: #2675f3f3;
+  }
+  &:focus {
+    outline: none;
   }
 }

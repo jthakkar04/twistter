@@ -129,7 +129,7 @@ export class Registration extends React.Component {
                   <button type="submit" className="btn" disabled={isSubmitting}>
                     Sign Up
               </button>
-                  <Link to="/login">
+                  <Link to="/">
                     <button type="button" className="btn">
                       Login
                     </button>
