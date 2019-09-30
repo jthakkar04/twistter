@@ -15,10 +15,13 @@ const firebaseConfig = {
 };
 
 class App extends React.Component {
+  
 
   render() {
-    firebase.initializeApp(firebaseConfig);
-
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    
     return (
       <div className="App"> {/* the whole thing which is declared in app.scss*/}
 
