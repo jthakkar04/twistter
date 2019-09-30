@@ -109,6 +109,7 @@ export class Login extends React.Component {
                         <div className="input-feedback">{errors.password}</div>
                       )}
                     </div>
+                    <Link to="/forgot">Forgot Password?</Link>
                   </div>
                 </div>
                 <div className="footer">
