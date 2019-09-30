@@ -2,12 +2,13 @@ from flask import Flask, json, request, render_template, redirect
 from flask_cors import CORS
 
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder = "../client/public")
 CORS(app)
 
-@app.route('/index')
-def hello():
-    return "Hello World"
+@app.route('/')
+@app.route('/login')
+def login():
+    return render_template("index.html")
 
 
 if __name__ == "__main__":
