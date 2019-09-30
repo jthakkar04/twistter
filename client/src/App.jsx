@@ -34,6 +34,7 @@ class App extends React.Component {
       <Router>
         <Switch>
           <Route exact path="/" component={Login} />
+          <Route exact path="/login" component={Login} />
           <Route path="/register" component={Registration} />
           <Route path="/testPage" component={TestPage} />
           <Route path="/forgot" component={Forgot} />

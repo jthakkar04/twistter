@@ -1,5 +1,5 @@
 body {
-  background: url("../../images/307\ background.jpg") no-repeat center center fixed;
+  background: url("../images/307\ background.jpg") no-repeat center center fixed;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -7,12 +7,17 @@ body {
   font-family: "Helvetica", "Open Sans", sans-serif;
   color: #067096;
 }
+.registration {
+  margin-top: 1em;
+}
 
+.login {
+  margin-top: 5.5em;
+}
 // Field
 .base-container {
   width: 100%;
   display: flex;
-  margin-top:5em;
   flex-direction: column;
   align-items: center;
   background-color: rgba(189, 189, 189, 0.822);
@@ -23,6 +28,8 @@ body {
   width: 100%;
   height: 75%;
   padding: 17px 10px;
+
+
   
   .header {
     font-size: 24px;
@@ -83,6 +90,10 @@ body {
       }
     }
   }
+  .forgotPassword {
+    color: blue;
+  }
+
   .footer {
     margin-top: .5em;
   }
