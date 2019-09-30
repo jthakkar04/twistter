@@ -1,7 +1,6 @@
 // Dependencies
 import React from 'react';
 import { Link } from "react-router-dom";
-import loginImg from "../../images/loginImg.png";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import * as bad_words from "bad-words";
@@ -70,18 +69,13 @@ export class Registration extends React.Component {
               <div className="base-container" ref={props.containerRef}>
                 <div className="header">Registration</div>
                 <div className="content">
-                <Link to="/">
-                  <div className="image" alt="logo">
-                    <img src={loginImg} />
-                  </div>
-                </Link>
                   <div className="form">
                     <div className="form-group">
                       <label htmlFor="username">Username</label>
                       <input
                         type="text"
                         name="username"
-                        placeholder="Enter your Username"
+                        placeholder="username"
                         value={values.username}
                         onChange={handleChange}
                         onBlur={handleBlur}
