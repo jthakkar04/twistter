@@ -12,7 +12,7 @@ export class TestPage extends React.Component {
 
         return (
             <div>
-                <h1>WE'RE WORKING BITCHES</h1>
+                <h1>WORK IN PROGRESS! COME BACK SOON!</h1>
             </div>
 
         );
