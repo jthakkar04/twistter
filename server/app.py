@@ -2,7 +2,7 @@ from flask import Flask, json, request, render_template, redirect
 from flask_cors import CORS
 
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder = "../client/public")
 CORS(app)
 
 @app.route('/')
