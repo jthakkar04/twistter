@@ -17,23 +17,33 @@ export class Registration extends React.Component {
 
       <Formik
         initialValues={{ username: "", email: "", password: "", confirmPassword: "" }}
-        onSubmit={async(values, actions) => {
-            //alert(JSON.stringify(values, null, 2));
-
+        onSubmit= { async (values, actions) => {
 
             //Firebase user registration
-            firebase.auth().createUserWithEmailAndPassword(values.email, values.password).then(function(firebaseUser) {
-              // Success 
-              alert("Successful registration!");
-              this.props.history.push("/testpage");
+            var valid = false;
+            firebase.auth().createUserWithEmailAndPassword(values.email, values.password)
+            .then(function(firebaseUser) {
+              console.log("Successful registration!");
+              valid = true;
             })
             .catch(function(error) {
-              alert('Twistter account already associated with this email!');
-              window.location.reload();
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              if (errorCode === 'auth/email-already-in-use') {
+                alert('Email already in use!');
+              }
+              else if (errorCode == 'auth/invalid-email') {
+                alert('Invalid email!')
+              }
+              else {
+                alert(errorMessage);
+              }
             })
             .then(() => {
-              console.log('Success!');
-              this.props.history.push("/testpage");
+              if (valid === true) {
+                console.log('Success!');
+                this.props.history.push("/testpage");
+              }
             });
 
             actions.setSubmitting(false);

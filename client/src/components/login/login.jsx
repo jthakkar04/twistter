@@ -32,11 +32,11 @@ export class Login extends React.Component {
              * 
              * 
              */
-            var valid = false
+            var valid = false;
             firebase.auth().signInWithEmailAndPassword(values.email, values.password)
             .then(function(firebaseUser) {
               console.log('Succesful login! Redirecting to main page!');
-              valid = true
+              valid = true;
             })
             .catch(function(error) {
               var errorCode = error.code;
@@ -45,7 +45,10 @@ export class Login extends React.Component {
                 alert('Wrong password!');
               }
               else if (errorCode == 'auth/invalid-email') {
-                alert('Invalid email!')
+                alert('Invalid email!');
+              }
+              else if (errorCode == 'user-not-found') {
+                alert('Profile with given email not found!');
               }
               else {
                 alert(errorMessage);
