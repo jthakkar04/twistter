@@ -15,13 +15,9 @@ export class Login extends React.Component {
     };
   }
 
-  handleChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  };
-
   render() {
+
+    
     return (
       <Formik
         initialValues={{ email: "", password: "" }}
@@ -31,6 +27,7 @@ export class Login extends React.Component {
             setSubmitting(false);
             //Change later
             if (values.email === "test@gmail.com" && values.password === "testing1") {
+              console.log("valid info")
               return <Redirect to="/testPage" />
             }
           }, 500);
@@ -63,9 +60,6 @@ export class Login extends React.Component {
               <div className={"base-container"} ref={props.containerRef}>
                 <div className="header">Login</div>
                 <div className="content">
-                  {/* <div className="image">
-                <img src={loginImg} />
-              </div> */}
                   <div className="form">
                     <div className="form-group">
                       <label htmlFor="email">Email</label>
