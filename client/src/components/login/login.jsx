@@ -3,6 +3,8 @@ import React from 'react';
 import { Link, Redirect } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import * as firebase from "firebase/app";
+import "firebase/auth";
 
 // Formatting
 
@@ -29,10 +31,20 @@ export class Login extends React.Component {
           setTimeout(() => {
             console.log("Logging in", values);
             setSubmitting(false);
-            //Change later
-            if (values.email === "test@gmail.com" && values.password === "testing1") {
+
+            // Firebase log-in auth
+            /**
+             * 
+             * .then(function() {
+              alert('Succesful login! Redirecting to main page!');
               return <Redirect to="/testPage" />
-            }
+            })
+             * 
+             */
+            firebase.auth().signInWithEmailAndPassword(values.email, values.password).catch(function(error) {
+              alert('Incorrect email and/or password!');
+            });
+
           }, 500);
         }}
 
