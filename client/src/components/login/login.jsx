@@ -44,10 +44,10 @@ export class Login extends React.Component {
               if (errorCode === 'auth/wrong-password') {
                 alert('Wrong password!');
               }
-              else if (errorCode == 'auth/invalid-email') {
+              else if (errorCode === 'auth/invalid-email') {
                 alert('Invalid email!');
               }
-              else if (errorCode == 'user-not-found') {
+              else if (errorCode === 'user-not-found') {
                 alert('Profile with given email not found!');
               }
               else {

@@ -31,7 +31,7 @@ export class Registration extends React.Component {
               if (errorCode === 'auth/email-already-in-use') {
                 alert('Email already in use!');
               }
-              else if (errorCode == 'auth/invalid-email') {
+              else if (errorCode === 'auth/invalid-email') {
                 alert('Invalid email!')
               }
               else {

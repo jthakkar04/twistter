@@ -7,7 +7,6 @@ import { Login } from './components/login';
 import { Registration } from './components/registration';
 import { TestPage } from './components/testPage';
 import { Forgot } from './components/forgotPassword';
-import { Link } from "react-router-dom";
 import "./styles/App.scss";
 import * as firebase from "firebase/app";
 import "firebase/auth";
