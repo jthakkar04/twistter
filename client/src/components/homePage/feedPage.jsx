@@ -1,7 +1,7 @@
 // Dependencies
 import React from 'react';
 
-export class HomePage extends React.Component {
+export class FeedPage extends React.Component {
 
     // Set state so it can be redirected if not logged in
     state = {

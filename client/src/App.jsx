@@ -7,7 +7,7 @@ import { Login } from './components/login';
 import { Registration } from './components/registration';
 import { TestPage } from './components/testPage';
 import { Forgot } from './components/forgotPassword';
-import { HomePage } from './components/homePage';
+import { FeedPage } from './components/homePage';
 import "./styles/App.scss";
 import * as firebase from "firebase/app";
 import "firebase/auth";
@@ -38,7 +38,7 @@ class App extends React.Component {
           <Route path="/register" component={Registration} />
           <Route path="/testPage" component={TestPage} />
           <Route path="/forgot" component={Forgot} />
-          <Route path="/home" component={HomePage} />
+          <Route path="/feed" component={FeedPage} />
         </Switch>
 
       </Router>

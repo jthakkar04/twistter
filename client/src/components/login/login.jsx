@@ -57,7 +57,7 @@ export class Login extends React.Component {
             .then(() => {
               if (valid === true){
                 console.log('Success!');
-                this.props.history.push("/home");
+                this.props.history.push("/feed");
               }
             })
             
