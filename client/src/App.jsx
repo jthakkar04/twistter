@@ -1,5 +1,8 @@
 import React from 'react';
 import { Switch, HashRouter as Router, Route } from "react-router-dom";
+import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import '@trendmicro/react-sidenav/dist/react-sidenav.css';
+
 // import "./styles/App.scss";
 
 // Add all components below this page for routing
@@ -40,7 +43,43 @@ class App extends React.Component {
           <Route path="/forgot" component={Forgot} />
           <Route path="/feed" component={FeedPage} />
         </Switch>
-
+        {/* <Route render={({ location, history }) => (
+          <React.Fragment>
+              <SideNav
+                  onSelect={(selected) => {
+                      const to = '/' + selected;
+                      if (location.pathname !== to) {
+                          history.push(to);
+                      }
+                  }}>
+                  <SideNav.Toggle />
+                  <SideNav.Nav defaultSelected="feed">
+                      <NavItem eventKey="feed">
+                          <NavIcon>
+                              <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
+                          </NavIcon>
+                          <NavText>
+                              Feed
+                          </NavText>
+                      </NavItem>
+                      <NavItem eventKey="login">
+                          <NavIcon>
+                              <i className="fa fa-fw fa-device" style={{ fontSize: '1.75em' }} />
+                          </NavIcon>
+                          <NavText>
+                              Login
+                          </NavText>
+                      </NavItem>
+                  </SideNav.Nav>
+              </SideNav>
+              <main>
+                  {/* <Route path="/" exact component={props => <RootComponent />} /> */}
+                  {/* <Route path="/login" component={props => <Login />} />
+                  <Route path="/feed" component={props => <FeedPage />} />
+              </main>
+          </React.Fragment>
+      )}
+      /> */}
       </Router>
       // <div className="App"> {/* the whole thing which is declared in app.scss*/}
 
