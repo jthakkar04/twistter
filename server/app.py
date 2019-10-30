@@ -50,7 +50,41 @@ def insert_microblog(userId):
     cnx.commit()
     return '200'
 
-def getSessionUser()
+@app.route('/todo/api/v1.0/login/<username>', methods =['GET'])
+def get_user_id(username):
+    query = "SELECT users.user_id FROM users WHERE users.username=%s"
+    val=(username,)
+    cursor.execute(query,val)
+
+    return jsonify(cursor.fetchone())
+
+@app.route('/todo/api/v1.0/register', methods=['PUT'])
+def put_user():
+    userInfo=request.json
+
+    username=userInfo['username']
+    email=userInfo['email']
+    firstName=userInfo['first_name']
+    lastName=userInfo['last_name']
+    numFollowers=0
+    numFollowing=0
+    profilePic=userInfo['profile_pic']
+    verified=0
+    bio=userInfo['bio']
+
+    query = "INSERT INTO users (username, email, first_name, last_name, num_followers, num_following, profile_pic, verified, bio) VALUES (%s, %s, %s, %s , %s, %s, %s, %s, %s)"
+
+    vals=(username, email, firstName, lastName, numFollowers, numFollowing, profilePic, verified, bio,)
+
+    cursor.execute(query, vals)
+    cnx.commit()
+    return '200'
+
+    
+
+
+
+
 
 
 
