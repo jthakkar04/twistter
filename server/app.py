@@ -37,6 +37,21 @@ def get_userProfile(userId):
     cursor.execute(query,val)
     return jsonify(cursor.fetchone())
 
+@app.route('/todo/api/v1.0/feed/<int:userId>',methods = ['PUT'])
+def insert_microblog(userId):
+    query="INSERT INTO microblogs (text, timestamp, user_id, link, is_reply) VALUES (%s, %s, %s, %s, %s)"
+    tweetText=request.json["text"]
+    timestamp=request.json["timestamp"]
+    link=request.json["link"]
+    is_reply=request.json["reply"]
+    vals=(tweetText,timestamp,userId,link,is_reply,)
+
+    cursor.execute(query,vals)
+    cnx.commit()
+    return '200'
+
+def getSessionUser()
+
 
 
 if __name__ == "__main__":
