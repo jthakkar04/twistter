@@ -10,8 +10,8 @@ import { Login } from './components/login';
 import { Registration } from './components/registration';
 import { TestPage } from './components/testPage';
 import { Forgot } from './components/forgotPassword';
-import { FeedPage } from './components/homePage';
-import "./styles/App.scss";
+import { Feed } from './components/homePage';
+// import "./styles/App.scss";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 
@@ -34,54 +34,84 @@ class App extends React.Component {
     }
 
     return (
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/login" component={Login} />
-          <Route path="/register" component={Registration} />
-          <Route path="/testPage" component={TestPage} />
-          <Route path="/forgot" component={Forgot} />
-          <Route path="/feed" component={FeedPage} />
-        </Switch>
-        {/* <Route render={({ location, history }) => (
-          <React.Fragment>
-              <SideNav
-                  onSelect={(selected) => {
-                      const to = '/' + selected;
-                      if (location.pathname !== to) {
-                          history.push(to);
-                      }
-                  }}>
-                  <SideNav.Toggle />
-                  <SideNav.Nav defaultSelected="feed">
-                      <NavItem eventKey="feed">
-                          <NavIcon>
-                              <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
-                          </NavIcon>
-                          <NavText>
-                              Feed
-                          </NavText>
-                      </NavItem>
-                      <NavItem eventKey="login">
-                          <NavIcon>
-                              <i className="fa fa-fw fa-device" style={{ fontSize: '1.75em' }} />
-                          </NavIcon>
-                          <NavText>
-                              Login
-                          </NavText>
-                      </NavItem>
-                  </SideNav.Nav>
-              </SideNav>
-              <main>
-                  {/* <Route path="/" exact component={props => <RootComponent />} /> */}
-                  {/* <Route path="/login" component={props => <Login />} />
-                  <Route path="/feed" component={props => <FeedPage />} />
-              </main>
-          </React.Fragment>
-      )}
-      /> */}
-      </Router>
-      // <div className="App"> {/* the whole thing which is declared in app.scss*/}
+    //   <Router>
+    //     <Switch>
+    //         <Route exact path="/" component={Login} />
+    //         <Route exact path="/login" component={Login} />
+    //         <Route path="/register" component={Registration} />
+    //         <Route path="/forgot" component={Forgot} />
+    //         <Route path="/register" component={Registration} />
+    //         <Route path="/testPage" component={TestPage} />
+    //         {/* <Route path="/feed" component={FeedPage} /> */}
+    //     </Switch>
+    //     </Router>
+        <Route render={({ location, history }) => (
+            <React.Fragment>
+                <Switch>
+                    <Route exact path="/" component={Login} />
+                    <Route exact path="/login" component={Login} />
+                    <Route path="/register" component={Registration} />
+                    <Route path="/forgot" component={Forgot} />
+                    <Route path="/register" component={Registration} />
+                    <Route path="/testPage" component={TestPage} />
+                </Switch>
+                <SideNav
+                    onSelect={(selected) => {
+                        const to = '/' + selected;
+                        if (location.pathname !== to) {
+                            history.push(to);
+                        }
+                    }}>
+                <SideNav.Toggle />
+                <SideNav.Nav defaultSelected="feed">
+                    <NavItem eventKey="feed">
+                        <NavIcon>
+                            <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
+                        </NavIcon>
+                        <NavText>
+                            Feed
+                        </NavText>
+                    </NavItem>
+                    <NavItem eventKey="Profile">
+                        <NavIcon>
+                            <i className="fa fa-fw fa-device" style={{ fontSize: '1.75em' }} />
+                        </NavIcon>
+                        <NavText>
+                            Profile
+                        </NavText>
+                    </NavItem>
+                    <NavItem eventKey="Settings">
+                        <NavIcon>
+                            <i className="fa fa-fw fa-settings" style={{ fontSize: '1.75em' }} />
+                        </NavIcon>
+                        <NavText>
+                            Settings
+                        </NavText>
+                    </NavItem>
+                    <NavItem eventKey="Login">
+                        <NavIcon>
+                            <i className="fa fa-fw fa-settings" style={{ fontSize: '1.75em' }} />
+                        </NavIcon>
+                        <NavText>
+                            Logout
+                        </NavText>
+                    </NavItem>
+                </SideNav.Nav>
+            </SideNav>
+            <main>
+                {/* { <Route path="/" exact component={props => <RootComponent />} />
+                <Route path="/login" component={props => <Login />} />
+                <Route path="/feed" component={props => <Feed />} />
+                <Route path="/settings" component={props => <Settings />} />
+                } */}
+            </main>
+         </React.Fragment>
+            )}/>
+            );
+        }
+    }
+      /* /* </Router> <div className="App"> { */
+          /* /* the whole thing which is declared in app.scss
 
       //   <div className="landing">
       //     <div className="container" >
@@ -101,10 +131,5 @@ class App extends React.Component {
 
       //     </div>
       //   </div>
-      // </div >
-
-    );
-  }
-}
-
+      // </div > */
 export default App;
