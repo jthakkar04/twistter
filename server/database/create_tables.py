@@ -15,6 +15,8 @@ mycursor = mydb.cursor()
 #mycursor.execute("CREATE TABLE topics (topic_id INT AUTO_INCREMENT PRIMARY KEY, topic_name VARCHAR (15))")#
 #mycursor.execute("CREATE TABLE microblogs (twist_id INT AUTO_INCREMENT PRIMARY KEY, text VARCHAR(240), timestamp VARCHAR (255), user_id int, FOREIGN KEY (user_id) REFERENCES users(user_id), link VARCHAR(255), is_reply BOOL)")
 
+mycursor.execute("INSERT INTO microblogs (text, timestamp, user_id) VALUES ('i hate CS', '00:00:00', '4')")
+
 mydb.commit()
 
 

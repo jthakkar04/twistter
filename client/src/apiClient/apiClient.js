@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as apiConsts from '../../constants/api';
 
-const BASE_URI = 'http://localhost:5000';
+const BASE_URI = 'http://localhost:5000/todo/api/v1.0';
 
 const devEnv = True;
 const client = axios.create({
@@ -20,7 +20,7 @@ class APIClient {
     * @return - 200 status, userID for user who just logged in
     */
     getSessionUser(username){
-        return this.perform('get', '/login',username);
+        return this.perform('get', '/login/${username}');
     }
 
     // REGISTRATION
@@ -50,7 +50,7 @@ class APIClient {
     * @return - 200 status, metadata for the tweet specified by tweetID
     */
     getPost(userID,tweetId){
-      return this.perform('get','/feed/${userID}', tweetId);
+      return this.perform('get','/feed/${userID}/${tweetId}');
     }
 
     // Feed
@@ -79,7 +79,7 @@ class APIClient {
     * @return 200 status, metadata for the user
     */
     getProfileData(userID, userInfo){
-      return this.perform('get', '/profile/$userID', userInfo);
+      return this.perform('get', '/profile/${userID}');
     }
 
 
@@ -87,7 +87,7 @@ class APIClient {
     return client({
       method,
       url: resource,
-      data,
+      data: JSON.stringify(data),
       headers: {
         // Authorization: `Bearer ${this.accessToken}`
       }
