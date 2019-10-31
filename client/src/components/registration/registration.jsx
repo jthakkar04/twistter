@@ -60,13 +60,12 @@ class RegistrationFormBase extends React.Component {
               .then(() => {
                 if (valid === true) {
                   console.log('Success!');
-                  this.props.history.push(ROUTES.LANDING);
+                  this.props.history.push(ROUTES.LOGIN);
                 }
               });
 
             actions.setSubmitting(false);
         }}
-
 
         const validationSchema={
           Yup.object().shape({

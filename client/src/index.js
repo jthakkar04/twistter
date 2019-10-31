@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/index.scss';
 import * as serviceWorker from './serviceWorker';
-import { HashRouter as Router } from "react-router-dom";
 
 // Add all components below this page for routing
 import App from './components/App';

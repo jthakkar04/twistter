@@ -1,20 +1,24 @@
 // Dependencies
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import * as firebase from "firebase/app";
-import "firebase/auth";
 
-// Formatting
+// Project dependencies
+import { withFirebase } from '../Firebase';
+import * as ROUTES from '../../constants/app_routing';
 
-export class Login extends React.Component {
+export const LoginPage = () => (
+  <div>
+    <LoginForm />
+  </div>
+);
+
+
+
+class LoginFormBase extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      email: "",
-      password: ""
-    };
   }
 
   render() {
@@ -23,14 +27,14 @@ export class Login extends React.Component {
       <Formik
         initialValues={{ email: "", password: "" }}
         onSubmit={ async (values, { setSubmitting }) => {
-            console.log("Logging in", values);
+            // console.log("Logging in", values);
             setSubmitting(false);
 
             // Firebase log-in auth
             var valid = false;
-            firebase.auth().signInWithEmailAndPassword(values.email, values.password)
+            this.props.firebase.doSignInWithEmailAndPassword(values.email, values.password)
             .then(function(firebaseUser) {
-              console.log('Succesful login! Redirecting to main page!');
+              // console.log('Succesful login! Redirecting to main page!');
               valid = true;
             })
             .catch(function(error) {
@@ -51,8 +55,13 @@ export class Login extends React.Component {
             })
             .then(() => {
               if (valid === true){
-                console.log('Success!');
-                this.props.history.push("/testpage");
+                // console.log('Success!');
+
+                // Outputs user UID to console
+                var user = this.props.firebase.doGetCurrentUser()
+                console.log(user.uid)
+
+                this.props.history.push(ROUTES.HOME);
               }
             })  
         }}
@@ -125,7 +134,7 @@ export class Login extends React.Component {
                   <button type="submit" className="btn" disabled={isSubmitting}>
                     Login
                     </button>
-                  <Link to="/register">
+                  <Link to={ROUTES.REGISTER}>
                     <button type="button" className="btn">
                       Sign-up
                     </button>
@@ -143,3 +152,5 @@ export class Login extends React.Component {
     );
   }
 }
+
+export const LoginForm = withRouter(withFirebase(LoginFormBase));
