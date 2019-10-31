@@ -1,9 +1,9 @@
 import mysql.connector
 
 mydb = mysql.connector.connect(
-    host = "localhost",
-    user="root",
-    passwd="NikitaRocks",
+    host = "twistter.cnt8cdemn92m.us-east-2.rds.amazonaws.com",
+    user="admin",
+    passwd="gotrainsgo",
     auth_plugin='mysql_native_password'
 )
 

@@ -1,2 +1,2 @@
 import "../../styles/style.scss";
-export { FeedPage } from "./feedPage";
+export { FeedPage, FeedPageForm } from "./feedPage";
