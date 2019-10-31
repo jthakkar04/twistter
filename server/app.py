@@ -5,11 +5,35 @@ import mysql.connector
 cnx=mysql.connector.connect(
     host = "localhost",
     user="root",
-    passwd="Ye5tuutr!",
+    passwd="NikitaRocks",
     auth_plugin='mysql_native_password',
     database='twistter'
 )
 cursor=cnx.cursor(dictionary=True)
+
+#put profile data
+ @app.route('/todo/api/v1.0/profile/<int:userId>'', methods=['PUT'])
+ def alter_user():
+    userInfo=request.json
+
+    username=userInfo['username']
+    email=userInfo['email']
+    firstName=userInfo['first_name']
+    lastName=userInfo['last_name']
+    numFollowers= userInfo['num_followers']
+    numFollowing=userInfo['num_following']
+    profilePic=userInfo['profile_pic']
+    verified= userInfo['verified']
+    bio=userInfo['bio']
+
+    query = "INSERT INTO users (username, email, first_name, last_name, num_followers, num_following, profile_pic, verified, bio) VALUES (%s, %s, %s, %s , %s, %s, %s, %s, %s)"
+
+    vals=(username, email, firstName, lastName, numFollowers, numFollowing, profilePic, verified, bio,)
+
+    cursor.execute(query, vals)
+    cnx.commit()
+    return '400'
+
 
 
 app = Flask(__name__)
