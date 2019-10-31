@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border: 1px solid black;
+    // border: 1px solid black;
     min-width: 250px;
     max-width: 800px;
     margin-top: 5.5em;
@@ -20,7 +20,7 @@
 
     #main{
     display: flex;
-    border: 1px solid black;
+    // border: 1px solid black;
     min-width: 25%;
     max-width: 100%;
     min-height: 100px;
@@ -28,7 +28,7 @@
     
         .userImg {
             display: flex;
-            border: 1px solid black;
+            // border: 1px solid black;
             width: 70%;
             height: 100%;
             justify-content: center;
@@ -39,11 +39,11 @@
                 margin-right: auto;
                 max-width: 45%;
                 max-height: 45%;
-                border: 1px solid red;
+                // border 1px solid red;
             }
         }
         .usrInfo{
-            // border: 1px solid black;
+            // // border 1px solid black;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -58,12 +58,12 @@
                 min-height: 10px;
 
                 #fullName{
-                    border: 1px solid black;
+                    // border 1px solid black;
                     width: 70%;
                     font-size: 20px;
                 }
                 #tag{
-                    border: 1px solid black;
+                    // border 1px solid black;
                     width: 40%;
                     min-width: 20%;
                     max-width: 30%;
@@ -78,7 +78,7 @@
                 width: 100%;
                 max-height: 300px;
                 min-height: 100px;
-                border: 1px solid black;
+                // border 1px solid black;
             }
         }
     }
@@ -88,13 +88,15 @@
         width: 100%;
         table {
             text-align: left;
-            border: 1px solid black;
+            // border 1px solid black;
             width: 100%;
             height: 40px;
+            margin-left: 10px;
+            margin-right: 10px;
         }
         
         td {
-            border: 1px solid black;
+            // border 1px solid black;
             padding: 2px;
             width: 50%
             
@@ -103,7 +105,7 @@
 
     .editButtons{
         display: flex;
-        border: 1px solid black;
+        // border 1px solid black;
         width: 100%;
         .spacer {
             width: 60%
@@ -131,4 +133,28 @@
         }
     }
     
+}
+
+.personalFeed {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid black;
+    min-width: 250px;
+    max-width: 800px;
+    margin-top: 2.5em;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    align-items: center;
+    font-family: "Helvetica", "Open Sans", sans-serif;
+    color: #067096;
+
+    background-color: rgba(189, 189, 189, 0.822);
+    box-shadow: 0px 0px 12px 2px rgba(15, 15, 15, 0.2);
+    border-radius: 4px;
+
+    .microblog {
+        width: 80%
+    }
 }

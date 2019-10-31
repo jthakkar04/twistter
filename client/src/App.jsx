@@ -5,17 +5,6 @@
 // import { Switch, HashRouter as Router, Route } from "react-router-dom";
 // // import "./styles/App.scss";
 
-<<<<<<< HEAD
-// Add all components below this page for routing
-import { Login } from './components/login';
-import { Registration } from './components/registration';
-import { TestPage } from './components/testPage';
-import { Forgot } from './components/forgotPassword';
-import { Profile } from './components/profilePage'
-import "./styles/App.scss";
-import * as firebase from "firebase/app";
-import "firebase/auth";
-=======
 // // Add all components below this page for routing
 // import { Login } from './components/login';
 // import { Registration } from './components/registration';
@@ -24,7 +13,6 @@ import "firebase/auth";
 // import "./styles/App.scss";
 // import * as firebase from "firebase/app";
 // import "firebase/auth";
->>>>>>> 343ad1b7f5896ecd313825b841d2b1eff6748430
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyCFlUyTWuhN0t-e2vFq4VOtz-pu2e9Nsf4",
@@ -44,18 +32,6 @@ import "firebase/auth";
 //       firebase.initializeApp(firebaseConfig);
 //     }
 
-<<<<<<< HEAD
-    return (
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/login" component={Login} />
-          <Route path="/register" component={Registration} />
-          <Route path="/testPage" component={TestPage} />
-          <Route path="/forgot" component={Forgot} />
-          <Route path="/profile" component={Profile} />
-        </Switch>
-=======
 //     return (
 //       <Router>
 //         <Switch>
@@ -66,7 +42,6 @@ import "firebase/auth";
 //           <Route path="/forgot" component={Forgot} />
 //           <Route path="/feed" component={FeedPage} />
 //         </Switch>
->>>>>>> 343ad1b7f5896ecd313825b841d2b1eff6748430
 
 //       </Router>
 //       <div className="App"> {/* the whole thing which is declared in app.scss*/}

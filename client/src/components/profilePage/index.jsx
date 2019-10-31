@@ -1,2 +1,2 @@
 import './profile.scss';
-export { Profile } from "./profilePage";
+export { ProfilePage } from "./profilePage";
