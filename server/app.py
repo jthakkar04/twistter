@@ -3,17 +3,17 @@ from flask_cors import CORS
 import mysql.connector
 
 cnx=mysql.connector.connect(
-    host = "localhost",
-    user="root",
-    passwd="NikitaRocks",
+    host = "twistter.cnt8cdemn92m.us-east-2.rds.amazonaws.com",
+    user="admin",
+    passwd="gotrainsgo",
     auth_plugin='mysql_native_password',
     database='twistter'
 )
 cursor=cnx.cursor(dictionary=True)
 
 #put profile data
- @app.route('/todo/api/v1.0/profile/<int:userId>'', methods=['PUT'])
- def alter_user():
+@app.route('/todo/api/v1.0/profile/<int:userId>', methods=['PUT'])
+def alter_user():
     userInfo=request.json
 
     username=userInfo['username']
@@ -32,7 +32,7 @@ cursor=cnx.cursor(dictionary=True)
 
     cursor.execute(query, vals)
     cnx.commit()
-    return '400'
+    return '200'
 
 
 
