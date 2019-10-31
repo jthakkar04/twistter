@@ -54,6 +54,7 @@ class App extends React.Component {
                     <Route path="/forgot" component={Forgot} />
                     <Route path="/register" component={Registration} />
                     <Route path="/testPage" component={TestPage} />
+                    <Route path="/feed" component={Feed} />
                 </Switch>
                 <SideNav
                     onSelect={(selected) => {
@@ -63,8 +64,8 @@ class App extends React.Component {
                         }
                     }}>
                 <SideNav.Toggle />
-                <SideNav.Nav defaultSelected="feed">
-                    <NavItem eventKey="feed">
+                <SideNav.Nav defaultSelected="Login">
+                    <NavItem eventKey="Feed">
                         <NavIcon>
                             <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
                         </NavIcon>
