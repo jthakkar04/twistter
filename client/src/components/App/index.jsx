@@ -1,9 +1,12 @@
+// Standard dependencies
 import React from 'react';
 import {HashRouter as Router, Route } from "react-router-dom";
+import "../../styles/style.scss";
+
+// Context based dependencies
 import Navigation from '../Navigation';
 import { withFirebase } from "../Firebase"
-;import "../../styles/style.scss";
-
+import { AuthUserContext } from '../Session';
 
 // Add all components below this page for routing
 import { LoginPage } from '../login';
@@ -38,16 +41,19 @@ class App extends React.Component {
   
   render() {
     return (
-      <Router>
-      <Navigation authUser={this.state.authUser} />
-        <hr />
-        <Route exact path="/" component={TestPage} />
-        <Route path="/login" component={LoginPage} />
-        <Route path="/register" component={RegistrationPage} />
-        {/* <Route path="/testPage" component={TestPage} /> */}
-        <Route path="/forgot" component={Forgot} />
-    </Router>
-
+      <AuthUserContext.Provider value={this.state.authUser}>
+        <Router>
+          <Navigation authUser={this.state.authUser} />
+          
+          <hr />
+          
+          <Route exact path="/" component={TestPage} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/register" component={RegistrationPage} />
+          {/* <Route path="/testPage" component={TestPage} /> */}
+          <Route path="/forgot" component={Forgot} />
+        </Router>
+    </AuthUserContext.Provider>
     );
   }
 }
