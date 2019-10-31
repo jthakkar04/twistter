@@ -1,2 +1,2 @@
-// import "./style.scss";
-export { Feed } from "./feedPage";
+import "../../styles/style.scss";
+export { FeedPage, FeedPageForm } from "./feedPage";

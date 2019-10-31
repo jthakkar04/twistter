@@ -1,18 +1,20 @@
 // Dependencies
-import React, { Component, Fragment } from "react";
-import {Link} from 'react-router-dom';
-import { Switch, HashRouter as Router, Route } from "react-router-dom";
-import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
-import '@trendmicro/react-sidenav/dist/react-sidenav.css';
+import React from 'react';
+import { Link, withRouter } from "react-router-dom";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
-import { render } from "react-dom";
-import request from "superagent";
-import debounce from "lodash.debounce";
+// Project dependencies
+import { withFirebase } from '../Firebase';
+import * as ROUTES from '../../constants/app_routing';
 
+export const FeedPage = () => (
+    <div>
+        <FeedPageForm />
+    </div>
+);
 
-// Be sure to include styles at some point, probably during your bootstraping
-
-export class Feed extends React.Component {
+class FeedPageBase extends React.Component {
 
     // Set state so it can be redirected if not logged in
     state = {
@@ -150,7 +152,6 @@ export class Feed extends React.Component {
         );
       }
     }
-    
-    // const container = document.createElement("div");
-    // document.body.appendChild(container);
-    // render(<Feed />, container);    
+}
+
+export const FeedPageForm = withRouter(withFirebase(FeedPageBase));

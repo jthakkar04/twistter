@@ -1,20 +1,23 @@
 // Dependencies
 import React from 'react';
+import { Link, withRouter } from "react-router-dom";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
-export class Forgot extends React.Component {
+// Project dependencies
+import { withFirebase } from '../Firebase';
+import * as ROUTES from '../../constants/app_routing';
 
-    // Set state so it can be redirected if not logged in
-    state = {
-        redirectToReferrer: false
-    }
 
-    render() {
 
-        return (
-            <div>
-                <h1>WORK IN PROGRESS! COME BACK SOON!</h1>
-            </div>
+export const ForgotPasswordPage = () => (
+    <div>
+        <ForgotPasswordForm />
+    </div>
+);
 
-        );
-    }
+class ForgotPasswordBase extends React.Component{
+
 }
+
+export const ForgotPasswordForm = withRouter(withFirebase(ForgotPasswordBase));
