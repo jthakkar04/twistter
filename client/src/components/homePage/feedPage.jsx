@@ -1,6 +1,6 @@
 // Dependencies
 import React from 'react';
-import microBlog  from './microblog';
+import { MicroBlog } from "../microblog";
 import { Link, withRouter } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -17,7 +17,7 @@ export const FeedPage = () => (
 
 class FeedPageBase extends React.Component {
 
-    constructor(props){
+    constructor(props){ 
         super(props)
         this.state = {
             redirectToReferrer: false,
@@ -31,19 +31,18 @@ class FeedPageBase extends React.Component {
 
     render() {
         const data = ['one', 'two', 'three']
-
-
         return (
             <div>
-                <h1>Home Page</h1>
+                <h1>Home Page: {data}</h1>
                 <div>
-                    < microBlog data={data} />
+                    {/* < MicroBlog data={data} /> */}
                     <ul class="flex-container column">
-                        <li class="flex-item">1</li>
-                        <li class="flex-item">2</li>
-                        <li class="flex-item">3</li>
-                        <li class="flex-item">4</li>
-                        <li class="flex-item">5</li>
+                        {/* <MicroBlog data={data}/> */}
+                        <li className="flex-item">1</li>
+                        <li className="flex-item">2</li>
+                        <li className="flex-item">3</li>
+                        <li className="flex-item">4</li>
+                        <li className="flex-item">5</li>
                     </ul>
                 </div>
             </div>

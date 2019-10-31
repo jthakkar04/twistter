@@ -139,28 +139,30 @@ body {
   margin: 0;
   list-style: none;
   
-  -ms-box-orient: horizontal;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -moz-flex;
-  display: -webkit-flex;
+  // -ms-box-orient: horizontal;
+  // display: -webkit-box;
+  // display: -moz-box;
+  // display: -ms-flexbox;
+  // display: -moz-flex;
+  // display: -webkit-flex;
   display: flex;
+  // min-width: 100%;
+  width:100%;
 }
 
 .column { 
   -webkit-flex-direction: column; 
   flex-direction: column; 
-  float: left;
+  // float: left;
 }
 .column li {
   background: deepskyblue;
 }
 
 .flex-item {
-  background: tomato;
+  background: deepskyblue;
   padding: 5px;
-  width: 50px;
+  width: 100%;
   height: 50px;
   margin: 5px;
   
