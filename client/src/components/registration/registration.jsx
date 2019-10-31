@@ -1,52 +1,72 @@
 // Dependencies
 import React from 'react';
-import { Link } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import * as bad_words from "bad-words";
-import * as firebase from "firebase/app";
-import "firebase/auth";
 
-// import "./style.scss";
+// Project dependencies
+import { withFirebase } from '../Firebase';
+import * as ROUTES from '../../constants/app_routing';
 
-export class Registration extends React.Component {
+export const RegistrationPage = () => (
+  <div>
+    <RegistrationForm />
+  </div>
+);
+
+
+class RegistrationFormBase extends React.Component {
+
+  constructor(props){
+    super(props);
+  }
 
   render() {
     return (
 
       <Formik
-        initialValues={{ username: "", email: "", password: "", confirmPassword: "" }}
+        initialValues={{ 
+          username: "", 
+          email: "", 
+          password: "", 
+          confirmPassword: "" 
+        }}
+
         onSubmit= { async (values, actions) => {
 
             //Firebase user registration
             var valid = false;
-            firebase.auth().createUserWithEmailAndPassword(values.email, values.password)
-            .then(function(firebaseUser) {
-              console.log("Successful registration!");
-              valid = true;
-            })
-            .catch(function(error) {
-              var errorCode = error.code;
-              var errorMessage = error.message;
-              if (errorCode === 'auth/email-already-in-use') {
-                alert('Email already in use!');
-              }
-              else if (errorCode === 'auth/invalid-email') {
-                alert('Invalid email!')
-              }
-              else {
-                alert(errorMessage);
-              }
-            })
-            .then(() => {
-              if (valid === true) {
-                console.log('Success!');
-                this.props.history.push("/testpage");
-              }
-            });
+            
+            this.props.firebase.doCreateUserWithEmailAndPassword(values.email, values.password)
+              // firebase.auth().createUserWithEmailAndPassword(values.email, values.password)
+              .then(function(firebaseUser) {
+                console.log("Successful registration!");
+                valid = true;
+              })
+              .catch(function(error) {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                if (errorCode === 'auth/email-already-in-use') {
+                  alert('Email already in use!');
+                }
+                else if (errorCode === 'auth/invalid-email') {
+                  alert('Invalid email!')
+                }
+                else {
+                  alert(errorMessage);
+                }
+              })
+              .then(() => {
+                if (valid === true) {
+                  console.log('Success!');
+                  this.props.history.push(ROUTES.LANDING);
+                }
+              });
 
             actions.setSubmitting(false);
         }}
+
 
         const validationSchema={
           Yup.object().shape({
@@ -65,7 +85,7 @@ export class Registration extends React.Component {
               .matches(/(?=.*[0-9])/, "Invalid Password"), // Makes sure the password has a number in there
             confirmPassword: Yup.string()
               .required('Required')
-              .test('passwords-match', 'Passwords must match ya fool', function (value) {
+              .test('passwords-match', 'Passwords must match', function (value) {
                 return this.parent.password === value;
               }),
           })}
@@ -93,7 +113,7 @@ export class Registration extends React.Component {
                       <input
                         type="text"
                         name="username"
-                        placeholder="username"
+                        placeholder="Username"
                         value={values.username}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -125,7 +145,7 @@ export class Registration extends React.Component {
                       <input
                         type="password"
                         name="password"
-                        placeholder="Enter your Password"
+                        placeholder="Enter your password"
                         value={values.password}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -140,7 +160,7 @@ export class Registration extends React.Component {
                       <input
                         type="password"
                         name="confirmPassword"
-                        placeholder="Re-type your Password"
+                        placeholder="Re-type your password"
                         value={values.confirmPassword}
                         onChange={handleChange}
                         onBlur={handleBlur}
@@ -156,7 +176,7 @@ export class Registration extends React.Component {
                   <button type="submit" className="btn" disabled={isSubmitting}>
                     Sign Up
               </button>
-                  <Link to="/">
+                  <Link to={ROUTES.LOGIN}>
                     <button type="button" className="btn">
                       Login
                     </button>
@@ -173,3 +193,6 @@ export class Registration extends React.Component {
     );
   }
 }
+
+// Export Form with routing history and Firebase access
+export const RegistrationForm = withRouter(withFirebase(RegistrationFormBase));

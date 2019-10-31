@@ -27,11 +27,6 @@ export class Login extends React.Component {
             setSubmitting(false);
 
             // Firebase log-in auth
-            /**
-             * 
-             * 
-             * 
-             */
             var valid = false;
             firebase.auth().signInWithEmailAndPassword(values.email, values.password)
             .then(function(firebaseUser) {
@@ -59,11 +54,7 @@ export class Login extends React.Component {
                 console.log('Success!');
                 this.props.history.push("/testpage");
               }
-            })
-            
-            
-            
-            
+            })  
         }}
 
         validationSchema={Yup.object().shape({
