@@ -13,7 +13,7 @@ import * as Routes from '../../constants/app_routing';
 import { LoginPage } from '../login';
 import { RegistrationPage } from '../registration';
 import { TestPage } from '../testPage';
-import { Forgot } from '../forgotPassword';
+import { ForgotPasswordPage } from '../forgotPassword';
 import { FeedPage } from '../homePage';
 
 
@@ -54,7 +54,7 @@ class App extends React.Component {
           <Route path={Routes.LOGIN} component={LoginPage} />
           <Route path={Routes.REGISTER} component={RegistrationPage} />
           {/* <Route path={Routes.TEST} component={TestPage} /> */}
-          <Route path={Routes.PASSWORD_FORGET} component={Forgot} />
+          <Route path={Routes.PASSWORD_FORGET} component={ForgotPasswordPage} />
           <Route path={Routes.FEED} component={FeedPage} />
         </Router>
     </AuthUserContext.Provider>
