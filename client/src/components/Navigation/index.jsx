@@ -13,7 +13,7 @@ const NavigationAuth = () => (
       <Link to={ROUTES.LANDING}>Landing(test)</Link>
     </li>
     <li>
-      <Link to={ROUTES.HOME}>Feed</Link>
+      <Link to={ROUTES.FEED}>Feed</Link>
     </li>
     <li>
       <Link to={ROUTES.TEST}>TEST</Link>

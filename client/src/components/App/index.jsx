@@ -6,13 +6,16 @@ import "../../styles/style.scss";
 // Context based dependencies
 import Navigation from '../Navigation';
 import { withFirebase } from "../Firebase"
-import { AuthUserContext } from '../Session';
+import { AuthUserContext } from '../SessionHandler';
+import * as Routes from '../../constants/app_routing';
 
 // Add all components below this page for routing
 import { LoginPage } from '../login';
 import { RegistrationPage } from '../registration';
 import { TestPage } from '../testPage';
 import { Forgot } from '../forgotPassword';
+import { FeedPage } from '../homePage';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -46,12 +49,13 @@ class App extends React.Component {
           <Navigation authUser={this.state.authUser} />
           
           <hr />
-          
-          <Route exact path="/" component={TestPage} />
-          <Route path="/login" component={LoginPage} />
-          <Route path="/register" component={RegistrationPage} />
-          {/* <Route path="/testPage" component={TestPage} /> */}
-          <Route path="/forgot" component={Forgot} />
+
+          <Route exact path={Routes.LANDING} component={FeedPage} />
+          <Route path={Routes.LOGIN} component={LoginPage} />
+          <Route path={Routes.REGISTER} component={RegistrationPage} />
+          {/* <Route path={Routes.TEST} component={TestPage} /> */}
+          <Route path={Routes.PASSWORD_FORGET} component={Forgot} />
+          <Route path={Routes.FEED} component={FeedPage} />
         </Router>
     </AuthUserContext.Provider>
     );

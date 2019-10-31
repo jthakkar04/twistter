@@ -61,7 +61,7 @@ class LoginFormBase extends React.Component {
                 var user = this.props.firebase.doGetCurrentUser()
                 console.log(user.uid)
 
-                this.props.history.push(ROUTES.HOME);
+                this.props.history.push(ROUTES.FEED);
               }
             })  
         }}
