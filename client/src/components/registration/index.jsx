@@ -1,3 +1,4 @@
+
 import "../../styles/style.scss";
 
-export { Registration } from "./registration";
+export { RegistrationPage, RegistrationForm } from "./registration";

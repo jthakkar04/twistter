@@ -1,3 +1,3 @@
 import "../../styles/style.scss";
 
-export { Login } from "./login";
+export { LoginPage, LoginForm } from "./login";
