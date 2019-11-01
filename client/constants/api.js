@@ -1,0 +1,1 @@
+export const AWS_CONST = 'http:13.58.22.129:5000/'

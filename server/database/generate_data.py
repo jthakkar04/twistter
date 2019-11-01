@@ -1,0 +1,53 @@
+import mysql.connector
+import names
+from faker import Faker
+import random
+import datetime
+
+
+cnx=mysql.connector.connect(
+    host = "twistter.cnt8cdemn92m.us-east-2.rds.amazonaws.com",
+    user="admin",
+    passwd="gotrainsgo",
+    auth_plugin='mysql_native_password',
+    database='twistter'
+)
+cursor=cnx.cursor(dictionary=True)
+
+def create_users():
+    fake=Faker()
+    for i in range(0,100):
+        firstName=names.get_first_name()
+        lastName=names.get_last_name()
+        username=firstName+lastName
+        email = username + "@gmail.com"
+        bio=fake.sentence()
+
+        query = "INSERT INTO users (username, email, first_name, last_name, num_followers, num_following, profile_pic, verified, bio) VALUES (%s, %s, %s, %s , %s, %s, %s, %s, %s)"
+        vals=(username, email, firstName, lastName, 0, 0, "NONE", 0, bio,)
+
+        cursor.execute(query, vals)
+    cnx.commit()
+
+def create_microblogs():
+    fake=Faker()
+    for i in range(0,5000):
+        userId=random.randint(1,102)
+        text=fake.text()
+        timestamp=datetime.datetime.now().time()
+        link="NONE"
+        is_reply=0
+
+        query="INSERT INTO microblogs (user_id, text, timestamp, link, is_reply) VALUES (%s, %s, %s, %s , %s)"
+        vals=(userId, text, timestamp, link, is_reply,)
+        cursor.execute(query,vals)
+
+    cnx.commit()
+
+
+
+if __name__ == "__main__":
+    create_microblogs()
+
+
+
