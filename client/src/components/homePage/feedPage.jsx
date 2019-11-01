@@ -117,6 +117,11 @@ class FeedPageBase extends React.Component {
     
         return (
           <div>
+            <div>
+              <img src="../images/sample-logo.png" alt="Logo" width="200" height="80"></img>
+            </div>
+            {/* client/src/components/homePage/feedPage.jsx */}
+            {/* client/src/images/sample-logo.png */}
             <h1>Infinite Users!</h1>
             <p>Scroll down to load more!!</p>
             {users.map(user => (
