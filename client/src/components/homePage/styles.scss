@@ -1,0 +1,48 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 8vh;
+    background-color: #067096;
+    background: transparent;
+    font-family: 'Poppins', sans-serif;
+
+    .nav-links li{
+        display: flex;
+        justify-content: space-around;
+        width: 30%;
+    }
+
+    .nav-links a{
+        color: whitesmoke;
+        text-decoration: none;
+        letter-spacing: 3px;
+        font-weight: bold;
+        font-size: 14px;
+    }
+}
+
+.logo{
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 20px;
+}
+
+@media screen and (max-width:1024px){
+    body{
+        display: none;
+    }
+}
+
+@media screen and (max-width:768px){
+    body{
+        display:none;
+    }
+}
