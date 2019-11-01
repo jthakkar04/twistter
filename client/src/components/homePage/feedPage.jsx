@@ -116,12 +116,16 @@ class FeedPageBase extends React.Component {
         } = this.state;
     
         return (
-          <div>
-            <div>
-              <img src="../images/sample-logo.png" alt="Logo" width="200" height="80"></img>
-            </div>
-            {/* client/src/components/homePage/feedPage.jsx */}
-            {/* client/src/images/sample-logo.png */}
+          <div style={{marginTop:30}}>
+            {/* <input placeholder="hi" marginTop="10"  height= "390" padding= "5" margin-top= "6" */}
+            <textarea rows="15" cols="100" placeholder="Twist here..." font-size="30"></textarea>
+            <button type="submit" className="btn">
+                    Twist!
+            </button>
+          {/* min-width="18em"
+          height="37"
+          padding=" 0 10"
+          font-size= "16"></input> */}
             <h1>Infinite Users!</h1>
             <p>Scroll down to load more!!</p>
             {users.map(user => (
