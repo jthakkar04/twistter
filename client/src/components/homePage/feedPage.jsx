@@ -1,5 +1,5 @@
 // Dependencies
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link, withRouter } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -7,6 +7,13 @@ import * as Yup from "yup";
 // Project dependencies
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/app_routing';
+
+import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+import '@trendmicro/react-sidenav/dist/react-sidenav.css';
+
+import { render } from "react-dom";
+import request from "superagent";
+import debounce from "lodash.debounce";
 
 export const FeedPage = () => (
     <div>
@@ -152,6 +159,5 @@ class FeedPageBase extends React.Component {
         );
       }
     }
-}
 
 export const FeedPageForm = withRouter(withFirebase(FeedPageBase));
