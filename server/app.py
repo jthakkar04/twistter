@@ -12,8 +12,15 @@ cnx=mysql.connector.connect(
 cursor=cnx.cursor(dictionary=True)
 
 #put profile data
+
+
+
+
+app = Flask(__name__)
+CORS(app)
+
 @app.route('/todo/api/v1.0/profile/<int:userId>', methods=['PUT'])
-def alter_user():
+def alter_user(userId):
     userInfo=request.json
 
     username=userInfo['username']
@@ -26,18 +33,13 @@ def alter_user():
     verified= userInfo['verified']
     bio=userInfo['bio']
 
-    query = "INSERT INTO users (username, email, first_name, last_name, num_followers, num_following, profile_pic, verified, bio) VALUES (%s, %s, %s, %s , %s, %s, %s, %s, %s)"
+    query = "UPDATE users SET username=%s, email=%s, first_name=%s, last_name=%s, num_followers=%s, num_following=%s, profile_pic=%s, verified=%s, bio=%s) WHERE user_id=%s"
 
-    vals=(username, email, firstName, lastName, numFollowers, numFollowing, profilePic, verified, bio,)
+    vals=(username, email, firstName, lastName, numFollowers, numFollowing, profilePic, verified, bio,userId,)
 
     cursor.execute(query, vals)
     cnx.commit()
     return '200'
-
-
-
-app = Flask(__name__)
-CORS(app)
 
 #route for getting specific tweet
 @app.route('/todo/api/v1.0/feed/<int:userId>/<int:tweetId>', methods=['GET'])
@@ -52,6 +54,15 @@ def get_tweet(userId, tweetId):
         "username": result[0]['username'],
         "tweetText": result[0]['text']
     })
+
+@app.route('/todo/api/v1.0/feed/<int:userId>', methods=['GET'])
+def get_all_tweets_from_user(userId):
+    query="SELECT * FROM microblogs WHERE user_id=%s"
+    val=(userId,)
+    cursor.execute(query,val)
+    result=cursor.fetchall()
+
+    return jsonify(result)
 
 
 @app.route('/todo/api/v1.0/profile/<int:userId>', methods=['GET'])
