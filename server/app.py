@@ -19,7 +19,7 @@ cursor=cnx.cursor(dictionary=True)
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/todo/api/v1.0/profile/<int:userId>', methods=['PUT'])
+@app.route('/todo/api/v1.0/profile/?userId=<int:userId>', methods=['PUT'])
 def alter_user(userId):
     userInfo=request.json
 
@@ -65,7 +65,7 @@ def get_all_tweets_from_user(userId):
     return jsonify(result)
 
 
-@app.route('/todo/api/v1.0/profile/<int:userId>', methods=['GET'])
+@app.route('/todo/api/v1.0/profile/?userId=<int:userId>', methods=['GET'])
 def get_userProfile(userId):
     query="SELECT * FROM users WHERE users.user_id=%s"
     val=(userId,)
