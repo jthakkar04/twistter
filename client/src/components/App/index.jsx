@@ -59,6 +59,7 @@ class App extends React.Component {
                     <Route path="/register" component={RegistrationPage} />
                     <Route path="/testPage" component={TestPage} />
                     <Route path="/feed" component={FeedPage} />
+                    <Route path="/profile" component={ProfilePage} />
                 </Switch>
                 <SideNav
                     onSelect={(selected) => {
@@ -69,7 +70,7 @@ class App extends React.Component {
                     }}>
                 <SideNav.Toggle />
                 <SideNav.Nav defaultSelected="Login">
-                    <NavItem eventKey="Feed">
+                    <NavItem eventKey="feed">
                         <NavIcon>
                             <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
                         </NavIcon>
@@ -77,7 +78,7 @@ class App extends React.Component {
                             Feed
                         </NavText>
                     </NavItem>
-                    <NavItem eventKey="Profile">
+                    <NavItem eventKey="profile">
                         <NavIcon>
                             <i className="fa fa-fw fa-device" style={{ fontSize: '1.75em' }} />
                         </NavIcon>
@@ -85,7 +86,7 @@ class App extends React.Component {
                             Profile
                         </NavText>
                     </NavItem>
-                    <NavItem eventKey="Settings">
+                    <NavItem eventKey="settings">
                         <NavIcon>
                             <i className="fa fa-fw fa-settings" style={{ fontSize: '1.75em' }} />
                         </NavIcon>
@@ -93,7 +94,7 @@ class App extends React.Component {
                             Settings
                         </NavText>
                     </NavItem>
-                    <NavItem eventKey="Login">
+                    <NavItem eventKey="login">
                         <NavIcon>
                             <i className="fa fa-fw fa-settings" style={{ fontSize: '1.75em' }} />
                         </NavIcon>
@@ -123,11 +124,8 @@ class App extends React.Component {
           <Route path={Routes.TEST} component={TestPage} />
           <Route path={Routes.PASSWORD_FORGET} component={ForgotPasswordPage} />
           <Route path={Routes.FEED} component={FeedPage} />
-<<<<<<< HEAD
           <Route path={Routes.PROFILE} component={ProfilePage} />
-=======
         </Router> */}
->>>>>>> master
         </Router>
     </AuthUserContext.Provider>
     );
