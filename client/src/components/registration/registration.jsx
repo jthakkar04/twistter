@@ -4,10 +4,12 @@ import { withRouter, Link } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import * as bad_words from "bad-words";
+import axios from 'axios';
 
 // Project dependencies
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/app_routing';
+
 
 export const RegistrationPage = () => (
   <div>
@@ -37,32 +39,44 @@ class RegistrationFormBase extends React.Component {
 
             //Firebase user registration
             var valid = false;
-            
-            this.props.firebase.doCreateUserWithEmailAndPassword(values.email, values.password)
-              // firebase.auth().createUserWithEmailAndPassword(values.email, values.password)
-              .then(function(firebaseUser) {
+            var prefix = 'https://api.hunter.io/v2/email-verifier?email=';
+            var email = values.email;
+            var suffix = '&api_key=21d82fada636073cdda586efc5fd3151715e5aaa'
+
+            var emailCheck = prefix + email + suffix;
+            await axios.get(emailCheck).then((response) => {
+              // alert(JSON.stringify(response.data.data.result));
+
+              if (response.data.data.result != "undeliverable") {
+                this.props.firebase.doCreateUserWithEmailAndPassword(values.email, values.password)
+                .then(function(firebaseUser) {
                 console.log("Successful registration!");
                 valid = true;
-              })
-              .catch(function(error) {
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                if (errorCode === 'auth/email-already-in-use') {
-                  alert('Email already in use!');
-                }
-                else if (errorCode === 'auth/invalid-email') {
-                  alert('Invalid email!')
-                }
-                else {
-                  alert(errorMessage);
-                }
-              })
-              .then(() => {
-                if (valid === true) {
-                  console.log('Success!');
-                  this.props.history.push(ROUTES.LOGIN);
-                }
-              });
+                })
+                .catch(function(error) {
+                  var errorCode = error.code;
+                  var errorMessage = error.message;
+                  if (errorCode === 'auth/email-already-in-use') {
+                    alert('Email already in use!');
+                  }
+                  else if (errorCode === 'auth/invalid-email') {
+                    alert('Invalid email!')
+                  }
+                  else {
+                    alert(errorMessage);
+                  }
+                })
+                .then(() => {
+                  if (valid === true) {
+                    console.log('Success!');
+                    this.props.history.push(ROUTES.LOGIN);
+                  }
+                });
+              }
+              else {
+                alert("Email does not exist!");
+              }
+            });
 
             actions.setSubmitting(false);
         }}
