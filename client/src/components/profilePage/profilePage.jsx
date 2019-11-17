@@ -29,7 +29,7 @@ class ProfilePageBase extends React.Component {
             disable: true,
             currentUserID: 1,
             userData: {
-                fullName: "",
+                fullName: "Julian Haresco",
                 userName: "",
                 location: "",
                 bio: "",
@@ -48,8 +48,6 @@ class ProfilePageBase extends React.Component {
             console.log(data);
             this.renderUserData(data);
         });
-
-        this.renderUserData(data);
     }
 
 
@@ -80,6 +78,9 @@ class ProfilePageBase extends React.Component {
                         // Create JSON string for values and send request
                         values.editable = false
                         values.editState = "Edit";
+                        this.updateProfile(values).then((response) => {
+                            console.log(response);
+                        });
                         console.log("sending edit")
                     }
 
@@ -182,7 +183,7 @@ class ProfilePageBase extends React.Component {
     renderUserData(data) {
         this.setState({
             userData: {
-                fullName: data.first_name + data.last_name,
+                fullName: data.first_name + " " + data.last_name,
                 userName: data.username,
                 location: data.location,
                 bio: data.bio,
@@ -193,7 +194,22 @@ class ProfilePageBase extends React.Component {
         });
     }
 
-    aync send
+    async updateProfile(data) {
+        let path = '/profile/' + this.state.currentUserID;
+        let nameSplit = data.fullName.split(" ");
+        // console.log(nameSplit)
+        let json = await APIClient.post(path, {
+            first_name: nameSplit[0],
+            last_name: nameSplit[1],
+            userName: data.username,
+            location: data.location,
+            bio: data.bio,
+            followers: data.followers,
+            following: data.following,
+            birthday: data.birthday,
+        });
+        return json;
+    }
 
 
 }
