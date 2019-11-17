@@ -21,6 +21,7 @@ import request from "superagent";
 import debounce from "lodash.debounce";
 
 import axios from 'axios';
+import APIClient from '../apiClient/apiClient';
 // import * as apiConsts from '../../../constants/api';
 
 export const FeedPage = () => (
@@ -91,10 +92,15 @@ class FeedPageBase extends React.Component {
         console.log("feed: " + this.state.userid)
         // clients.getFeed(this.state.userid)
         // console.log(this.props.clients.getFeed(this.state.userid))
-        axios.get('http://localhost:5000/todo/api/v1.0/feed/${this.state.userid}')
-          .then(res => {
-            console.log(res.data);
-          })
+        // axios.get('http://localhost:5000/todo/api/v1.0/timeline/${this.state.userid}')
+        //   .then(res => {
+        //     console.log(res);
+        //   })
+        this.getTimelineData().then((result =>{
+          console.log("data");
+          let data = result.data;
+          console.log(data);
+        }));
       }
     
       loadUsers = () => {
@@ -193,6 +199,12 @@ class FeedPageBase extends React.Component {
             }
           </div>
         );
+      }
+      async getTimelineData(){
+        let path = '/timeline/' + this.state.userid;
+        let json = await APIClient.get(path);
+        console.log(json);
+        return json;
       }
     }
 
