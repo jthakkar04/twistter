@@ -44,10 +44,24 @@ def create_microblogs():
 
     cnx.commit()
 
+def create_follow_relations():
+    for i in range(1,104):
+        #create 50 following relations from each user
+        id_list = random.sample(range(1,104),50)
+        for following_id in id_list:
+            if following_id != i:
+                query="INSERT INTO follower_following (follower_id, following_id) VALUES (%s,%s)"
+                vals=(i, following_id,)
+                cursor.execute(query,vals)
+    cnx.commit()
+
+
+
+
 
 
 if __name__ == "__main__":
-    create_microblogs()
+    create_follow_relations()
 
 
 
