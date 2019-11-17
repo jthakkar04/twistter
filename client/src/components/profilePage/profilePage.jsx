@@ -4,11 +4,9 @@ import { Link, withRouter } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import ApiClient from '../ApiClient';
 
 // Project dependencies
 import { withFirebase } from '../Firebase';
-import * as ROUTES from '../../constants/app_routing';
 import SignOutButton from '../SignOut';
 import troll from "../../images/TrollFace.jpg";
 import APIClient from '../ApiClient';
@@ -153,8 +151,6 @@ class ProfilePageBase extends React.Component {
                                     </div>
                                     <div className="editButtons">
                                         <button id="editFile" type="submit"> {values.editState} Profile</button>
-                                        <div className="spacer" />
-                                        <SignOutButton />
                                     </div>
                                 </div>
 
