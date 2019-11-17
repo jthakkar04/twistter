@@ -64,28 +64,32 @@ class RegistrationFormBase extends React.Component {
                 if (valid === true) {
                   console.log('Success!');
                   this.props.history.push(ROUTES.LOGIN);
-                 // console.log(this.props.firebase.doGetCurrentUserId());
+                 console.log("Firebase reg"+ this.props.firebase.doGetCurrentUserId());
+                 axios.put('http://localhost:5000/todo/api/v1.0/register', {
+                    bio: "NONE",
+                    first_name: values.firstname,
+                    last_name: values.lastname,
+                    email: values.email,
+                    num_followers: 0,
+                    num_following: 0,
+                    profile_pic: null,
+                    user_id: this.props.firebase.doGetCurrentUserId(),
+                    username: values.username,
+                    verfied: false
+                  })
+                  .then(function(response){
+                    console.log(response);
+                    
+                  })
+                  .catch(function (error){
+                    console.log(error);
+                  });
                 }
               });
 
-              axios.post('http://localhost:5000/todo/api/v1.0/register', {
-                bio: "NONE",
-                first_name: values.firstname,
-                last_name: values.lastname,
-                email: values.email,
-                num_followers: 0,
-                num_following: 0,
-                profile_pic: null,
-                user_id: this.props.firebase.doGetCurrentUserId(),
-                username: values.username,
-                verfied: false
-              })
-              .then(function(response){
-                console.log(response);
-              })
-              .catch(function (error){
-                console.log(error);
-              });
+              
+
+              
               
 
             actions.setSubmitting(false);
@@ -93,6 +97,8 @@ class RegistrationFormBase extends React.Component {
 
         const validationSchema={
           Yup.object().shape({
+            firstname:Yup.string().required("Required"),
+            lastname: Yup.string().required("Required"),
             username: Yup.string()
               .required("Required")
               .test('safe-username', 'Profanity not allowed in usernames', function (value) {
@@ -133,21 +139,22 @@ class RegistrationFormBase extends React.Component {
                   <div className="form">
                     <div className="form-group">
                       
+                      <label htmlFor="firstname">First Name</label>
                       <input
                         type="text"
-                        name="Firstname"
+                        name="firstname"
                         placeholder="First name"
-                        value={values.Firstname}
+                        value={values.firstname}
                         onChange={handleChange}
                         onBlur={handleBlur}
                     
                       />
-
+                      <label htmlFor="lastname">Last Name</label>
                       <input
                         type="text"
-                        name="Lastname"
+                        name="lastname"
                         placeholder="Last name"
-                        value={values.Lastname}
+                        value={values.lastname}
                         onChange={handleChange}
                         onBlur={handleBlur}
                     
