@@ -4,6 +4,11 @@ import { Link, withRouter } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
+
+
+// import * as APIClient from '../../apiClient/apiClient';
+// import * as clients from '../apiClient/apiClient';
+
 // Project dependencies
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/app_routing';
@@ -15,20 +20,31 @@ import { render } from "react-dom";
 import request from "superagent";
 import debounce from "lodash.debounce";
 
+import axios from 'axios';
+// import * as apiConsts from '../../../constants/api';
+
 export const FeedPage = () => (
     <div>
         <FeedPageForm />
     </div>
 );
 
+const BASE_URI = 'http://localhost:5000/todo/api/v1.0';
+const AWS_CONST = 'http:13.58.22.129:5000/'
+
+const devEnv = true;
+const client = axios.create({
+  baseURL: devEnv == true ? BASE_URI : AWS_CONST,
+  json: true
+});
 class FeedPageBase extends React.Component {
 
-    constructor(props){ 
-        super(props)
-        this.state = {
-            redirectToReferrer: false,
-        }
-    }
+    // constructor(props){ 
+    //     super(props)
+    //     this.state = {
+    //         redirectToReferrer: false,
+    //     }
+    // }
 
     constructor(props) {
         super(props);
@@ -39,6 +55,7 @@ class FeedPageBase extends React.Component {
           hasMore: true,
           isLoading: false,
           users: [],
+          userid: this.props.firebase.doGetCurrentUserId()
         };
     
         // Binds our scroll event handler
@@ -70,7 +87,14 @@ class FeedPageBase extends React.Component {
     
       componentWillMount() {
         // Loads some users on initial load
-        this.loadUsers();
+        // this.loadUsers();
+        console.log("feed: " + this.state.userid)
+        // clients.getFeed(this.state.userid)
+        // console.log(this.props.clients.getFeed(this.state.userid))
+        axios.get('http://localhost:5000/todo/api/v1.0/feed/${this.state.userid}')
+          .then(res => {
+            console.log(res.data);
+          })
       }
     
       loadUsers = () => {
@@ -118,6 +142,7 @@ class FeedPageBase extends React.Component {
         } = this.state;
     
         return (
+          
           <div style={{marginTop:30}}>
             {/* <input placeholder="hi" marginTop="10"  height= "390" padding= "5" margin-top= "6" */}
             <textarea rows="15" cols="100" placeholder="Twist here..." font-size="30"></textarea>

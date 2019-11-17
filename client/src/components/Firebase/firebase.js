@@ -32,6 +32,8 @@ class Firebase {
         this.auth.currentUser.updatePassword(password);
     
     doGetCurrentUser = () => this.auth.currentUser;
+
+    doGetCurrentUserId = () => this.auth.currentUser.uid;
 }
 
 export default Firebase;

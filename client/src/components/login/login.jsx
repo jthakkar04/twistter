@@ -59,9 +59,17 @@ class LoginFormBase extends React.Component {
 
                 // Outputs user UID to console
                 var user = this.props.firebase.doGetCurrentUser()
-                console.log(user.uid)
+                console.log("userid: " + user.uid)
 
-                this.props.history.push(ROUTES.FEED);
+                this.props.history.push({pathname: '/feed'});
+                // this.props.history.push({pathname: '/feed', state: {userid: user.uid}});
+                // this.props.history.push({
+                //   pathname: '/feed', 
+                //   state:{
+                //     id:user.uid,
+                //     message:"hi"
+                //   }
+                // });
               }
             })  
         }}
@@ -85,7 +93,7 @@ class LoginFormBase extends React.Component {
             isSubmitting,
             handleChange,
             handleBlur,
-            handleSubmit
+            handleSubmit, 
           } = props;
           return (
 

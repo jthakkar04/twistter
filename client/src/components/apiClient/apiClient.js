@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as apiConsts from '../../constants/api';
+import * as apiConsts from '../../../constants/api';
 
 const BASE_URI = 'http://localhost:5000/todo/api/v1.0';
 
