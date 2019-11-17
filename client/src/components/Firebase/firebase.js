@@ -1,6 +1,7 @@
 import app from "firebase/app";
 import "firebase/auth";
 
+
 const config = {
     apiKey: "AIzaSyCFlUyTWuhN0t-e2vFq4VOtz-pu2e9Nsf4",
     authDomain: "twistter-34846.firebaseapp.com",
@@ -32,6 +33,8 @@ class Firebase {
         this.auth.currentUser.updatePassword(password);
     
     doGetCurrentUser = () => this.auth.currentUser;
+
+    doGetCurrentUserId = () => this.auth.currentUser.uid;
 }
 
 export default Firebase;
