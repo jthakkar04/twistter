@@ -14,7 +14,6 @@ const config = {
 class Firebase {
     constructor() {
         app.initializeApp(config);
-
         this.auth = app.auth();
     }
 
@@ -32,6 +31,16 @@ class Firebase {
         this.auth.currentUser.updatePassword(password);
     
     doGetCurrentUser = () => this.auth.currentUser;
+
+    isInitialized() {
+		return new Promise(resolve => {
+			this.auth.onAuthStateChanged(resolve)
+		})
+    }
+    
+    getCurrentUsername() {
+        return this.auth.currentUser && this.auth.currentUser.displayName
+    }
 }
 
 export default Firebase;

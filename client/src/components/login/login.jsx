@@ -7,6 +7,7 @@ import * as Yup from "yup";
 // Project dependencies
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/app_routing';
+import { FeedPage } from '../homePage';
 
 export const LoginPage = () => (
   <div>
@@ -14,57 +15,106 @@ export const LoginPage = () => (
   </div>
 );
 
-
+const INITIAL_STATE = {
+  email: '',
+  password: '',
+  error: null,
+};
 
 class LoginFormBase extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { ...INITIAL_STATE };
   }
+
+  onSubmit = event => {
+    const { email, password } = this.state;
+    this.props.firebase
+      .doSignInWithEmailAndPassword(email, password)
+      .then(() => {
+        this.setState({ ...INITIAL_STATE });
+        this.props.history.push(FeedPage);
+        this.props.history.replace('/feed')
+      })
+      .catch(error => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password!');
+        }
+        else if (errorCode === 'auth/invalid-email') {
+            alert('Invalid email!');
+        }
+        else if (errorCode === 'user-not-found') {
+            alert('Profile with given email not found!');
+        }
+        else {
+            alert(errorMessage);
+        }
+        // this.setState({ error });
+      });
+    event.preventDefault();
+  };
+
+  onChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
   render() {
 
+    const { email, password, error } = this.state;
+    const isInvalid = password === '' || email === '';
+
     return (
+        
+
       <Formik
-        initialValues={{ email: "", password: "" }}
-        onSubmit={ async (values, { setSubmitting }) => {
-            // console.log("Logging in", values);
-            setSubmitting(false);
+        // initialValues={{ email: "", password: "" }}
+        // onSubmit={ async (values, { setSubmitting }) => {
+            
+        //     // const { values } = this.state;
 
-            // Firebase log-in auth
-            var valid = false;
-            this.props.firebase.doSignInWithEmailAndPassword(values.email, values.password)
-            .then(function(firebaseUser) {
-              // console.log('Succesful login! Redirecting to main page!');
-              valid = true;
-            })
-            .catch(function(error) {
-              var errorCode = error.code;
-              var errorMessage = error.message;
-              if (errorCode === 'auth/wrong-password') {
-                alert('Wrong password!');
-              }
-              else if (errorCode === 'auth/invalid-email') {
-                alert('Invalid email!');
-              }
-              else if (errorCode === 'user-not-found') {
-                alert('Profile with given email not found!');
-              }
-              else {
-                alert(errorMessage);
-              }
-            })
-            .then(() => {
-              if (valid === true){
-                // console.log('Success!');
+        //     // console.log("Logging in", values);
+        //     setSubmitting(false);
 
-                // Outputs user UID to console
-                var user = this.props.firebase.doGetCurrentUser()
-                console.log(user.uid)
+        //     // Firebase log-in auth
+        //     var valid = false;
+            
+        //     this.props.firebase.doSignInWithEmailAndPassword(values.email, values.password)
+        //     .then(function(firebaseUser) {
+        //       // console.log('Succesful login! Redirecting to main page!');
+        //       this.setState({ ...INITIAL_STATE });
+        //       valid = true;
+        //     })
+        //     .catch(function(error) {
+        //       var errorCode = error.code;
+        //       var errorMessage = error.message;
+        //       if (errorCode === 'auth/wrong-password') {
+        //         alert('Wrong password!');
+        //       }
+        //       else if (errorCode === 'auth/invalid-email') {
+        //         alert('Invalid email!');
+        //       }
+        //       else if (errorCode === 'user-not-found') {
+        //         alert('Profile with given email not found!');
+        //       }
+        //       else {
+        //         alert(errorMessage);
+        //       }
+        //     })
+        //     .then(() => {
+        //       if (valid === true){
+        //         // console.log('Success!');
 
-                this.props.history.push(ROUTES.FEED);
-              }
-            })  
-        }}
+        //         // Outputs user UID to console
+        //         var user = this.props.firebase.doGetCurrentUser()
+        //         console.log(user.uid)
+
+        //         this.props.history.push(ROUTES.FEED);
+        //         this.props.history.replace('/feed')
+        //       }
+        //     })  
+        // }}
 
         validationSchema={Yup.object().shape({
           email: Yup.string()
@@ -89,7 +139,7 @@ class LoginFormBase extends React.Component {
           } = props;
           return (
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={this.onSubmit}>
               <div className="login">
               <div className="base-container" ref={props.containerRef}>
                 <div className="header">Login</div>
@@ -100,8 +150,9 @@ class LoginFormBase extends React.Component {
                       <input
                         type="text"
                         name="email"
+                        value={email}
                         placeholder="Enter your Email"
-                        onChange={handleChange}
+                        onChange={this.onChange}
                         onBlur={handleBlur}
                         value={values.email}
                       />
@@ -117,7 +168,7 @@ class LoginFormBase extends React.Component {
                         name="password"
                         placeholder="Enter your Password"
                         value={values.password}
-                        onChange={handleChange}
+                        onChange={this.onChange}
                         onBlur={handleBlur}
                         className={errors.password && touched.password && "error"}
                       />
@@ -131,7 +182,7 @@ class LoginFormBase extends React.Component {
                   </div>
                 </div>
                 <div className="footer">
-                  <button type="submit" className="btn" disabled={isSubmitting}>
+                  <button type="submit" className="btn" disabled={isInvalid}>
                     Login
                     </button>
                   <Link to={ROUTES.REGISTER}>
