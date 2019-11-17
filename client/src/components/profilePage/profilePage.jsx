@@ -3,14 +3,15 @@ import React from 'react';
 import { Link, withRouter } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import ApiClient from '../ApiClient';
 
 // Project dependencies
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/app_routing';
 import SignOutButton from '../SignOut';
-
-
 import troll from "../../images/TrollFace.jpg";
+import APIClient from '../ApiClient';
 
 export const ProfilePage = () => (
     <div>
@@ -21,129 +22,181 @@ export const ProfilePage = () => (
 class ProfilePageBase extends React.Component {
 
     // Set state so it can be redirected if not logged in
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             redirectToReferrer: false,
-            disable: true
-        }
-    }
-    
-    render() {
-        return (
-        <Formik 
-            initialValues={{ 
-                fullName: "Julian Haresco", 
-                userName: "jharesco" ,
-                location: "Cupertino,CA",
-                bio: "SUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUP",
-                followers: "10000",
-                following: "10000",
-                birthday:"10/31/2019",
-                editable: false,
-                editState: "Edit"
-            }}
-            onSubmit = {(values, {setSubmitting }) => {
-                setSubmitting(false);
-
-                if (values.editable === false) {
-                    values.editable = true; 
-                    values.editState = "Save";
-                    console.log("making edits")  
-                } else{
-                    // Create JSON string for values and send request
-                    values.editable = false
-                    values.editState = "Edit";
-                    console.log("sending edit")
-                }
-                setSubmitting(true);
-            }}
-        >
-
-            {props => {
-            const {
-                values,
-                touched,
-                errors,
-                isSubmitting,
-                handleChange,
-                handleBlur,
-                handleSubmit
-            } = props;
-            return (
-                <form onSubmit={handleSubmit} on>
-                <div>
-                        <div className="profile">
-                            <div id="main">
-        
-                                <div className="userImg">
-                                    <img src={troll} alt= {"No Image set"} />
-                                </div>
-                                <div className="usrInfo">
-                                    <div className="userName">
-                                        <input type="text" 
-                                            id="fullName" 
-                                            name="fullName"
-                                            disabled={!values.editable} 
-                                            value={values.fullName}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur} />
-
-                                        <input type="text" 
-                                            id="tag" 
-                                            name="username"
-                                            disabled={!values.editable} 
-                                            value={values.userName}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur} />
-                                    </div>
-                                    <div className="usrBio">
-                                        <input type="text" 
-                                            name="bio"
-                                            disabled={!values.editable} 
-                                            value={values.bio} 
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}/>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="userStats">
-                                <table>
-                                    <tr>
-                                        <td > Followers: <input type="text" name="followers" disabled={!values.editable} value={values.followers} onChange={handleChange} onBlur={handleBlur}/> </td>
-                                        <td > Following: <input type="text" name="following" disabled={!values.editable} value={values.following} onChange={handleChange} onBlur={handleBlur}/> </td>
-                                    </tr>
-                                    <tr>
-                                        <td> Location: <input type="text" name="location" disabled={!values.editable} value={values.location} onChange={handleChange} onBlur={handleBlur}/> </td>
-                                        <td> Birthdate: <input type="text" name="birthday" disabled={!values.editable} value={values.birthday} onChange={handleChange} onBlur={handleBlur}/> </td>
-                                    </tr>
-                                </table>
-        
-                            </div>
-                            <div className="editButtons">
-                                <button id="editFile" type= "submit"> {values.editState} Profile</button>
-                                <div className="spacer" />
-                                <SignOutButton />
-                            </div>
-                        </div>
-        
-                        <div class="personalFeed">
-                            <div class="microblog">
-                                Fill with code from feed/microblogs
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                );
+            disable: true,
+            currentUserID: 1,
+            userData: {
+                fullName: "",
+                userName: "",
+                location: "",
+                bio: "",
+                followers: "",
+                following: "",
+                birthday: "",
             }
         }
-        </Formik >
-                
-    
-            );
-        };
     }
+
+    componentDidMount() {
+
+        this.getUserData().then((result) => {
+            console.log("data");
+            let data = result.data;
+            console.log(data);
+            this.renderUserData(data);
+        });
+
+        this.renderUserData(data);
+    }
+
+
+    render() {
+        return (
+            <Formik
+                enableReinitialize
+                initialValues={{
+                    fullName: this.state.userData.fullName,
+                    userName: this.state.userData.userName,
+                    location: this.state.userData.location,
+                    bio: this.state.userData.bio,
+                    followers: this.state.userData.followers,
+                    following: this.state.userData.following,
+                    birthday: this.state.userData.birthday,
+                    editable: false,
+                    editState: "Edit"
+                }}
+                onSubmit={(values, { setSubmitting }) => {
+                    setSubmitting(false);
+
+                    if (values.editable === false) {
+                        values.editable = true;
+                        values.editState = "Save";
+                        console.log("making edits")
+
+                    } else {
+                        // Create JSON string for values and send request
+                        values.editable = false
+                        values.editState = "Edit";
+                        console.log("sending edit")
+                    }
+
+                    setSubmitting(true);
+                }}
+            >
+
+                {props => {
+                    const {
+                        values,
+                        touched,
+                        errors,
+                        isSubmitting,
+                        handleChange,
+                        handleBlur,
+                        handleSubmit
+                    } = props;
+                    return (
+                        <form onSubmit={handleSubmit}>
+                            <div>
+                                <div className="profile">
+                                    <div id="main">
+
+                                        <div className="userImg">
+                                            <img src={troll} alt={"No Image set"} />
+                                        </div>
+                                        <div className="usrInfo">
+                                            <div className="userName">
+                                                <input type="text"
+                                                    id="fullName"
+                                                    name="fullName"
+                                                    disabled={!values.editable}
+                                                    value={values.fullName}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur} />
+
+                                                <input type="text"
+                                                    id="tag"
+                                                    name="username"
+                                                    disabled={!values.editable}
+                                                    value={values.userName}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur} />
+                                            </div>
+                                            <div className="usrBio">
+                                                <input type="text"
+                                                    name="bio"
+                                                    disabled={!values.editable}
+                                                    value={values.bio}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur} />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="userStats">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td > Followers: <input type="text" name="followers" disabled={!values.editable} value={values.followers} onChange={handleChange} onBlur={handleBlur} /> </td>
+                                                    <td > Following: <input type="text" name="following" disabled={!values.editable} value={values.following} onChange={handleChange} onBlur={handleBlur} /> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td> Location: <input type="text" name="location" disabled={!values.editable} value={values.location} onChange={handleChange} onBlur={handleBlur} /> </td>
+                                                    <td> Birthdate: <input type="text" name="birthday" disabled={!values.editable} value={values.birthday} onChange={handleChange} onBlur={handleBlur} /> </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <div className="editButtons">
+                                        <button id="editFile" type="submit"> {values.editState} Profile</button>
+                                        <div className="spacer" />
+                                        <SignOutButton />
+                                    </div>
+                                </div>
+
+                                <div className="personalFeed">
+                                    <div className="microblog">
+                                        Fill with code from feed/microblogs
+                            </div>
+                                </div>
+                            </div>
+                        </form>
+                    );
+                }
+                }
+            </Formik >
+
+
+        );
+    };
+
+    async getUserData() {
+        let path = '/profile/' + this.state.currentUserID;
+        let json = await APIClient.get(path);
+        return json;
+    }
+
+    renderUserData(data) {
+        this.setState({
+            userData: {
+                fullName: data.first_name + data.last_name,
+                userName: data.username,
+                location: data.location,
+                bio: data.bio,
+                followers: data.followers,
+                following: data.following,
+                birthday: data.birthday,
+            }
+        });
+    }
+
+    aync send
+
+
+}
 
 
 export const ProfileForm = withRouter(withFirebase(ProfilePageBase));
