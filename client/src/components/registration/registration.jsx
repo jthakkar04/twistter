@@ -137,7 +137,7 @@ class RegistrationFormBase extends React.Component {
                         type="text"
                         name="Firstname"
                         placeholder="First name"
-                        value={values.Firstname}
+                        value={values.firstname}
                         onChange={handleChange}
                         onBlur={handleBlur}
                     
@@ -147,7 +147,7 @@ class RegistrationFormBase extends React.Component {
                         type="text"
                         name="Lastname"
                         placeholder="Last name"
-                        value={values.Lastname}
+                        value={values.lastname}
                         onChange={handleChange}
                         onBlur={handleBlur}
                     
