@@ -5,7 +5,6 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 
 // Project dependencies
-import Sidebar from '../Navigation/Sidebar';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/app_routing';
 
@@ -24,7 +23,6 @@ export const FeedPage = () => (
 
 class FeedPageBase extends React.Component {
 
-    // firebaseClient = new Firebase();
     // Set state so it can be redirected if not logged in
     state = {
         redirectToReferrer: false
@@ -116,13 +114,7 @@ class FeedPageBase extends React.Component {
           isLoading,
           users,
         } = this.state;
-
-        // if (!this.props.firebase.getCurrentUsername()) {
-        //   alert('Please login first')
-        //   this.props.history.replace('/login')
-        //   return null
-        // }
-      
+    
         return (
           <div style={{marginTop:30}}>
             {/* <input placeholder="hi" marginTop="10"  height= "390" padding= "5" margin-top= "6" */}
@@ -130,7 +122,10 @@ class FeedPageBase extends React.Component {
             <button type="submit" className="btn">
                     Twist!
             </button>
-
+          {/* min-width="18em"
+          height="37"
+          padding=" 0 10"
+          font-size= "16"></input> */}
             <h1>Infinite Users!</h1>
             <p>Scroll down to load more!!</p>
             {users.map(user => (

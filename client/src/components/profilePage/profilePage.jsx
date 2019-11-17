@@ -30,13 +30,6 @@ class ProfilePageBase extends React.Component {
     }
     
     render() {
-
-        // if (!this.props.firebase.getCurrentUsername()) {
-        //     alert('Please login first')
-        //     this.props.history.replace('/login')
-        //     return null
-        //   }
-
         return (
         <Formik 
             initialValues={{ 

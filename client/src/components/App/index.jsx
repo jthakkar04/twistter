@@ -7,10 +7,8 @@ import "../../styles/style.scss";
 
 // Context based dependencies
 import Navigation from '../Navigation';
-import Sidebar from '../Navigation/Sidebar';
 import { withFirebase } from "../Firebase"
 import { AuthUserContext } from '../SessionHandler';
-import { withAuthentication } from '../Session'
 import * as Routes from '../../constants/app_routing';
 
 // Add all components below this page for routing
@@ -21,22 +19,18 @@ import { ForgotPasswordPage } from '../forgotPassword';
 import { FeedPage } from '../homePage';
 import { ProfilePage } from '../profilePage';
 
-const DefaultContainer = () => (
-    <div>
-      {/* <Sidebar /> */}
-      <Route path="/testPage" component={TestPage} />
-      <Route path="/feed" component={FeedPage} />
-      <Route path="/profile" component={ProfilePage} />
-    </div>
-)
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.props = {
-      authUser: null
+      currentUser: null
     }
+
+    this.state = {
+      authUser: null,
+    };
   }
 
   componentDidMount() {
@@ -50,36 +44,93 @@ class App extends React.Component {
   componentWillUnmount() {
     this.listener();
   }
-
+  
   render() {
-    // let navHeader = this.props.firebase.doGetCurrentUser() ? <Sidebar /> : '';
     return (
-      // <AuthUserContext.Provider value={this.state.authUser}>
+      <AuthUserContext.Provider value={this.state.authUser}>
         <Router>
-        <Navigation />
-          {/* <Route render={({ location, history }) => ( */}
-              {/* <React.Fragment>
-                  <Switch> */}
-                      <Route exact path="/" component={LoginPage} />
-                      <Route exact path="/login" component={LoginPage} />
-                      <Route path="/register" component={RegistrationPage} />
-                      <Route path="/forgot" component={ForgotPasswordPage} />
-                      <Route path="/register" component={RegistrationPage} />
-                      
-                      {/* <Route component = {DefaultContainer} /> */}
-                      {/* {this.componentDidMount() ? <Sidebar /> : ''} */}
-                      {/* {this.componentDidMount() ? <Route component = {DefaultContainer} /> : ''} */}
-                      <Route path="/testPage" component={TestPage} />
-                      <Route path="/feed" component={FeedPage} />
-                      <Route path="/profile" component={ProfilePage} />
-                  {/* </Switch>
-                </React.Fragment> */}
-          {/* )}/> */}
+<Route render={({ location, history }) => (
+            <React.Fragment>
+                <Switch>
+                    <Route exact path="/" component={LoginPage} />
+                    <Route exact path="/login" component={LoginPage} />
+                    <Route path="/register" component={RegistrationPage} />
+                    <Route path="/forgot" component={ForgotPasswordPage} />
+                    <Route path="/register" component={RegistrationPage} />
+                    <Route path="/testPage" component={TestPage} />
+                    <Route path="/feed" component={FeedPage} />
+                    <Route path="/profile" component={ProfilePage} />
+                </Switch>
+                <SideNav
+                    onSelect={(selected) => {
+                        const to = '/' + selected;
+                        if (location.pathname !== to) {
+                            history.push(to);
+                        }
+                    }}>
+                <SideNav.Toggle />
+                <SideNav.Nav defaultSelected="Login">
+                    <NavItem eventKey="feed">
+                        <NavIcon>
+                            <i className="fa fa-fw fa-home" style={{ fontSize: '1.75em' }} />
+                        </NavIcon>
+                        <NavText>
+                            Feed
+                        </NavText>
+                    </NavItem>
+                    <NavItem eventKey="profile">
+                        <NavIcon>
+                            <i className="fa fa-fw fa-device" style={{ fontSize: '1.75em' }} />
+                        </NavIcon>
+                        <NavText>
+                            Profile
+                        </NavText>
+                    </NavItem>
+                    <NavItem eventKey="settings">
+                        <NavIcon>
+                            <i className="fa fa-fw fa-settings" style={{ fontSize: '1.75em' }} />
+                        </NavIcon>
+                        <NavText>
+                            Settings
+                        </NavText>
+                    </NavItem>
+                    <NavItem eventKey="login">
+                        <NavIcon>
+                            <i className="fa fa-fw fa-settings" style={{ fontSize: '1.75em' }} />
+                        </NavIcon>
+                        <NavText>
+                            Logout
+                        </NavText>
+                    </NavItem>
+                </SideNav.Nav>
+            </SideNav>
+            <main>
+                {/* { <Route path="/" exact component={props => <RootComponent />} />
+                <Route path="/login" component={props => <Login />} />
+                <Route path="/feed" component={props => <Feed />} />
+                <Route path="/settings" component={props => <Settings />} />
+                } */}
+            </main>
+         </React.Fragment>
+            )}/>
+        {/* <Router>
+          <Navigation authUser={this.state.authUser} />
+          
+          <hr />
+
+          <Route exact path={Routes.LANDING} component={FeedPage} />
+          <Route path={Routes.LOGIN} component={LoginPage} />
+          <Route path={Routes.REGISTER} component={RegistrationPage} />
+          <Route path={Routes.TEST} component={TestPage} />
+          <Route path={Routes.PASSWORD_FORGET} component={ForgotPasswordPage} />
+          <Route path={Routes.FEED} component={FeedPage} />
+          <Route path={Routes.PROFILE} component={ProfilePage} />
+        </Router> */}
         </Router>
-    // </AuthUserContext.Provider>
+    </AuthUserContext.Provider>
     );
   }
 }
 
-export default withAuthentication(App);
+export default withFirebase(App);
 
