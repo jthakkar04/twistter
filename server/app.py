@@ -89,9 +89,11 @@ def get_user_id(username):
 
     return jsonify(cursor.fetchone())
 
-@app.route('/todo/api/v1.0/register', methods=['PUT'])
+@app.route('/todo/api/v1.0/register', methods=['POST'])
 def put_user():
+    print("Here's where we are!")
     userInfo=request.json
+    print(userInfo)
     username=userInfo['username']
     email=userInfo['email']
     userId = userInfo['user_id']
