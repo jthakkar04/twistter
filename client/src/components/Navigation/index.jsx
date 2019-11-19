@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, HashRouter as Router, Route } from "react-router-dom";
+import { HashRouter as Router, Route } from "react-router-dom";
 import { AuthUserContext } from '../SessionHandler';
 import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 
