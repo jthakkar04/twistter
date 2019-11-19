@@ -1,10 +1,11 @@
 import React from 'react';
 import { withFirebase } from '../Firebase';
+import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 
 const SignOutBase = ({ firebase }) => (
-  <button type="button" onClick={firebase.doSignOut}>
+  <NavText onClick={firebase.doSignOut}>
     Sign Out
-  </button>
+  </NavText>
 );
 
 export default withFirebase(SignOutBase);
