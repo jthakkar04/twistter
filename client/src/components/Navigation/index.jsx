@@ -66,8 +66,8 @@ const NavigationAuth = () => (
                                 <i className="fa fa-fw fa-settings" style={{ fontSize: '1.75em' }} />
                             </NavIcon>
                             <NavText>
-                                Logout
-                        </NavText>
+                                <SignOutButton />
+                            </NavText>
                         </NavItem>
                     </SideNav.Nav>
                 </SideNav>

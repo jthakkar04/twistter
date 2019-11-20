@@ -4,6 +4,8 @@ import { HashRouter as Router, Route } from "react-router-dom";
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import "../../styles/style.scss";
 
+import logo from "../../images/sample-logo.png"
+
 // Context based dependencies
 import Navigation from '../Navigation';
 import { withAuthentication } from '../SessionHandler';
@@ -20,8 +22,9 @@ import { ProfilePage } from '../profilePage';
 
 const App = () => (
     <Router>
+        <img className="logo" src={logo} />
         <Navigation />
-        <SignOutButton />
+        {/* <SignOutButton /> */}
 
         <Route exact path={Routes.LANDING} component={LoginPage} />
         <Route path={Routes.LOGIN} component={LoginPage} />
