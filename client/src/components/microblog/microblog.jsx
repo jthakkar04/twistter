@@ -19,6 +19,7 @@ import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 import { render } from "react-dom";
 import request from "superagent";
 import debounce from "lodash.debounce";
+import moment from 'moment';
 
 import axios from 'axios';
 import APIClient from '../apiClient/apiClient';
@@ -86,7 +87,7 @@ export class MicroBlog extends React.Component {
             {microblogs.map(microblog => (
             <Fragment key={microblog.user_id}>
                 <div style={{ display: 'flex' }} className="microblogs">
-                <img
+                {/* <img
                     alt={microblog.photo}
                     src={microblog.photo}
                     style={{
@@ -95,15 +96,17 @@ export class MicroBlog extends React.Component {
                     marginRight: 20,
                     width: 72,
                     }}
-                />
-                <div>
-                    <h2 style={{ marginTop: 0 }}>
+                /> */}
+                {/* <div> */}
+                    <h2 style ={{ textAlign:"center" }}>
                     {microblog.text}
                     </h2>
-                    <p>{microblog.user}</p>
-                    <p>{microblog.time}</p>
+                    <div className="microBody" style={{ flexDirection: "column"}}>
+                        <p style={{ color:"#067096", fontSize: 15, fontWeight: "bold" }}>{microblog.user}</p>
+                        <p style={{ color:"#067096" }}>{microblog.time}</p>
+                    </div>
                 </div>
-                </div>
+                {/* </div> */}
             </Fragment>
             ))}
             <hr />
@@ -165,19 +168,23 @@ export class MicroBlog extends React.Component {
     //       });
     //   }
 
-       async getUsernameData(user_id){
-          let path = '/profile/' + user_id;
-          return await APIClient.get(path).then((result) => {
-              console.log("data")
-              console.log(result.data)
-              return result.data['username']
-          });
-      }
+    //    async getUsernameData(user_id){
+    //       let path = '/profile/' + user_id;
+    //       return await APIClient.get(path).then((result) => {
+    //           console.log("data")
+    //           console.log(result.data)
+    //           return result.data['username']
+    //       });
+    //   }
 
       getTime(timestamp){
-        var d = new Date(0);
-        d.setUTCSeconds(timestamp);
-        return d;
+        // var d = new Date();
+        // d.setSeconds( timestamp );
+        var newDate = moment(new Date(timestamp * 1000)).format('MM/DD/YYYY hh:MM');
+
+        // var formatted = d.format('MM/DD/YYYY hh:MM');
+        // d.setUTCSeconds(timestamp);
+        return newDate;
       }
 
 }

@@ -122,10 +122,9 @@ def put_user():
 
 @app.route('/todo/api/v1.0/timeline/<userId>', methods=['GET'])
 def get_timeline(userId):
-    query = "SELECT microblogs.*, users.username FROM microblogs, users WHERE microblogs.user_id IN (SELECT following_id FROM follower_following WHERE follower_id=%s) ORDER BY microblogs.timestamp"
+    query = "SELECT microblogs.*, users.username FROM microblogs, users WHERE microblogs.user_id IN (SELECT following_id FROM follower_following WHERE follower_id=%s) AND microblogs.user_id=users.user_id ORDER BY microblogs.timestamp;"
     val=(userId,)
     cursor.execute(query,val)
-
     return jsonify(cursor.fetchall())
 
 
