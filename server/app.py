@@ -63,10 +63,16 @@ def get_all_tweets_from_user(userId):
 
 @app.route('/todo/api/v1.0/profile/<userId>', methods=['GET'])
 def get_userProfile(userId):
+    # query="SELECT * FROM users WHERE users.user_id=%s"
+    # val=(userId,)
+    # cursor.execute(query,val)
+    # return jsonify(cursor.fetchone())
     query="SELECT * FROM users WHERE users.user_id=%s"
     val=(userId,)
     cursor.execute(query,val)
-    return jsonify(cursor.fetchone())
+    result=jsonify(cursor.fetchone())
+    result.headers.add('Access-Control-Allow-Origin', '*')
+    return result
 
 @app.route('/todo/api/v1.0/feed/<userId>',methods = ['PUT'])
 def insert_microblog(userId):

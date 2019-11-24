@@ -19,6 +19,7 @@ body {
   position: absolute;
 }
 
+
 .registration {
   margin-top: 1em;
 }
@@ -126,6 +127,20 @@ body {
   }
 }
 
+.container{
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vh;
+  overflow-y: scroll;
+
+}
+.microblogs{
+  flex:1;
+  margin-top:10px;
+  background-color:#E5E5E5;
+  opacity: 50%;
+}
 //Button
 .btn {
   font-size: 21px;
