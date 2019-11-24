@@ -132,7 +132,7 @@ export class MicroBlog extends React.Component {
         await APIClient.get(path).then((result) =>{
           console.log(result.data);
           const nextMicroblogs = result.data.map(microblog => ({
-            user: this.getUsernameData(microblog.user_id).toString(),
+            user: microblog.username,
             // user:microblog.user_id,
             time: this.getTime(microblog.timestamp).toString(),
             photo: microblog.link,

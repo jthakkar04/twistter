@@ -63,6 +63,7 @@ def get_all_tweets_from_user(userId):
 
 @app.route('/todo/api/v1.0/profile/<userId>', methods=['GET'])
 def get_userProfile(userId):
+    #import pdb; pdb.set_trace()
     # query="SELECT * FROM users WHERE users.user_id=%s"
     # val=(userId,)
     # cursor.execute(query,val)
@@ -121,7 +122,7 @@ def put_user():
 
 @app.route('/todo/api/v1.0/timeline/<userId>', methods=['GET'])
 def get_timeline(userId):
-    query = "SELECT * FROM microblogs WHERE microblogs.user_id IN (SELECT following_id FROM follower_following WHERE follower_id=%s) ORDER BY microblogs.timestamp"
+    query = "SELECT microblogs.*, users.username FROM microblogs, users WHERE microblogs.user_id IN (SELECT following_id FROM follower_following WHERE follower_id=%s) ORDER BY microblogs.timestamp"
     val=(userId,)
     cursor.execute(query,val)
 
