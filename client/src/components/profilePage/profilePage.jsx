@@ -1,8 +1,10 @@
 // Dependencies
 import React from 'react';
 import { Link, withRouter } from "react-router-dom";
-import { Formik } from "formik";
+import { Formik, validateYupSchema } from "formik";
 import * as Yup from "yup";
+import * as bad_words from "bad-words";
+
 import axios from "axios";
 
 // Project dependencies
@@ -25,20 +27,23 @@ class ProfilePageBase extends React.Component {
         this.state = {
             redirectToReferrer: false,
             disable: true,
-            currentUserID: 1,
+            // currentUserID: 1,
             userData: {
                 fullName: "Julian Haresco",
                 userName: "",
                 location: "",
-                bio: "",
-                followers: "",
-                following: "",
                 birthday: "",
+                bio: "",
+                // Set it to parse -- just in case we don't know how database will
+                //  pull the data
+                followers: parseInt("0"),
+                following: parseInt("0"),
             }
         }
     }
 
     componentDidMount() {
+        
 
         this.getUserData().then((result) => {
             console.log("data");
@@ -48,12 +53,39 @@ class ProfilePageBase extends React.Component {
         });
     }
 
+    profileValidation = Yup.object().shape({
+        // fullName: Yup.string()
+        // .required("Required")
+        // .test('safe-name', 'Please give your actual name', function (value) {
+        //     var filter = new bad_words();
+        //     return filter.isProfane(value) === false;
+        // }),
+        bio: Yup.string()
+        .min(2, "Please enter something in the bio")
+        .max(250, "Too long of a bio"),
+        birthday: Yup.string()
+        .matches(/^(?:0[1-9]|[12]\d|3[01])([\/.-])(?:0[1-9]|1[12])\1(?:19|20)\d\d$/, 
+                'Please enter in "dd/mm/yyyy"'),
+        location: Yup.string()
+        .test('safe-location', 'Please give your actual location', function (value) {
+            var filter = new bad_words();
+            return filter.isProfane(value) === false;
+        })
+        .matches(/[,][ ]/, 'Please specify a location as "City, State"')
+    })
 
     render() {
         return (
             <Formik
                 enableReinitialize
-                initialValues={{
+                initialValues={{                    
+                    // fullName: "",
+                    // userName: "",
+                    // location: "",
+                    // bio: "",
+                    // followers: "",
+                    // following: "",
+                    // birthday: "",
                     fullName: this.state.userData.fullName,
                     userName: this.state.userData.userName,
                     location: this.state.userData.location,
@@ -64,6 +96,7 @@ class ProfilePageBase extends React.Component {
                     editable: false,
                     editState: "Edit"
                 }}
+                
                 onSubmit={(values, { setSubmitting }) => {
                     setSubmitting(false);
 
@@ -83,8 +116,12 @@ class ProfilePageBase extends React.Component {
                     }
 
                     setSubmitting(true);
+                    // dispatchEvent(
+
+                    // )
                 }}
-            >
+                validationSchema = {this.profileValidation}
+                >
 
                 {props => {
                     const {
@@ -103,18 +140,23 @@ class ProfilePageBase extends React.Component {
                                     <div id="main">
 
                                         <div className="userImg">
-                                            <img src={troll} alt={"No Image set"} />
+                                            {/* <img src={troll} alt={"No Image set"} /> */}
                                         </div>
                                         <div className="usrInfo">
                                             <div className="userName">
-                                                <input type="text"
+
+                                                {/* Full Name */}
+                                                <text type="text"
                                                     id="fullName"
                                                     name="fullName"
-                                                    disabled={!values.editable}
+                                                    // disabled={!values.editable}
                                                     value={values.fullName}
                                                     onChange={handleChange}
-                                                    onBlur={handleBlur} />
+                                                    onBlur={handleBlur} >
+                                                    {values.fullName}
+                                                </text>
 
+                                                {/*UserName */}
                                                 <input type="text"
                                                     id="tag"
                                                     name="username"
@@ -123,13 +165,21 @@ class ProfilePageBase extends React.Component {
                                                     onChange={handleChange}
                                                     onBlur={handleBlur} />
                                             </div>
+                                            {/* Bio */}
                                             <div className="usrBio">
-                                                <input type="text"
+                                                <input 
+                                                    type="text"
                                                     name="bio"
                                                     disabled={!values.editable}
                                                     value={values.bio}
                                                     onChange={handleChange}
-                                                    onBlur={handleBlur} />
+                                                    onBlur={handleBlur}
+                                                    className={errors.bio}
+                                                    className="placeholder"
+                                                />
+                                                {errors.bio && touched.bio && (
+                                                    <div className="input-feedback">{errors.bio}</div>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -138,12 +188,49 @@ class ProfilePageBase extends React.Component {
                                         <table>
                                             <tbody>
                                                 <tr>
-                                                    <td > Followers: <input type="text" name="followers" disabled={!values.editable} value={values.followers} onChange={handleChange} onBlur={handleBlur} /> </td>
-                                                    <td > Following: <input type="text" name="following" disabled={!values.editable} value={values.following} onChange={handleChange} onBlur={handleBlur} /> </td>
+                                                    <td > Followers:
+                                                        <text className="follower" type="number" name="followers" onChange={handleChange} onBlur={handleBlur} >
+                                                            {values.followers}
+                                                        </text>
+                                                    </td>
+                                                    
+                                                    <td > Following:
+                                                        <text className="follower" type="number" name="following" onChange={handleChange} onBlur={handleBlur}>
+                                                            {values.following}
+                                                        </text>
+                                                        </td>
                                                 </tr>
+                                            </tbody>
+                                            <tbody>
                                                 <tr>
-                                                    <td> Location: <input type="text" name="location" disabled={!values.editable} value={values.location} onChange={handleChange} onBlur={handleBlur} /> </td>
-                                                    <td> Birthdate: <input type="text" name="birthday" disabled={!values.editable} value={values.birthday} onChange={handleChange} onBlur={handleBlur} /> </td>
+                                                    <td> Location: 
+                                                        <input 
+                                                            type="text" 
+                                                            name="location" 
+                                                            disabled={!values.editable} 
+                                                            value={values.location} 
+                                                            onChange={handleChange} 
+                                                            onBlur={handleBlur}
+                                                            className={errors.location}
+                                                        />
+                                                        {errors.location && touched.location && (
+                                                            <div className="input-feedback">{errors.location}</div>
+                                                        )}
+                                                    </td>
+                                                    <td> Birthdate: 
+                                                        <input 
+                                                            type="text" 
+                                                            name="birthday" 
+                                                            disabled={!values.editable} 
+                                                            value={values.birthday} 
+                                                            onChange={handleChange} 
+                                                            onBlur={handleBlur} 
+                                                            className={errors.birthday && touched.birthday && "Error"}
+                                                        />
+                                                        {errors.birthday && touched.birthday && (
+                                                            <div className="input-feedback">{errors.birthday}</div>
+                                                        )}
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -154,11 +241,11 @@ class ProfilePageBase extends React.Component {
                                     </div>
                                 </div>
 
-                                <div className="personalFeed">
+                                {/* <div className="personalFeed">
                                     <div className="microblog">
                                         Fill with code from feed/microblogs
-                            </div>
-                                </div>
+                                    </div>
+                                </div> */}
                             </div>
                         </form>
                     );

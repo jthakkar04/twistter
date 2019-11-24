@@ -60,7 +60,8 @@ class RegistrationFormBase extends React.Component {
               .then(() => {
                 if (valid === true) {
                   console.log('Success!');
-                  this.props.history.push(ROUTES.LOGIN);
+                  this.props.history.push(ROUTES.PROFILE);
+                  alert('Profile Created!\nContinue making your profile!')
                 }
               });
 
