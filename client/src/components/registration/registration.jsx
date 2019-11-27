@@ -4,6 +4,7 @@ import { withRouter, Link } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import * as bad_words from "bad-words";
+import axios from 'axios';
 
 // Project dependencies
 import { withFirebase } from '../Firebase';
@@ -27,6 +28,8 @@ class RegistrationFormBase extends React.Component {
 
       <Formik
         initialValues={{ 
+          firstname: "",
+          lastname: "",
           username: "", 
           email: "", 
           password: "", 
@@ -62,14 +65,41 @@ class RegistrationFormBase extends React.Component {
                   console.log('Success!');
                   this.props.history.push(ROUTES.PROFILE);
                   alert('Profile Created!\nContinue making your profile!')
+                 console.log("Firebase reg"+ this.props.firebase.doGetCurrentUserId());
+                 axios.put('http://localhost:5000/todo/api/v1.0/register', {
+                    bio: "NONE",
+                    first_name: values.firstname,
+                    last_name: values.lastname,
+                    email: values.email,
+                    num_followers: 0,
+                    num_following: 0,
+                    profile_pic: null,
+                    user_id: this.props.firebase.doGetCurrentUserId(),
+                    username: values.username,
+                    verfied: false
+                  })
+                  .then(function(response){
+                    console.log(response);
+                    
+                  })
+                  .catch(function (error){
+                    console.log(error);
+                  });
                 }
               });
+
+              
+
+              
+              
 
             actions.setSubmitting(false);
         }}
 
         const validationSchema={
           Yup.object().shape({
+            firstname:Yup.string().required("Required"),
+            lastname: Yup.string().required("Required"),
             username: Yup.string()
               .required("Required")
               .test('safe-username', 'Profanity not allowed in usernames', function (value) {
@@ -109,6 +139,27 @@ class RegistrationFormBase extends React.Component {
                 <div className="content">
                   <div className="form">
                     <div className="form-group">
+                      
+                      <label htmlFor="firstname">First Name</label>
+                      <input
+                        type="text"
+                        name="firstname"
+                        placeholder="First name"
+                        value={values.firstname}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                    
+                      />
+                      <label htmlFor="lastname">Last Name</label>
+                      <input
+                        type="text"
+                        name="lastname"
+                        placeholder="Last name"
+                        value={values.lastname}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                    
+                      />
                       <label htmlFor="username">Username</label>
                       <input
                         type="text"
@@ -196,3 +247,6 @@ class RegistrationFormBase extends React.Component {
 
 // Export Form with routing history and Firebase access
 export const RegistrationForm = withRouter(withFirebase(RegistrationFormBase));
+
+
+
