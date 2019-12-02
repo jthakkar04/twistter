@@ -19,6 +19,7 @@ import { TestPage } from '../testPage';
 import { ForgotPasswordPage } from '../forgotPassword';
 import { FeedPage } from '../homePage';
 import { ProfilePage } from '../profilePage';
+import { SettingsPage } from '../settings';
 
 const App = () => (
     <Router>
@@ -33,6 +34,7 @@ const App = () => (
         <Route path={Routes.PASSWORD_FORGET} component={ForgotPasswordPage} />
         <Route path={Routes.FEED} component={FeedPage} />
         <Route path={Routes.PROFILE} component={ProfilePage} />
+        <Route path={Routes.SETTING} component={SettingsPage} />
     </Router>
 );
 

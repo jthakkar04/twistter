@@ -5,7 +5,6 @@ import { Formik, validateYupSchema } from "formik";
 import * as Yup from "yup";
 import * as bad_words from "bad-words";
 
-import axios from "axios";
 
 // Project dependencies
 import { withFirebase } from '../Firebase';
