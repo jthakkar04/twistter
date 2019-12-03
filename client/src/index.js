@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './styles/index.scss';
 import * as serviceWorker from './serviceWorker';
+import { ThemeProvider } from "./ThemeContext";
 
 // Add all components below this page for routing
 import App from './components/App';
@@ -16,9 +17,11 @@ import Firebase, { FirebaseContext } from './components/Firebase';
 
 ReactDOM.render(
     <FirebaseContext.Provider value={new Firebase()}>
-        <App />
+        <ThemeProvider>
+            <App />
+        </ThemeProvider>
     </FirebaseContext.Provider>,
-     document.getElementById("root")
+    document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
