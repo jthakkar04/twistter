@@ -9,7 +9,9 @@ body {
 }
 
 .logo {
-  position:absolute;
+  min-width: 15%;
+  max-width: 368px;
+  height: auto;
   left:0;
   top:0;
 }
@@ -18,6 +20,7 @@ body {
   background-color: #067096;
   position: absolute;
 }
+
 
 .registration {
   margin-top: 1em;
@@ -63,6 +66,7 @@ body {
       }
     }
     
+
     // Field CSS
     .form { 
       display: flex;
@@ -125,6 +129,42 @@ body {
   }
 }
 
+.container{
+  display: flex;
+  // flex-direction: row;
+  height: 100vh;
+  width: 150vh;   
+  overflow-y: scroll;
+
+}
+.twist{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  .microBody{
+    display: flex;
+    flex-direction: column;
+    // flex:2;
+    font-size: 10px;
+    // flex-direction: column;
+  }
+}
+
+  .microblogs{
+    // flex:1;
+    display: flex;
+    flex-direction: row;
+    margin-top:10px;
+    background-color: rgba(229,229,229,0.5);
+    // background-color: 50%;
+    color:black;
+    font-size:10px;
+    text-align: center;
+    vertical-align: middle;
+    // opacity: 50%;
+  }
+
+
 //Button
 .btn {
   font-size: 21px;
@@ -143,4 +183,43 @@ body {
   &:focus {
     outline: none;
   }
+}
+
+.flex-container {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  
+  // -ms-box-orient: horizontal;
+  // display: -webkit-box;
+  // display: -moz-box;
+  // display: -ms-flexbox;
+  // display: -moz-flex;
+  // display: -webkit-flex;
+  display: flex;
+  // min-width: 100%;
+  width:100%;
+}
+
+.column { 
+  -webkit-flex-direction: column; 
+  flex-direction: column; 
+  // float: left;
+}
+.column li {
+  background: deepskyblue;
+}
+
+.flex-item {
+  background: deepskyblue;
+  padding: 5px;
+  width: 100%;
+  height: 50px;
+  margin: 5px;
+  
+  line-height: 50px;
+  color: white;
+  font-weight: bold;
+  font-size: 2em;
+  text-align: center;
 }

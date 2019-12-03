@@ -58,8 +58,10 @@
 
                 #fullName{
                     // border: 1px solid black;
-                    width: 50%;
-                    font-size: 20px;
+                    width: 115%;
+                    font-size: 17px;
+                    // color: #067096;
+                    background: none;
                 }
                 #tag{
                     // border: 1px solid black;
@@ -69,7 +71,11 @@
                     padding-top: 5px;
                     font-size: 12px;
                 }
-                // align-content: flex-end;
+                input:disabled {
+                    background: none;
+                    color: #033446;
+                }
+
                 input {
                     border: none;
                     background-color: rgba(189, 189, 189, 0.822);
@@ -78,47 +84,96 @@
 
             .usrBio {
                 justify-content: left;
-                font-size: 10;
-
                 margin-top: 10px;
                 // border: 1px solid black;
+                input:disabled {
+                    background: none;
+                    color: #033446;
+                }
+
                 input {
+                    font-size: 12px;
                     border: none;
                     width: 100%;
                     max-height: 300px;
                     min-height: 100px;
-                    background-color: rgba(189, 189, 189, 0.822);
+                    background-color: white;
+                    color: black;
                 }
             }
         }
     }
 
+    .input.error {
+        border-color: red;
+        font-family: "Helvetica","Open Sans", sans-serif;
+      }
+      
+      .input-feedback {
+        color: rgb(235, 54, 54);
+        margin-top: 5px;
+        // margin-left: 25px;
+        font-size: 9px;
+        font-weight: bold;
+        // margin-bottom: 20px;
+        font-family: "Helvetica","Open Sans", sans-serif;
+      }
+
     .userStats{
-        margin: 10px;
-        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        width: 85%;
+        padding-top: 1.5vh;
+        padding-left: 5vh;
+        padding-bottom: 1.5vh;
 
         background-color: rgba(189, 189, 189, 0.822);
         box-shadow: 0px 0px 12px 2px rgba(15, 15, 15, 0.2);
         border-radius: 4px;
+
+        .following-label {
+            margin-right: -100px;
+        }
+
         table {
             text-align: left;
-            // border 1px solid black;
             width: 100%;
-            height: 40px;
-            margin-left: 10px;
-            margin-right: 10px;
+            max-height: 40px;
         }
-          
+
+        .follower {
+            padding: 5px;
+            // width: 1000%;
+            margin-left: 22.5%;
+            text-align: center;
+        }
+
+        input:disabled {
+            background: none;
+            // background-color: rgba(189, 189, 189, 0.822);
+            color:#033446;
+        }
+
         input {
+            font-size: 15px;
             border: none;
-            padding: 2px;
+            margin-left: 2.5%;
+            text-align: center;
             width: 50%;
-            background-color: rgba(189, 189, 189, 0.822);
+            background-color: white;
+            color: black;
         }
+
+        // input {
+        //     width: 50%;
+        //     color: #067096;
+        //     background-color: rgba(189, 189, 189, 0.822);
+        // }
     }
 
     .editButtons{
         display: flex;
+        margin-left: 5%;
         // border 1px solid black;
         width: 100%;
         .spacer {
@@ -138,8 +193,8 @@
             transition: all 250ms ease-in-out;
             cursor: pointer;
             &:hover {
-                background-color: #fcfcfcf3;
-                color: #5CCAF2;
+                background-color: #5CCAF2;
+                color: white;
             }
             &:focus {
                 outline: none;
