@@ -97,7 +97,7 @@ export class MicroBlog extends React.Component {
                     width: 72,
                     }}
                 /> */}
-                {/* <div> */}
+                <div className="twist">
                     <h2 style ={{ textAlign:"center" }}>
                     {microblog.text}
                     </h2>
@@ -106,7 +106,7 @@ export class MicroBlog extends React.Component {
                         <p style={{ color:"#067096" }}>{microblog.time}</p>
                     </div>
                 </div>
-                {/* </div> */}
+                </div>
             </Fragment>
             ))}
             <hr />
