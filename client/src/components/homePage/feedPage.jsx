@@ -1,17 +1,11 @@
 // Dependencies
 import React, { Component, Fragment } from 'react';
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
 // Project dependencies
-import { withFirebase } from '../Firebase';
-import * as ROUTES from '../../constants/app_routing';
-
-import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
-import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-
-import { render } from "react-dom";
+import { AuthUserContext, withAuthorization } from '../SessionHandler'
 import request from "superagent";
 import debounce from "lodash.debounce";
 
@@ -21,9 +15,9 @@ import APIClient from '../apiClient/apiClient';
 import Microblog from '../microblog/microblog';
 
 export const FeedPage = () => (
-    <div>
-        <FeedPageForm />
-    </div>
+  <div>
+    <FeedPageForm />
+  </div>
 );
 
 const BASE_URI = 'http://localhost:5000/todo/api/v1.0';
@@ -59,6 +53,9 @@ class FeedPageBase extends React.Component {
           </div>
         );
       }
-    }
+    // );
+  }
+// }
 
-export const FeedPageForm = withRouter(withFirebase(FeedPageBase));
+const condition = authUser => !!authUser;
+export const FeedPageForm = withAuthorization(condition)(FeedPageBase);

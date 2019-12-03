@@ -26,18 +26,18 @@ class LoginFormBase extends React.Component {
     return (
       <Formik
         initialValues={{ email: "", password: "" }}
-        onSubmit={ async (values, { setSubmitting }) => {
-            // console.log("Logging in", values);
-            setSubmitting(false);
+        onSubmit={async (values, { setSubmitting }) => {
+          // console.log("Logging in", values);
+          setSubmitting(false);
 
-            // Firebase log-in auth
-            var valid = false;
-            this.props.firebase.doSignInWithEmailAndPassword(values.email, values.password)
-            .then(function(firebaseUser) {
+          // Firebase log-in auth
+          var valid = false;
+          this.props.firebase.doSignInWithEmailAndPassword(values.email, values.password)
+            .then(function (firebaseUser) {
               // console.log('Succesful login! Redirecting to main page!');
               valid = true;
             })
-            .catch(function(error) {
+            .catch(function (error) {
               var errorCode = error.code;
               var errorMessage = error.message;
               if (errorCode === 'auth/wrong-password') {
@@ -54,7 +54,7 @@ class LoginFormBase extends React.Component {
               }
             })
             .then(() => {
-              if (valid === true){
+              if (valid === true) {
                 // console.log('Success!');
 
                 // Outputs user UID to console
@@ -71,7 +71,7 @@ class LoginFormBase extends React.Component {
                 //   }
                 // });
               }
-            })  
+            })
         }}
 
         validationSchema={Yup.object().shape({
@@ -99,56 +99,56 @@ class LoginFormBase extends React.Component {
 
             <form onSubmit={handleSubmit}>
               <div className="login">
-              <div className="base-container" ref={props.containerRef}>
-                <div className="header">Login</div>
-                <div className="content">
-                  <div className="form">
-                    <div className="form-group">
-                      <label htmlFor="email">Email</label>
-                      <input
-                        type="text"
-                        name="email"
-                        placeholder="Enter your Email"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.email}
-                      />
-                      {errors.email && touched.email && (
-                        <div className="input-feedback">{errors.email}</div>
-                      )}
-                    </div>
+                <div className="base-container" ref={props.containerRef}>
+                  <div className="header">Login</div>
+                  <div className="content">
+                    <div className="form">
+                      <div className="form-group">
+                        <label htmlFor="email">Email</label>
+                        <input
+                          type="text"
+                          name="email"
+                          placeholder="Enter your Email"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.email}
+                        />
+                        {errors.email && touched.email && (
+                          <div className="input-feedback">{errors.email}</div>
+                        )}
+                      </div>
 
-                    <div className="form-group">
-                      <label htmlFor="password">Password</label>
-                      <input
-                        type="password"
-                        name="password"
-                        placeholder="Enter your Password"
-                        value={values.password}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className={errors.password && touched.password && "error"}
-                      />
-                      {errors.password && touched.password && (
-                        <div className="input-feedback">{errors.password}</div>
-                      )}
-                    </div>
-                    <Link to="/forgot">
-                      <div className="forgotPassword">Forgot Password?</div>
+                      <div className="form-group">
+                        <label htmlFor="password">Password</label>
+                        <input
+                          type="password"
+                          name="password"
+                          placeholder="Enter your Password"
+                          value={values.password}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          className={errors.password && touched.password && "error"}
+                        />
+                        {errors.password && touched.password && (
+                          <div className="input-feedback">{errors.password}</div>
+                        )}
+                      </div>
+                      <Link to="/forgot">
+                        <div className="forgotPassword">Forgot Password?</div>
                       </Link>
+                    </div>
+                  </div>
+                  <div className="footer">
+                    <button type="submit" className="btn" disabled={isSubmitting}>
+                      Login
+                    </button>
+                    <Link to={ROUTES.REGISTER}>
+                      <button type="button" className="btn">
+                        Sign-up
+                    </button>
+                    </Link>
                   </div>
                 </div>
-                <div className="footer">
-                  <button type="submit" className="btn" disabled={isSubmitting}>
-                    Login
-                    </button>
-                  <Link to={ROUTES.REGISTER}>
-                    <button type="button" className="btn">
-                      Sign-up
-                    </button>
-                  </Link>
-                </div>
-              </div>
               </div>
             </form>
 

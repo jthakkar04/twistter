@@ -9,7 +9,9 @@ body {
 }
 
 .logo {
-  position:absolute;
+  min-width: 15%;
+  max-width: 368px;
+  height: auto;
   left:0;
   top:0;
 }

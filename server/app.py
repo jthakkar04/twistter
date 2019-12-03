@@ -2,8 +2,8 @@ from flask import Flask, json, request, render_template, redirect, jsonify, make
 from flask_cors import CORS
 import mysql.connector
 
-cnx=mysql.connector.connect(
-    host = "twistter.cnt8cdemn92m.us-east-2.rds.amazonaws.com",
+cnx = mysql.connector.connect(
+    host="twistter.cnt8cdemn92m.us-east-2.rds.amazonaws.com",
     user="admin",
     passwd="gotrainsgo",
     auth_plugin='mysql_native_password',
@@ -17,21 +17,22 @@ CORS(app)
 
 @app.route('/todo/api/v1.0/profile/<userId>', methods=['PUT'])
 def alter_user(userId):
-    userInfo=request.json
+    userInfo = request.json
 
-    username=userInfo['username']
-    email=userInfo['email']
-    firstName=userInfo['first_name']
-    lastName=userInfo['last_name']
-    numFollowers= userInfo['num_followers']
-    numFollowing=userInfo['num_following']
-    profilePic=userInfo['profile_pic']
-    verified= userInfo['verified']
-    bio=userInfo['bio']
+    username = userInfo['username']
+    email = userInfo['email']
+    firstName = userInfo['first_name']
+    lastName = userInfo['last_name']
+    numFollowers = userInfo['num_followers']
+    numFollowing = userInfo['num_following']
+    profilePic = userInfo['profile_pic']
+    verified = userInfo['verified']
+    bio = userInfo['bio']
 
     query = "UPDATE users SET username=%s, email=%s, first_name=%s, last_name=%s, num_followers=%s, num_following=%s, profile_pic=%s, verified=%s, bio=%s) WHERE user_id=%s"
 
-    vals=(username, email, firstName, lastName, numFollowers, numFollowing, profilePic, verified, bio,userId,)
+    vals = (username, email, firstName, lastName, numFollowers,
+            numFollowing, profilePic, verified, bio, userId,)
 
     cursor.execute(query, vals)
     cnx.commit()
@@ -40,10 +41,10 @@ def alter_user(userId):
 #route for getting specific tweet
 @app.route('/todo/api/v1.0/feed/<userId>/<int:tweetId>', methods=['GET'])
 def get_tweet(userId, tweetId):
-    query="SELECT microblogs.text, users.username FROM users, microblogs WHERE microblogs.twist_id=%s"
-    val=(tweetId,)
-    cursor.execute(query,val)
-    result=cursor.fetchall()
+    query = "SELECT microblogs.text, users.username FROM users, microblogs WHERE microblogs.twist_id=%s"
+    val = (tweetId,)
+    cursor.execute(query, val)
+    result = cursor.fetchall()
     print(result)
 
     return jsonify({
@@ -53,46 +54,41 @@ def get_tweet(userId, tweetId):
 
 @app.route('/todo/api/v1.0/feed/<userId>', methods=['GET'])
 def get_all_tweets_from_user(userId):
-    query="SELECT * FROM microblogs WHERE user_id=%s"
-    val=(userId,)
-    cursor.execute(query,val)
-    result=cursor.fetchall()
+    query = "SELECT * FROM microblogs WHERE user_id=%s"
+    val = (userId,)
+    cursor.execute(query, val)
+    result = cursor.fetchall()
 
     return jsonify(result)
 
 
 @app.route('/todo/api/v1.0/profile/<userId>', methods=['GET'])
 def get_userProfile(userId):
-    #import pdb; pdb.set_trace()
-    # query="SELECT * FROM users WHERE users.user_id=%s"
-    # val=(userId,)
-    # cursor.execute(query,val)
-    # return jsonify(cursor.fetchone())
-    query="SELECT * FROM users WHERE users.user_id=%s"
-    val=(userId,)
-    cursor.execute(query,val)
-    result=jsonify(cursor.fetchone())
-    result.headers.add('Access-Control-Allow-Origin', '*')
-    return result
+    print(userId)
+    query = "SELECT * FROM users WHERE users.user_id=%s"
+    val = (userId,)
+    cursor.execute(query, val)
+    return jsonify(cursor.fetchone())
 
 @app.route('/todo/api/v1.0/feed/<userId>',methods = ['PUT'])
 def insert_microblog(userId):
-    query="INSERT INTO microblogs (text, timestamp, user_id, link, is_reply) VALUES (%s, %s, %s, %s, %s)"
-    tweetText=request.json["text"]
-    timestamp=request.json["timestamp"]
-    link=request.json["link"]
-    is_reply=request.json["reply"]
-    vals=(tweetText,timestamp,userId,link,is_reply,)
+    query = "INSERT INTO microblogs (text, timestamp, user_id, link, is_reply) VALUES (%s, %s, %s, %s, %s)"
+    tweetText = request.json["text"]
+    timestamp = request.json["timestamp"]
+    link = request.json["link"]
+    is_reply = request.json["reply"]
+    vals = (tweetText, timestamp, userId, link, is_reply,)
 
-    cursor.execute(query,vals)
+    cursor.execute(query, vals)
     cnx.commit()
     return '200'
 
-@app.route('/todo/api/v1.0/login/<username>', methods =['GET'])
+
+@app.route('/todo/api/v1.0/login/<username>', methods=['GET'])
 def get_user_id(username):
     query = "SELECT users.user_id FROM users WHERE users.username=%s"
-    val=(username,)
-    cursor.execute(query,val)
+    val = (username,)
+    cursor.execute(query, val)
 
     return jsonify(cursor.fetchone())
 
