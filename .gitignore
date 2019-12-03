@@ -1,2 +1,4 @@
 # Ignore the following folders
 node_modules/
+.DS_STORE
+.vscode/

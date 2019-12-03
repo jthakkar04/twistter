@@ -63,7 +63,8 @@ class RegistrationFormBase extends React.Component {
               .then(() => {
                 if (valid === true) {
                   console.log('Success!');
-                  this.props.history.push(ROUTES.LOGIN);
+                  this.props.history.push(ROUTES.PROFILE);
+                  alert('Profile Created!\nContinue making your profile!')
                  console.log("Firebase reg"+ this.props.firebase.doGetCurrentUserId());
                  axios.put('http://localhost:5000/todo/api/v1.0/register', {
                     bio: "NONE",
