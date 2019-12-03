@@ -28,6 +28,7 @@ class ForgotPasswordBase extends React.Component{
           <Formik
             initialValues={{ email: "", password: "" }}
             onSubmit={ async (values, { setSubmitting }) => {
+
                 // console.log("Logging in", values);
                 setSubmitting(false);
     
@@ -112,29 +113,27 @@ class ForgotPasswordBase extends React.Component{
                         </div>
     
                         <div className="form-group">
-                          <label htmlFor="password">Password</label>
+                          <label htmlFor="password">Confirmation Code</label>
                           <input
-                            type="password"
+                            type="text"
                             name="password"
-                            placeholder="Enter your Password"
+                            placeholder="Enter your Confirmation Code"
                             value={values.password}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            className={errors.password && touched.password && "error"}
                           />
-                          {errors.password && touched.password && (
-                            <div className="input-feedback">{errors.password}</div>
-                          )}
                         </div>
-                        <Link to="/forgot">
-                          <div className="forgotPassword">Forgot Password?</div>
-                          </Link>
+                        <button type="submit" className="btn" disabled={isSubmitting}>
+                          Send Code
+                        </button>
                       </div>
                     </div>
                     <div className="footer">
-                      <button type="submit" className="btn" disabled={isSubmitting}>
+                      <Link to={ROUTES.LOGIN}>
+                      <button type="submit" className="btn">
                         Login
                         </button>
+                      </Link>
                       <Link to={ROUTES.REGISTER}>
                         <button type="button" className="btn">
                           Sign-up
