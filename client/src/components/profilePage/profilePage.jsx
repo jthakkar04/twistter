@@ -44,7 +44,7 @@ class ProfilePageBase extends React.Component {
     }
 
     componentDidMount() {
-        
+
 
         this.getUserData().then((result) => {
             console.log("data");
@@ -62,24 +62,24 @@ class ProfilePageBase extends React.Component {
         //     return filter.isProfane(value) === false;
         // }),
         bio: Yup.string()
-        .min(2, "Please enter something in the bio")
-        .max(250, "Too long of a bio"),
+            .min(2, "Please enter something in the bio")
+            .max(250, "Too long of a bio"),
         birthday: Yup.string()
-        .matches(/^(?:0[1-9]|[12]\d|3[01])([\/.-])(?:0[1-9]|1[12])\1(?:19|20)\d\d$/, 
+            .matches(/^(?:0[1-9]|[12]\d|3[01])([\/.-])(?:0[1-9]|1[12])\1(?:19|20)\d\d$/,
                 'Please enter in "dd/mm/yyyy"'),
         location: Yup.string()
-        .test('safe-location', 'Please give your actual location', function (value) {
-            var filter = new bad_words();
-            return filter.isProfane(value) === false;
-        })
-        .matches(/[,][ ]/, 'Please specify a location as "City, State"')
+            .test('safe-location', 'Please give your actual location', function (value) {
+                var filter = new bad_words();
+                return filter.isProfane(value) === false;
+            })
+            .matches(/[,][ ]/, 'Please specify a location as "City, State"')
     })
 
     render() {
         return (
             <Formik
                 enableReinitialize
-                initialValues={{                    
+                initialValues={{
                     // fullName: "",
                     // userName: "",
                     // location: "",
@@ -97,7 +97,7 @@ class ProfilePageBase extends React.Component {
                     editable: false,
                     editState: "Edit"
                 }}
-                
+
                 onSubmit={(values, { setSubmitting }) => {
                     setSubmitting(false);
 
@@ -121,8 +121,8 @@ class ProfilePageBase extends React.Component {
 
                     // )
                 }}
-                validationSchema = {this.profileValidation}
-                >
+                validationSchema={this.profileValidation}
+            >
 
                 {props => {
                     const {
@@ -168,7 +168,7 @@ class ProfilePageBase extends React.Component {
                                             </div>
                                             {/* Bio */}
                                             <div className="usrBio">
-                                                <input 
+                                                <input
                                                     type="text"
                                                     name="bio"
                                                     disabled={!values.editable}
@@ -194,23 +194,23 @@ class ProfilePageBase extends React.Component {
                                                             {values.followers}
                                                         </text>
                                                     </td>
-                                                    
+
                                                     <td > Following:
                                                         <text className="follower" type="number" name="following" onChange={handleChange} onBlur={handleBlur}>
                                                             {values.following}
                                                         </text>
-                                                        </td>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                             <tbody>
                                                 <tr>
-                                                    <td> Location: 
-                                                        <input 
-                                                            type="text" 
-                                                            name="location" 
-                                                            disabled={!values.editable} 
-                                                            value={values.location} 
-                                                            onChange={handleChange} 
+                                                    <td> Location:
+                                                        <input
+                                                            type="text"
+                                                            name="location"
+                                                            disabled={!values.editable}
+                                                            value={values.location}
+                                                            onChange={handleChange}
                                                             onBlur={handleBlur}
                                                             className={errors.location}
                                                         />
@@ -218,14 +218,14 @@ class ProfilePageBase extends React.Component {
                                                             <div className="input-feedback">{errors.location}</div>
                                                         )}
                                                     </td>
-                                                    <td> Birthdate: 
-                                                        <input 
-                                                            type="text" 
-                                                            name="birthday" 
-                                                            disabled={!values.editable} 
-                                                            value={values.birthday} 
-                                                            onChange={handleChange} 
-                                                            onBlur={handleBlur} 
+                                                    <td> Birthdate:
+                                                        <input
+                                                            type="text"
+                                                            name="birthday"
+                                                            disabled={!values.editable}
+                                                            value={values.birthday}
+                                                            onChange={handleChange}
+                                                            onBlur={handleBlur}
                                                             className={errors.birthday && touched.birthday && "Error"}
                                                         />
                                                         {errors.birthday && touched.birthday && (
