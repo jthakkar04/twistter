@@ -74,28 +74,12 @@ class SettingPageBase extends React.Component {
                 <div className="settingOption" >
                     <p id="label">Delete Profile</p>
                     <Button variant="danger" size="sm" onClick={this.deleteProfile}>Delete Profile</Button>
-                    {/* <Modal show={this.state.show} onHide={this.handleClose}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Warning!</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>You are about to delete your account. Are you sure?</Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={this.handleClose}>
-                                No
-                        </Button>
-                            <Button variant="primary" onClick={this.handleClose}>
-                                Yes
-                        </Button>
-                        </Modal.Footer>
-                    </Modal> */}
                 </div>
                 <div className="settingOption">
                     <p id="label">Toggle Color Scheme</p>
                     <Button variant="primary" size="sm" onClick={this.changeColor}>Change Theme</Button>
                 </div>
                 <div className="topicEditor">
-
-
                 </div >
             </div >
 
