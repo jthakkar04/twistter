@@ -34,38 +34,14 @@ class ForgotPasswordBase extends React.Component{
     
                 // Firebase log-in auth
                 var valid = false;
-                this.props.firebase.doSignInWithEmailAndPassword(values.email, values.password)
-                .then(function(firebaseUser) {
-                  // console.log('Succesful login! Redirecting to main page!');
-                  valid = true;
-                })
-                .catch(function(error) {
-                  var errorCode = error.code;
-                  var errorMessage = error.message;
-                  if (errorCode === 'auth/wrong-password') {
-                    alert('Wrong password!');
-                  }
-                  else if (errorCode === 'auth/invalid-email') {
-                    alert('Invalid email!');
-                  }
-                  else if (errorCode === 'user-not-found') {
-                    alert('Profile with given email not found!');
-                  }
-                  else {
-                    alert(errorMessage);
-                  }
-                })
-                .then(() => {
-                  if (valid === true){
-                    // console.log('Success!');
-    
-                    // Outputs user UID to console
-                    var user = this.props.firebase.doGetCurrentUser()
-                    console.log(user.uid)
-    
-                    this.props.history.push(ROUTES.FEED);
-                  }
-                })  
+                this.props.firebase.doPasswordReset(values.email).then(function() {
+                  // Email sent.
+                }).catch(function(error) {
+                  // An error happened.
+                });
+
+                // TODO MAKE HTML ALERT SAYING EMAIL WAS SENT
+                
             }}
     
             validationSchema={Yup.object().shape({
