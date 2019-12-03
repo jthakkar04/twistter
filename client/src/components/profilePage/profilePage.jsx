@@ -8,8 +8,7 @@ import * as bad_words from "bad-words";
 import axios from "axios";
 
 // Project dependencies
-import { withFirebase } from '../Firebase';
-import { AuthUserContext, withAuthorization } from '../SessionHandler';
+import { withAuthorization } from '../SessionHandler'
 import SignOutButton from '../SignOut';
 import troll from "../../images/TrollFace.jpg";
 import APIClient from '../apiClient';
@@ -25,10 +24,9 @@ class ProfilePageBase extends React.Component {
     // Set state so it can be redirected if not logged in
     constructor(props) {
         super(props);
+        console.log(props)
         this.state = {
-            redirectToReferrer: false,
-            disable: true,
-            // currentUserID: 1,
+            loggedInUser: this.props.firebase.doGetCurrentUserId(),
             userData: {
                 fullName: "Julian Haresco",
                 userName: "",
@@ -44,23 +42,10 @@ class ProfilePageBase extends React.Component {
     }
 
     componentDidMount() {
-
-
-        this.getUserData().then((result) => {
-            console.log("data");
-            let data = result.data;
-            console.log(data);
-            this.renderUserData(data);
-        });
+        this.getUserData();
     }
 
     profileValidation = Yup.object().shape({
-        // fullName: Yup.string()
-        // .required("Required")
-        // .test('safe-name', 'Please give your actual name', function (value) {
-        //     var filter = new bad_words();
-        //     return filter.isProfane(value) === false;
-        // }),
         bio: Yup.string()
             .min(2, "Please enter something in the bio")
             .max(250, "Too long of a bio"),
@@ -80,13 +65,6 @@ class ProfilePageBase extends React.Component {
             <Formik
                 enableReinitialize
                 initialValues={{
-                    // fullName: "",
-                    // userName: "",
-                    // location: "",
-                    // bio: "",
-                    // followers: "",
-                    // following: "",
-                    // birthday: "",
                     fullName: this.state.userData.fullName,
                     userName: this.state.userData.userName,
                     location: this.state.userData.location,
@@ -117,9 +95,6 @@ class ProfilePageBase extends React.Component {
                     }
 
                     setSubmitting(true);
-                    // dispatchEvent(
-
-                    // )
                 }}
                 validationSchema={this.profileValidation}
             >
@@ -259,23 +234,23 @@ class ProfilePageBase extends React.Component {
     };
 
     async getUserData() {
-        let path = '/profile/' + this.state.currentUserID;
-        let json = await APIClient.get(path);
-        return json;
-    }
+        let path = '/profile/' + this.state.loggedInUser;
 
-    renderUserData(data) {
-        this.setState({
-            userData: {
-                fullName: data.first_name + " " + data.last_name,
-                userName: data.username,
-                location: data.location,
-                bio: data.bio,
-                followers: data.followers,
-                following: data.following,
-                birthday: data.birthday,
-            }
-        });
+        await APIClient.get(path).then(
+            (result) => {
+                let data = result.data
+                this.setState({
+                    userData: {
+                        fullName: data.first_name + " " + data.last_name,
+                        userName: data.username,
+                        location: data.location,
+                        bio: data.bio,
+                        followers: parseInt(data.followers),
+                        following: parseInt(data.following),
+                        birthday: data.birthday,
+                    }
+                });
+            });
     }
 
     async updateProfile(data) {
@@ -298,5 +273,5 @@ class ProfilePageBase extends React.Component {
 
 }
 
-
-export const ProfileForm = withRouter(withFirebase(ProfilePageBase));
+const condition = authUser => !!authUser;
+export const ProfileForm = withAuthorization(condition)(ProfilePageBase);
