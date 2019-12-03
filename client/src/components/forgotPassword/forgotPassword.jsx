@@ -40,7 +40,6 @@ class ForgotPasswordBase extends React.Component{
                   // An error happened.
                 });
 
-                // TODO MAKE HTML ALERT SAYING EMAIL WAS SENT
                 
             }}
     
@@ -48,10 +47,7 @@ class ForgotPasswordBase extends React.Component{
               email: Yup.string()
                 .email('Invalid email')
                 .required('Required'),
-              password: Yup.string()
-                .min(8, "Invalid Password") // Keeps the min length of password to be 8 characters
-                .required("Required")
-                .matches(/(?=.*[0-9])/, "Invalid Password") // Makes sure the password has a number in there
+              
             })}
           >
     
@@ -87,20 +83,8 @@ class ForgotPasswordBase extends React.Component{
                             <div className="input-feedback">{errors.email}</div>
                           )}
                         </div>
-    
-                        <div className="form-group">
-                          <label htmlFor="password">Confirmation Code</label>
-                          <input
-                            type="text"
-                            name="password"
-                            placeholder="Enter your Confirmation Code"
-                            value={values.password}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                          />
-                        </div>
                         <button type="submit" className="btn" disabled={isSubmitting}>
-                          Send Code
+                          Send Reset Email
                         </button>
                       </div>
                     </div>
@@ -108,11 +92,6 @@ class ForgotPasswordBase extends React.Component{
                       <Link to={ROUTES.LOGIN}>
                       <button type="submit" className="btn">
                         Login
-                        </button>
-                      </Link>
-                      <Link to={ROUTES.REGISTER}>
-                        <button type="button" className="btn">
-                          Sign-up
                         </button>
                       </Link>
                     </div>
