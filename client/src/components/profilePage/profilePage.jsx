@@ -12,7 +12,7 @@ import { withFirebase } from '../Firebase';
 import { AuthUserContext, withAuthorization } from '../SessionHandler';
 import SignOutButton from '../SignOut';
 import troll from "../../images/TrollFace.jpg";
-import APIClient from '../ApiClient';
+import APIClient from '../apiClient';
 
 export const ProfilePage = () => (
     <div>
