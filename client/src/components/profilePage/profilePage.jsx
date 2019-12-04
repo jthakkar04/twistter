@@ -24,19 +24,19 @@ class ProfilePageBase extends React.Component {
     // Set state so it can be redirected if not logged in
     constructor(props) {
         super(props);
-        console.log(props)
         this.state = {
             loggedInUser: this.props.firebase.doGetCurrentUserId(),
             userData: {
+                bio: "NONE",
+                email: "",
                 fullName: "Julian Haresco",
-                userName: "",
-                location: "",
-                birthday: "",
-                bio: "",
-                // Set it to parse -- just in case we don't know how database will
-                //  pull the data
                 followers: parseInt("0"),
                 following: parseInt("0"),
+                profile_pic: null,
+                username: "",
+                verified: true,
+                // Set it to parse -- just in case we don't know how database will
+                //  pull the data
             }
         }
     }
@@ -48,16 +48,16 @@ class ProfilePageBase extends React.Component {
     profileValidation = Yup.object().shape({
         bio: Yup.string()
             .min(2, "Please enter something in the bio")
-            .max(250, "Too long of a bio"),
-        birthday: Yup.string()
-            .matches(/^(?:0[1-9]|[12]\d|3[01])([\/.-])(?:0[1-9]|1[12])\1(?:19|20)\d\d$/,
-                'Please enter in "dd/mm/yyyy"'),
-        location: Yup.string()
-            .test('safe-location', 'Please give your actual location', function (value) {
-                var filter = new bad_words();
-                return filter.isProfane(value) === false;
-            })
-            .matches(/[,][ ]/, 'Please specify a location as "City, State"')
+            .max(250, "Too long of a bio")
+        // birthday: Yup.string()
+        //     .matches(/^(?:0[1-9]|[12]\d|3[01])([\/.-])(?:0[1-9]|1[12])\1(?:19|20)\d\d$/,
+        //         'Please enter in "dd/mm/yyyy"'),
+        // location: Yup.string()
+        //     .test('safe-location', 'Please give your actual location', function (value) {
+        //         var filter = new bad_words();
+        //         return filter.isProfane(value) === false;
+        //     })
+        //     .matches(/[,][ ]/, 'Please specify a location as "City, State"')
     })
 
     render() {
@@ -66,7 +66,7 @@ class ProfilePageBase extends React.Component {
                 enableReinitialize
                 initialValues={{
                     fullName: this.state.userData.fullName,
-                    userName: this.state.userData.userName,
+                    username: this.state.userData.username,
                     location: this.state.userData.location,
                     bio: this.state.userData.bio,
                     followers: this.state.userData.followers,
@@ -88,9 +88,7 @@ class ProfilePageBase extends React.Component {
                         // Create JSON string for values and send request
                         values.editable = false
                         values.editState = "Edit";
-                        this.updateProfile(values).then((response) => {
-                            console.log(response);
-                        });
+                        this.updateProfile(values);
                         console.log("sending edit")
                     }
 
@@ -115,11 +113,11 @@ class ProfilePageBase extends React.Component {
                                 <div className="profile">
                                     <div id="main">
 
-                                        <div className="userImg">
-                                            {/* <img src={troll} alt={"No Image set"} /> */}
-                                        </div>
+                                        {/* <div className="userImg">
+                                            {/* <img src={troll} alt={"No Image set"} />
+                                         </div> */}
                                         <div className="usrInfo">
-                                            <div className="userName">
+                                            <div className="username">
 
                                                 {/* Full Name */}
                                                 <text type="text"
@@ -137,12 +135,13 @@ class ProfilePageBase extends React.Component {
                                                     id="tag"
                                                     name="username"
                                                     disabled={!values.editable}
-                                                    value={values.userName}
+                                                    value={values.username}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur} />
                                             </div>
                                             {/* Bio */}
                                             <div className="usrBio">
+                                                <h4> Bio</h4>
                                                 <input
                                                     type="text"
                                                     name="bio"
@@ -177,7 +176,7 @@ class ProfilePageBase extends React.Component {
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                            <tbody>
+                                            {/* <tbody>
                                                 <tr>
                                                     <td> Location:
                                                         <input
@@ -208,7 +207,7 @@ class ProfilePageBase extends React.Component {
                                                         )}
                                                     </td>
                                                 </tr>
-                                            </tbody>
+                                            </tbody> */}
                                         </table>
 
                                     </div>
@@ -239,33 +238,35 @@ class ProfilePageBase extends React.Component {
         await APIClient.get(path).then(
             (result) => {
                 let data = result.data
+                console.log(data)
                 this.setState({
                     userData: {
                         fullName: data.first_name + " " + data.last_name,
-                        userName: data.username,
-                        location: data.location,
+                        username: data.username,
+                        email: data.email,
                         bio: data.bio,
-                        followers: parseInt(data.followers),
-                        following: parseInt(data.following),
-                        birthday: data.birthday,
+                        followers: parseInt(data.num_followers),
+                        following: parseInt(data.num_following),
                     }
                 });
             });
     }
 
     async updateProfile(data) {
-        let path = '/profile/' + this.state.currentUserID;
+        let path = '/profile/' + this.state.loggedInUser;
         let nameSplit = data.fullName.split(" ");
-        // console.log(nameSplit)
-        let json = await APIClient.post(path, {
+        console.log(data)
+        let json = await APIClient.put(path, {
+
+            username: data.username,
+            email: this.state.userData.email,
             first_name: nameSplit[0],
             last_name: nameSplit[1],
-            userName: data.username,
-            location: data.location,
+            num_followers: data.followers,
+            num_following: data.following,
+            profile_pic: null,
+            verified: true,
             bio: data.bio,
-            followers: data.followers,
-            following: data.following,
-            birthday: data.birthday,
         });
         return json;
     }
