@@ -1,23 +1,7 @@
 // Dependencies
-import React, { Component, Fragment } from 'react';
-import { Link, withRouter } from "react-router-dom";
-import { Formik } from "formik";
-import * as Yup from "yup";
-
-
-
-// import * as APIClient from '../../apiClient/apiClient';
-// import * as clients from '../apiClient/apiClient';
+import React, { Fragment } from 'react';
 
 // Project dependencies
-import { withFirebase } from '../Firebase';
-import * as ROUTES from '../../constants/app_routing';
-
-import SideNav, { Toggle, Nav, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
-import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-
-import { render } from "react-dom";
-import request from "superagent";
 import debounce from "lodash.debounce";
 import moment from 'moment';
 
@@ -34,7 +18,6 @@ const client = axios.create({
 });
 
 export class PersonalFeed extends React.Component {
-
     
     constructor(props) {
         super(props);
@@ -45,6 +28,7 @@ export class PersonalFeed extends React.Component {
           hasMore: true,
           isLoading:false,
           microblogs:[],
+          currentTwists: [],
         //   p: this.props.p,
           userid: this.props.p.firebase.doGetCurrentUserId(),
         };
@@ -65,7 +49,7 @@ export class PersonalFeed extends React.Component {
             window.innerHeight + document.documentElement.scrollTop
             === document.documentElement.offsetHeight
           ) {
-            getTimelineData();
+            this.getTimelineData();
           }
         }, 100);
       }
@@ -85,7 +69,7 @@ export class PersonalFeed extends React.Component {
         return (
             <div>
             {microblogs.map(microblog => (
-            <Fragment key={microblog.user_id}>
+            <Fragment key={microblog.twistId}>
                 <div style={{ display: 'flex' }} className="microblogs">
                 {/* <img
                     alt={microblog.photo}
@@ -97,7 +81,7 @@ export class PersonalFeed extends React.Component {
                     width: 72,
                     }}
                 /> */}
-                <div className="twist">
+                <div className="twist" id = {microblog.twistId}>
                     <h2 style ={{ textAlign:"center" }}>
                     {microblog.text}
                     </h2>
@@ -128,62 +112,56 @@ export class PersonalFeed extends React.Component {
 
       async getTimelineData(){
         let path = '/feed/' + this.state.userid;
+
         // let json = await APIClient.get(path);
         this.setState({
           isLoading:true
         })
         await APIClient.get(path).then((result) =>{
-          console.log(result.data);
+
           const nextMicroblogs = result.data.map(microblog => ({
             user: microblog.username,
             // user:microblog.user_id,
             time: this.getTime(microblog.timestamp).toString(),
             photo: microblog.link,
             text: microblog.text,
+            twistId: microblog.twist_id
 
           }));
+
+          let nonRepeatedBlogs = []
+
+          for (let i = 0; i < nextMicroblogs.length; i++){
+            if (!this.state.currentTwists.includes(nextMicroblogs[i].twistId)){
+              this.state.currentTwists.push(nextMicroblogs[i].twistId);
+              nonRepeatedBlogs.push(nextMicroblogs[i]);
+            }
+          }
+
           this.setState({
-            hasMore: this.state.microblogs.length < 10,
+            hasMore: (this.state.microblogs.length < 10 && nonRepeatedBlogs != 0),
             isLoading: false,
             microblogs: [
               ...this.state.microblogs,
-              ...nextMicroblogs
+              ...nonRepeatedBlogs
             ],
           });
         }).catch((err) => {
+
           this.setState({
             error: err.message,
             isLoading:false,
           })
         })
 
-        // return json;
+        // await APIClient.get(path).then((res) => {
+        //   console.log(res);
+        // })
+
       }
 
-    //   getUsername(user_id){
-    //       this.getUsernameData(user_id).then((result)=>{
-    //           console.log("data")
-    //           console.log(result.data)
-    //           return result.data['username']
-    //       });
-    //   }
-
-    //    async getUsernameData(user_id){
-    //       let path = '/profile/' + user_id;
-    //       return await APIClient.get(path).then((result) => {
-    //           console.log("data")
-    //           console.log(result.data)
-    //           return result.data['username']
-    //       });
-    //   }
-
       getTime(timestamp){
-        // var d = new Date();
-        // d.setSeconds( timestamp );
         var newDate = moment(new Date(timestamp * 1000)).format('MM/DD/YYYY hh:MM');
-
-        // var formatted = d.format('MM/DD/YYYY hh:MM');
-        // d.setUTCSeconds(timestamp);
         return newDate;
       }
 
