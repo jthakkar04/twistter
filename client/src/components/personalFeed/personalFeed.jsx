@@ -4,20 +4,18 @@ import React, { Fragment } from 'react';
 // Project dependencies
 import debounce from "lodash.debounce";
 import moment from 'moment';
-
-import axios from 'axios';
 import APIClient from '../apiClient/apiClient';
+import { withAuthorization } from '../SessionHandler';
+import {LinkButtonEl} from '../LinkButton'
+import * as ROUTES from '../../constants/app_routing';
 
-const BASE_URI = 'http://localhost:5000/todo/api/v1.0';
-const AWS_CONST = 'http:13.58.22.129:5000/'
+export const PersonalFeed = () => (
+  <div>
+      <PersonalFeedDiv />
+  </div>
+);
 
-const devEnv = true;
-const client = axios.create({
-  baseURL: devEnv == true ? BASE_URI : AWS_CONST,
-  json: true
-});
-
-export class PersonalFeed extends React.Component {
+export class PersonalFeedDivBase extends React.Component {
     
     constructor(props) {
         super(props);
@@ -29,8 +27,7 @@ export class PersonalFeed extends React.Component {
           isLoading:false,
           microblogs:[],
           currentTwists: [],
-        //   p: this.props.p,
-          userid: this.props.p.firebase.doGetCurrentUserId(),
+          userid: this.props.firebase.doGetCurrentUserId(),
         };
     
         window.onscroll = debounce(() =>{
@@ -68,6 +65,11 @@ export class PersonalFeed extends React.Component {
     
         return (
             <div>
+              <div className="editButtons">
+                  <h2> User's Posts</h2>
+                  <LinkButtonEl to={ROUTES.PROFILE}> Back to Profile </LinkButtonEl>
+              </div>
+
             {microblogs.map(microblog => (
             <Fragment key={microblog.twistId}>
                 <div style={{ display: 'flex' }} className="microblogs">
@@ -167,4 +169,5 @@ export class PersonalFeed extends React.Component {
 
 }
 
-export default PersonalFeed
+const condition = authUser => !!authUser;
+export const PersonalFeedDiv = withAuthorization(condition)(PersonalFeedDivBase);

@@ -20,6 +20,7 @@ import { ForgotPasswordPage } from '../forgotPassword';
 import { FeedPage } from '../homePage';
 import { ProfilePage } from '../profilePage';
 import { SettingsPage } from '../settings';
+import { PersonalFeed } from '../personalFeed';
 
 import styled from "@emotion/styled";
 import { useTheme } from "../../ThemeContext";
@@ -59,6 +60,7 @@ const App = () => {
                     <Route path={Routes.PASSWORD_FORGET} component={ForgotPasswordPage} />
                     <Route path={Routes.FEED} component={FeedPage} />
                     <Route path={Routes.SETTING} component={SettingsPage} />
+                    <Route path= {Routes.PERSONALFEED} component={PersonalFeed} />
                 </div>
             </Wrapper>
         </Router>

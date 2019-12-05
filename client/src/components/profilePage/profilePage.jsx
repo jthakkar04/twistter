@@ -10,7 +10,8 @@ import * as bad_words from "bad-words";
 import { withAuthorization } from '../SessionHandler'
 import troll from "../../images/TrollFace.jpg";
 import APIClient from '../apiClient';
-import { PersonalFeed } from '../personalFeed';
+import {LinkButtonEl} from '../LinkButton'
+import * as ROUTES from '../../constants/app_routing';
 
 export const ProfilePage = () => (
     <div>
@@ -41,7 +42,7 @@ class ProfilePageBase extends React.Component {
     }
 
     componentDidMount() {
-        // this.getUserData();
+        this.getUserData();
     }
 
     profileValidation = Yup.object().shape({
@@ -212,20 +213,14 @@ class ProfilePageBase extends React.Component {
                                         </div>
                                         <div className="editButtons">
                                             <button id="editFile" type="submit"> {values.editState} Profile</button>
+                                            <LinkButtonEl to={ROUTES.PERSONALFEED}>User's Posts </LinkButtonEl>
                                         </div>
                                     </div>
-
-                                    
                             </form>
                         );
                     }
                     }
                 </Formik > 
-           
-
-                <div className="personalFeed">
-                    <PersonalFeed p={this.props}/>
-                </div>
             </div>
 
         );
