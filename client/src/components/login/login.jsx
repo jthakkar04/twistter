@@ -154,5 +154,4 @@ class LoginFormBase extends React.Component {
   }
 }
 
-const condition = authUser => !!authUser;
-export const LoginForm = withAuthorization(condition)(LoginFormBase);
+export const LoginForm = withRouter(withFirebase(LoginFormBase));

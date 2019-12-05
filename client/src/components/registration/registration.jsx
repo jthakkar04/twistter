@@ -8,7 +8,7 @@ import axios from 'axios';
 
 // Project dependencies
 import { AuthUserContext, withAuthorization } from '../SessionHandler'
-// import { withFirebase } from '../Firebase';
+import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/app_routing';
 
 export const RegistrationPage = () => (
@@ -248,8 +248,6 @@ class RegistrationFormBase extends React.Component {
 }
 
 // Export Form with routing history and Firebase access
-
-const condition = authUser => !!authUser;
-export const RegistrationForm = withAuthorization(condition)(RegistrationFormBase);
+export const RegistrationForm = withRouter(withFirebase(RegistrationFormBase));
 
 
