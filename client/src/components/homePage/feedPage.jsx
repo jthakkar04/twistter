@@ -10,7 +10,7 @@ import request from "superagent";
 import debounce from "lodash.debounce";
 
 import axios from 'axios';
-import APIClient from '../apiClient/apiClient';
+import APIClient from '../apiClient';
 // import { Microblog } from '../microblog/microblog'
 import Microblog from '../microblog/microblog';
 
@@ -29,17 +29,49 @@ const client = axios.create({
   json: true
 });
 class FeedPageBase extends React.Component {
-
       constructor(props){
         super(props);
+        this.state = {
+          userid: this.props.firebase.doGetCurrentUserId(),
+          twist:""
+        }
+        this.handleChange = this.handleChange.bind(this);
+        this.createTwist = this.createTwist.bind(this);
+      }
+
+      async createTwist(e){
+        console.log("create: " + this.state.twist);
+        let path = '/feed';
+        axios({
+          method: 'post',
+          url: BASE_URI + path,
+          headers: {}, 
+          data: {
+            user_id: this.state.userid, 
+            text: this.state.twist,
+            link: "NONE",
+            reply: "NONE"
+          }
+        }).then((result) => {
+          document.getElementById("twist").value=""
+        }).catch((err) =>{
+          console.log(err.message)
+        })
+
+      }
+
+      handleChange(e){
+        this.setState({
+          twist: e.target.value
+        })
       }
     
       render() {
         return (
           <div>
             <div style={{marginTop:30}}>
-              <textarea rows="15" cols="100" placeholder="Twist here..." font-size="30"></textarea>
-              <button type="submit" className="btn">
+              <textarea id="twist" rows="15" cols="100" placeholder="Twist here..." font-size="30" onChange={this.handleChange}></textarea>
+              <button type="submit" className="btn" onClick={this.createTwist}>
                       Twist!
               </button>
             </div>

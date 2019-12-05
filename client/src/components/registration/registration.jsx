@@ -7,7 +7,6 @@ import * as bad_words from "bad-words";
 import axios from 'axios';
 
 // Project dependencies
-import { AuthUserContext, withAuthorization } from '../SessionHandler'
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/app_routing';
 

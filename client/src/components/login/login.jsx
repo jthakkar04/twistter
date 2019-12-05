@@ -153,5 +153,4 @@ class LoginFormBase extends React.Component {
     );
   }
 }
-
 export const LoginForm = withRouter(withFirebase(LoginFormBase));

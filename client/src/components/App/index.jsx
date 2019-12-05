@@ -38,7 +38,7 @@ const Wrapper = styled("div")`
 `;
 
 const App = () => {
-    const themeState = useTheme();
+    // const themeState = useTheme();
     return (
 
         <Router>
@@ -48,9 +48,9 @@ const App = () => {
             <Wrapper>
                 {/* <h1>Dark Mode</h1> */}
                 <div>
-                    <button onClick={() => themeState.toggle()}>
+                    {/* <button onClick={() => themeState.toggle()}>
                         {themeState.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                    </button>
+                    </button> */}
                     <Route path={Routes.PROFILE} component={ProfilePage} />
                     <Route exact path={Routes.LANDING} component={LoginPage} />
                     <Route path={Routes.LOGIN} component={LoginPage} />

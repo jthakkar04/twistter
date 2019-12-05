@@ -9,6 +9,9 @@ import { withFirebase } from '../Firebase';
 import APIClient from '../apiClient';
 import * as ROUTES from '../../constants/app_routing';
 
+import styled from "@emotion/styled";
+import { useTheme } from "../../ThemeContext";
+
 export const SettingsPage = () => (
     <div>
         <SettingBase />
@@ -68,17 +71,14 @@ class SettingPageBase extends React.Component {
 
 
     render() {
-
         return (
+
             <div className="settings">
                 <div className="settingOption" >
                     <p id="label">Delete Profile</p>
                     <Button variant="danger" size="sm" onClick={this.deleteProfile}>Delete Profile</Button>
                 </div>
-                <div className="settingOption">
-                    <p id="label">Toggle Color Scheme</p>
-                    <Button variant="primary" size="sm" onClick={this.changeColor}>Change Theme</Button>
-                </div>
+                <ThemeButton />
                 <div className="topicEditor">
                 </div >
             </div >
@@ -89,6 +89,16 @@ class SettingPageBase extends React.Component {
 
 }
 
+const ThemeButton = () => {
+    const themeState = useTheme();
+        return (
+            <div className="settingOption">
+                <p id="label">Toggle Color Scheme</p>
+                <Button variant="primary" size="sm" onClick={() => themeState.toggle()}>
+                    {themeState.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}</Button>
+            </div>
+    );
+}
 
 
 export const SettingBase = withRouter(withFirebase(SettingPageBase));
