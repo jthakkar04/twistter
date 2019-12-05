@@ -6,7 +6,7 @@ import { Button, Modal } from "react-bootstrap";
 
 // Project dependencies
 import { withFirebase } from '../Firebase';
-import APIClient from '../ApiClient';
+import APIClient from '../apiClient';
 import * as ROUTES from '../../constants/app_routing';
 
 export const SettingsPage = () => (

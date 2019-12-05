@@ -5,6 +5,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 
 // Project dependencies
+import { AuthUserContext, withAuthorization } from '../SessionHandler'
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/app_routing';
 
@@ -33,7 +34,7 @@ class LoginFormBase extends React.Component {
           // Firebase log-in auth
           var valid = false;
           this.props.firebase.doSignInWithEmailAndPassword(values.email, values.password)
-            .then(function (firebaseUser) {
+            .then(function () {
               // console.log('Succesful login! Redirecting to main page!');
               valid = true;
             })
@@ -59,9 +60,9 @@ class LoginFormBase extends React.Component {
 
                 // Outputs user UID to console
                 var user = this.props.firebase.doGetCurrentUser()
-                console.log(user.uid)
+                // console.log("userid: " + user.uid)
 
-                this.props.history.push(ROUTES.FEED);
+                this.props.history.push({ pathname: '/feed' });
               }
             })
         }}
@@ -85,7 +86,7 @@ class LoginFormBase extends React.Component {
             isSubmitting,
             handleChange,
             handleBlur,
-            handleSubmit
+            handleSubmit,
           } = props;
           return (
 
@@ -153,4 +154,5 @@ class LoginFormBase extends React.Component {
   }
 }
 
-export const LoginForm = withRouter(withFirebase(LoginFormBase));
+const condition = authUser => !!authUser;
+export const LoginForm = withAuthorization(condition)(LoginFormBase);
