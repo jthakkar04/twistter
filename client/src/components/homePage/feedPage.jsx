@@ -10,7 +10,7 @@ import request from "superagent";
 import debounce from "lodash.debounce";
 
 import axios from 'axios';
-import APIClient from '../apiClient/apiClient';
+import APIClient from '../apiClient';
 // import { Microblog } from '../microblog/microblog'
 import Microblog from '../microblog/microblog';
 
