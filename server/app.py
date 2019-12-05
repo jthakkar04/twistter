@@ -1,4 +1,5 @@
 from flask import Flask, json, request, render_template, redirect, jsonify, make_response
+import time
 from flask_cors import CORS
 import mysql.connector
 
@@ -70,19 +71,18 @@ def get_userProfile(userId):
     cursor.execute(query, val)
     return jsonify(cursor.fetchone())
 
-@app.route('/todo/api/v1.0/feed/<userId>',methods = ['PUT'])
-def insert_microblog(userId):
-    query = "INSERT INTO microblogs (text, timestamp, user_id, link, is_reply) VALUES (%s, %s, %s, %s, %s)"
-    tweetText = request.json["text"]
-    timestamp = request.json["timestamp"]
-    link = request.json["link"]
-    is_reply = request.json["reply"]
-    vals = (tweetText, timestamp, userId, link, is_reply,)
-
-    cursor.execute(query, vals)
+@app.route('/todo/api/v1.0/feed',methods = ['POST'])
+def insert_microblog():
+    query="INSERT INTO microblogs (text, timestamp, user_id, link, is_reply) VALUES (%s, %s, %s, %s, %s)"
+    userID = request.json['user_id']
+    tweetText=request.json["text"]
+    timestamp=time.time()
+    link=request.json["link"]
+    is_reply=request.json["reply"]
+    vals=(tweetText,timestamp,userID,link,is_reply,)
+    cursor.execute(query,vals)
     cnx.commit()
     return '200'
-
 
 @app.route('/todo/api/v1.0/login/<username>', methods=['GET'])
 def get_user_id(username):
