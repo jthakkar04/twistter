@@ -9,6 +9,7 @@ import axios from "axios";
 
 // Project dependencies
 import { withFirebase } from '../Firebase';
+import { PersonalFeed } from "../personalFeed"
 import { AuthUserContext, withAuthorization } from '../SessionHandler';
 import SignOutButton from '../SignOut';
 import troll from "../../images/TrollFace.jpg";
@@ -31,7 +32,7 @@ class ProfilePageBase extends React.Component {
             // currentUserID: 1,
             userData: {
                 fullName: "Julian Haresco",
-                userName: "",
+                userName: "etsts",
                 location: "",
                 birthday: "",
                 bio: "",
@@ -44,13 +45,11 @@ class ProfilePageBase extends React.Component {
     }
 
     componentDidMount() {
-        
-
         this.getUserData().then((result) => {
             console.log("data");
             let data = result.data;
             console.log(data);
-            this.renderUserData(data);
+            // this.renderUserData(data);
         });
     }
 
@@ -136,7 +135,6 @@ class ProfilePageBase extends React.Component {
                     } = props;
                     return (
                         <form onSubmit={handleSubmit}>
-                            <div>
                                 <div className="profile">
                                     <div id="main">
 
@@ -242,12 +240,9 @@ class ProfilePageBase extends React.Component {
                                     </div>
                                 </div>
 
-                                {/* <div className="personalFeed">
-                                    <div className="microblog">
-                                        Fill with code from feed/microblogs
-                                    </div>
-                                </div> */}
-                            </div>
+                                <div className="container">
+                                    <PersonalFeed p={this.props}/>
+                                </div>
                         </form>
                     );
                 }
