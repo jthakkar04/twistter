@@ -31,10 +31,12 @@ class Firebase {
 
     doPasswordUpdate = password =>
         this.auth.currentUser.updatePassword(password);
-    
+
     doGetCurrentUser = () => this.auth.currentUser;
 
     doGetCurrentUserId = () => this.auth.currentUser.uid;
+
+    doDeleteCurrentUser = () => this.auth.currentUser.delete();
 }
 
 export default Firebase;
