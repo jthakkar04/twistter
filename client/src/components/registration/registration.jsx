@@ -68,7 +68,7 @@ class RegistrationFormBase extends React.Component {
                 }
               });
 
-              axios.post('http://localhost:5000/todo/api/v1.0/todo/api/v1.0/register', {
+              axios.post('http://localhost:5000/todo/api/v1.0/register', {
                 bio: "NONE",
                 first_name: values.firstname,
                 last_name: values.lastname,
@@ -137,7 +137,7 @@ class RegistrationFormBase extends React.Component {
                         type="text"
                         name="Firstname"
                         placeholder="First name"
-                        value={values.Firstname}
+                        value={values.firstname}
                         onChange={handleChange}
                         onBlur={handleBlur}
                     
@@ -147,7 +147,7 @@ class RegistrationFormBase extends React.Component {
                         type="text"
                         name="Lastname"
                         placeholder="Last name"
-                        value={values.Lastname}
+                        value={values.lastname}
                         onChange={handleChange}
                         onBlur={handleBlur}
                     

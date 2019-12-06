@@ -109,9 +109,12 @@ def show_topics():
 
 @app.route('/todo/api/v1.0/register', methods=['POST'])
 def put_user():
+    print("Here's where we are!")
     userInfo=request.json
+    print(userInfo)
     username=userInfo['username']
     email=userInfo['email']
+    userId = userInfo['user_id']
     firstName=userInfo['first_name']
     lastName=userInfo['last_name']
     numFollowers=0
@@ -120,9 +123,9 @@ def put_user():
     verified=0
     bio=userInfo['bio']
 
-    query = "INSERT INTO users (username, email, first_name, last_name, num_followers, num_following, profile_pic, verified, bio) VALUES (%s, %s, %s, %s , %s, %s, %s, %s, %s)"
+    query = "INSERT INTO users (username, email, first_name, last_name, num_followers, num_following, profile_pic, verified, bio, user_id) VALUES (%s, %s, %s, %s , %s, %s, %s, %s, %s,%s)"
 
-    vals=(username, email, firstName, lastName, numFollowers, numFollowing, profilePic, verified, bio,)
+    vals=(username, email, firstName, lastName, numFollowers, numFollowing, profilePic, verified, bio, userId,)
 
     cursor.execute(query, vals)
     cnx.commit()
