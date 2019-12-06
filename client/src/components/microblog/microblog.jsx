@@ -105,6 +105,12 @@ export class MicroBlog extends React.Component {
                   <p style={{ color: "#067096", fontSize: 15, fontWeight: "bold" }}>{microblog.user}</p>
                   <p style={{ color: "#067096" }}>{microblog.time}</p>
                   <p style={{ color: "#067096" }}>{microblog.likes}</p>
+                  <button type="button" className="btn">
+                        Like
+                    </button>
+                    <button type="button" className="btn">
+                        Quote
+                    </button>
                 </div>
               </div>
             </div>
