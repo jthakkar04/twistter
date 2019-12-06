@@ -1,5 +1,9 @@
-from flask import Flask, json, request, render_template, redirect, jsonify, make_response
+import time
+
+from flask import (Flask, json, jsonify, make_response, redirect,
+                   render_template, request)
 from flask_cors import CORS
+
 import mysql.connector
 
 cnx=mysql.connector.connect(
@@ -74,7 +78,7 @@ def insert_microblog():
 
     userID = request.json['user_id']
     tweetText=request.json["text"]
-    timestamp=request.json["timestamp"]
+    timestamp=time.time()
     link=request.json["link"]
     is_reply=request.json["reply"]
     vals=(tweetText,timestamp,userID,link,is_reply,)
@@ -82,6 +86,13 @@ def insert_microblog():
     cursor.execute(query,vals)
     cnx.commit()
     return '200'
+
+@app.route('/todo/api/v1.0/feed/users', methods = ['GET'])
+def get_users():
+    query="SELECT username FROM users"
+    cursor.execute(query)
+    return jsonify(cursor.fetchall())
+    
 
 @app.route('/todo/api/v1.0/login/<username>', methods =['GET'])
 def get_user_id(username):
@@ -124,7 +135,7 @@ def like_tweet():
     tweetID = data['tweetId']
 
     query = "INSERT INTO liked_tweets (user_id, twist_id) VALUES (%s,%s)"
-    vals = (userID, tweetID)
+    vals = (userID, tweetID,)
 
     cursor.execute(query, vals)
     cnx.commit()
@@ -132,16 +143,18 @@ def like_tweet():
 
 @app.route('/todo/api/v1.0/profile/liked_tweets/<userId>', methods=['GET'])
 def get_liked_tweets(userId):
-    query = "SELECT * FROM microblogs INNER JOIN liked_tweets ON liked_tweets.twist_id=microblogs.twist_id WHERE liked_tweets.user_id=%s"
+    query = "SELECT * FROM microblogs INNER JOIN liked_tweets ON liked_tweets.twist_id=microblogs.twist_id WHERE liked_tweets.user_id=%s ORDER BY microblogs.timestamp"
     val = (userId,)
     cursor.execute(query,val)
     return jsonify(cursor.fetchall())
 
 
 
+
+
 @app.route('/todo/api/v1.0/timeline/<userId>', methods=['GET'])
 def get_timeline(userId):
-    query = "SELECT * FROM microblogs WHERE microblogs.user_id IN (SELECT following_id FROM follower_following WHERE follower_id=%s) ORDER BY microblogs.timestamp"
+    query = "SELECT microblogs.*, users.username FROM microblogs, users WHERE microblogs.user_id IN (SELECT following_id FROM follower_following WHERE follower_id=%s) AND microblogs.user_id=users.user_id ORDER BY microblogs.timestamp;"
     val=(userId,)
     cursor.execute(query,val)
 
