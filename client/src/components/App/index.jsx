@@ -19,6 +19,8 @@ import { TestPage } from '../testPage';
 import { ForgotPasswordPage } from '../forgotPassword';
 import { FeedPage } from '../homePage';
 import { ProfilePage } from '../profilePage';
+import { SettingsPage } from '../settings';
+import { PersonalFeed } from '../personalFeed';
 
 import styled from "@emotion/styled";
 import { useTheme } from "../../ThemeContext";
@@ -37,7 +39,7 @@ const Wrapper = styled("div")`
 `;
 
 const App = () => {
-    const themeState = useTheme();
+    // const themeState = useTheme();
     return (
 
         <Router>
@@ -47,9 +49,9 @@ const App = () => {
             <Wrapper>
                 {/* <h1>Dark Mode</h1> */}
                 <div>
-                    <button onClick={() => themeState.toggle()}>
+                    {/* <button onClick={() => themeState.toggle()}>
                         {themeState.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-                    </button>
+                    </button> */}
                     <Route path={Routes.PROFILE} component={ProfilePage} />
                     <Route exact path={Routes.LANDING} component={LoginPage} />
                     <Route path={Routes.LOGIN} component={LoginPage} />
@@ -57,6 +59,8 @@ const App = () => {
                     <Route path={Routes.TEST} component={TestPage} />
                     <Route path={Routes.PASSWORD_FORGET} component={ForgotPasswordPage} />
                     <Route path={Routes.FEED} component={FeedPage} />
+                    <Route path={Routes.SETTING} component={SettingsPage} />
+                    <Route path= {Routes.PERSONALFEED} component={PersonalFeed} />
                 </div>
             </Wrapper>
         </Router>
