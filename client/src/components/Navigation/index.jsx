@@ -1,7 +1,6 @@
 import React from 'react';
 import { HashRouter as Router, Route } from "react-router-dom";
 import { AuthUserContext } from '../SessionHandler';
-import SideNav, { NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
 
 // Styles
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
@@ -38,7 +37,7 @@ const NavigationAuth = () => (
         <SignOutButton />
         
       </Menu>
-          //  </React.Fragment>
+          // </React.Fragment>
         )}
         />
     </Router>
