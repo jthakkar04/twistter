@@ -104,6 +104,7 @@ export class MicroBlog extends React.Component {
                 <div className="microBody" style={{ flexDirection: "column" }}>
                   <p style={{ color: "#067096", fontSize: 15, fontWeight: "bold" }}>{microblog.user}</p>
                   <p style={{ color: "#067096" }}>{microblog.time}</p>
+                  <p style={{ color: "#067096" }}>{microblog.likes}</p>
                 </div>
               </div>
             </div>
@@ -140,6 +141,7 @@ export class MicroBlog extends React.Component {
         time: this.getTime(microblog.timestamp).toString(),
         photo: microblog.link,
         text: microblog.text,
+        likes: microblog.likes,
 
       }));
       this.setState({
