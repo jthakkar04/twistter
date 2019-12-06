@@ -24,10 +24,11 @@ import { PersonalFeed } from '../personalFeed';
 
 import styled from "@emotion/styled";
 import { useTheme } from "../../ThemeContext";
+import { slide as Menu } from 'react-burger-menu'
 
 const Wrapper = styled("div")`
   background: ${props => props.theme.background};
-  width: 80vw;
+  width: 100%;
   height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen";
   h1 {
@@ -43,8 +44,9 @@ const App = () => {
     return (
 
         <Router>
-            <img className="logo" src={logo} />
-            <Navigation />
+            <Navigation /> 
+            <img className="logo" src={logo} /> 
+            
             {/* <SignOutButton /> */}
             <Wrapper>
                 {/* <h1>Dark Mode</h1> */}
