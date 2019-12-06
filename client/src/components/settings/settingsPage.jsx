@@ -95,7 +95,7 @@ const ThemeButton = () => {
             <div className="settingOption">
                 <p id="label">Toggle Color Scheme</p>
                 <Button variant="primary" size="sm" onClick={() => themeState.toggle()}>
-                    {themeState.dark ? "Switch to Light Mode" : "Switch to Dark Mode"}</Button>
+                    {themeState.dark ? "Light Mode" : "Dark Mode"}</Button>
             </div>
     );
 }
