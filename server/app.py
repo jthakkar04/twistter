@@ -84,6 +84,12 @@ def insert_microblog():
     cnx.commit()
     return '200'
 
+@app.route('/todo/api/v1.0/feed/users', methods = ['GET'])
+def get_users():
+    query="SELECT username FROM users"
+    cursor.execute(query)
+    return jsonify(cursor.fetchall())
+
 @app.route('/todo/api/v1.0/login/<username>', methods=['GET'])
 def get_user_id(username):
     query = "SELECT users.user_id FROM users WHERE users.username=%s"

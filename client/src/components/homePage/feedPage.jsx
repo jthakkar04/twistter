@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
+
 // Project dependencies
 import { AuthUserContext, withAuthorization } from '../SessionHandler'
 import request from "superagent";
@@ -11,8 +12,11 @@ import debounce from "lodash.debounce";
 
 import axios from 'axios';
 import APIClient from '../apiClient';
+import Table from '../Table/table'
 // import { Microblog } from '../microblog/microblog'
 import Microblog from '../microblog/microblog';
+var fuzzy = require("fuzzy");
+
 
 export const FeedPage = () => (
   <div>
@@ -33,13 +37,21 @@ class FeedPageBase extends React.Component {
         super(props);
         this.state = {
           userid: this.props.firebase.doGetCurrentUserId(),
-          twist:""
+          twist:"",
+          searchWord:"",
+          searchMatches:[]
         }
         this.handleChange = this.handleChange.bind(this);
         this.createTwist = this.createTwist.bind(this);
+        // this.searchChange = this.searchChange.bind(this);
+        // this.getUsernames = this.getUsernames.bind(this);
       }
 
-      async createTwist(e){
+      componentDidMount(){
+        this.getUsernames();
+      }
+
+      createTwist(e){
         console.log("create: " + this.state.twist);
         let path = '/feed';
         axios({
@@ -65,10 +77,52 @@ class FeedPageBase extends React.Component {
           twist: e.target.value
         })
       }
+
+      // searchChange(event) {
+      //   this.setState({ searchWord: event.target.value });
+      // }
+
+      async getUsernames(){
+        let path = "/feed/users"
+        await APIClient.get(path).then((result) => {
+          // return result.data;
+          console.log(result)
+        })
+        // .catch((err) => {
+        //   console.log("error: " + err)
+        // })
+        // let path = BASE_URI + "/feed/users"
+        // axios.get(path)
+        // .then(function (response) {
+        //   console.log(response);
+        // })
+        // .catch(function (error) {
+        //   console.log(error);
+        // });
+      }
     
       render() {
+        const { searchWord } = this.state;
+        // this.getUsernames();
+        // console.log(list);
+        var options = {
+          pre: "<b>",
+          post: "</b>",
+          extract: function(el) {
+            console.log(el);
+            return el.username;
+          }
+        };
+
+        // var results = fuzzy.filter(searchWord, list, options);
+        // var results = results.map(e => e.original);
+
         return (
           <div>
+            <div className="form">
+                <input type="text" placeholder="Search for users" name="searchWord" value={this.state.searchWord} onChange={this.searchChange}/>
+                {/* <Table searchMatches={results}/> */}
+            </div>
             <div style={{marginTop:30}}>
               <textarea id="twist" rows="15" cols="100" placeholder="Twist here..." font-size="30" onChange={this.handleChange}></textarea>
               <button type="submit" className="btn" onClick={this.createTwist}>
