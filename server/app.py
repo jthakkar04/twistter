@@ -1,6 +1,9 @@
-from flask import Flask, json, request, render_template, redirect, jsonify, make_response
 import time
+
+from flask import (Flask, json, jsonify, make_response, redirect,
+                   render_template, request)
 from flask_cors import CORS
+
 import mysql.connector
 
 cnx = mysql.connector.connect(
@@ -16,19 +19,19 @@ cursor=cnx.cursor(dictionary=True)
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/todo/api/v1.0/profile/<userId>', methods=['PUT'])
-def alter_user(userId):
-    userInfo = request.json
-
-    username = userInfo['username']
-    email = userInfo['email']
-    firstName = userInfo['first_name']
-    lastName = userInfo['last_name']
-    numFollowers = userInfo['num_followers']
-    numFollowing = userInfo['num_following']
-    profilePic = userInfo['profile_pic']
-    verified = userInfo['verified']
-    bio = userInfo['bio']
+@app.route('/todo/api/v1.0/profile', methods=['POST'])
+def alter_user():
+    userInfo=request.json
+    userId=userInfo['user_id']
+    username=userInfo['username']
+    email=userInfo['email']
+    firstName=userInfo['first_name']
+    lastName=userInfo['last_name']
+    numFollowers= userInfo['num_followers']
+    numFollowing=userInfo['num_following']
+    profilePic=userInfo['profile_pic']
+    verified= userInfo['verified']
+    bio=userInfo['bio']
 
     query = "UPDATE users SET username=%s, email=%s, first_name=%s, last_name=%s, num_followers=%s, num_following=%s, profile_pic=%s, verified=%s, bio=%s) WHERE user_id=%s"
 
@@ -84,7 +87,14 @@ def insert_microblog():
     cnx.commit()
     return '200'
 
-@app.route('/todo/api/v1.0/login/<username>', methods=['GET'])
+@app.route('/todo/api/v1.0/feed/users', methods = ['GET'])
+def get_users():
+    query="SELECT username FROM users"
+    cursor.execute(query)
+    return jsonify(cursor.fetchall())
+    
+
+@app.route('/todo/api/v1.0/login/<username>', methods =['GET'])
 def get_user_id(username):
     query = "SELECT users.user_id FROM users WHERE users.username=%s"
     val = (username,)
@@ -92,7 +102,12 @@ def get_user_id(username):
 
     return jsonify(cursor.fetchone())
 
-@app.route('/todo/api/v1.0/register', methods=['PUT'])
+@app.route('/todo/api/v1.0/feed/topics', methods=['GET'])
+def show_topics():
+    cursor.execute("SELECT topic_name FROM topics")
+    return jsonify(cursor.fetchall())
+
+@app.route('/todo/api/v1.0/register', methods=['POST'])
 def put_user():
     print("Here's where we are!")
     userInfo=request.json
@@ -116,6 +131,30 @@ def put_user():
     cnx.commit()
     return '200'
 
+@app.route('/todo/api/v1.0/timeline/like', methods=['POST'])
+def like_tweet():
+    data=request.json
+    userID = data['userId']
+    tweetID = data['tweetId']
+
+    query = "INSERT INTO liked_tweets (user_id, twist_id) VALUES (%s,%s)"
+    vals = (userID, tweetID,)
+
+    cursor.execute(query, vals)
+    cnx.commit()
+    return '200'
+
+@app.route('/todo/api/v1.0/profile/liked_tweets/<userId>', methods=['GET'])
+def get_liked_tweets(userId):
+    query = "SELECT * FROM microblogs INNER JOIN liked_tweets ON liked_tweets.twist_id=microblogs.twist_id WHERE liked_tweets.user_id=%s ORDER BY microblogs.timestamp"
+    val = (userId,)
+    cursor.execute(query,val)
+    return jsonify(cursor.fetchall())
+
+
+
+
+
 @app.route('/todo/api/v1.0/timeline/<userId>', methods=['GET'])
 def get_timeline(userId):
     query = "SELECT microblogs.*, users.username FROM microblogs, users WHERE microblogs.user_id IN (SELECT following_id FROM follower_following WHERE follower_id=%s) AND microblogs.user_id=users.user_id ORDER BY microblogs.timestamp;"
@@ -125,7 +164,7 @@ def get_timeline(userId):
 
 
 
-@app.route('/todo/api/v1.0/profile/follow', methods=['PUT'])
+@app.route('/todo/api/v1.0/profile/follow', methods=['POST'])
 def follow_user():
     data=request.json
     follower_id = data['userId']
